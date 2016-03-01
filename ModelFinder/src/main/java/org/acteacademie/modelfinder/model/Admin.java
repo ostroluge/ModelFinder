@@ -1,5 +1,10 @@
 package org.acteacademie.modelfinder.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+
+import org.springframework.data.annotation.Id;
+
 @Entity
 public class Admin {
 

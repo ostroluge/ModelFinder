@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql-miage.alwaysdata.net:3306/miage_modelfinder
+    username: miage
+    password: miage
+    continueOnError: true
+    initialize: false
+    initialSize: 0
+    timeBetweenEvictionRunsMillis: 5000
+    minEvictableIdleTimeMillis: 5000
+    minIdle: 0
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming_strategy: org.hibernate.cfg.DefaultNamingStrategy
+    properties:
+      hibernate:   
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        temp:
+          use_jdbc_metadata_defaults: false

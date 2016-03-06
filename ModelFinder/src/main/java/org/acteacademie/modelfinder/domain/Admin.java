@@ -12,23 +12,24 @@ import javax.persistence.Table;
 public class Admin {
 
 	@Id
+	@Column(name="ID_ADMIN")
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_admin;
+	private long id;
 	
 	@Column(unique = false, nullable = false)
 	private String mail;
 	
-	@Column(unique = false, nullable = false)
-	private String nom;
+	@Column(name="NOM", unique = false, nullable = false)
+	private String lastName;
 
-	@Column(unique = false, nullable = false)
-	private String prenom;
+	@Column(name="PRENOM", unique = false, nullable = false)
+	private String firstName;
 	
 	protected Admin(){}
 	
 	public Admin(String lastName, String firstName,String mail){
-		this.prenom=firstName;
-		this.nom=lastName;
+		this.firstName=firstName;
+		this.lastName=lastName;
 		this.mail=mail;
 	}
 	
@@ -36,6 +37,38 @@ public class Admin {
     public String toString() {
         return String.format(
                 "Admin[id=%d, firstName='%s', lastName='%s', email='%s']",
-                id_admin, prenom, nom,mail);
+                id, firstName, lastName,mail);
+    }
+    
+    public long getIdAdmin(){
+    	return this.id;
+    }
+    
+    private void setIdAdmin(long idAdmin){
+    	this.id = idAdmin;
+    }
+    
+    public String getMail(){
+    	return this.mail;
+    }
+    
+    private void setMail(String mail){
+    	this.mail = mail;
+    }
+    
+    public String getLastName(){
+    	return this.lastName;
+    }
+    
+    private void setLastName(String lastName){
+    	this.lastName = lastName;
+    }
+    
+    public String getFirstName(){
+    	return this.firstName;
+    }
+    
+	private void setFirstName(String firstName){
+    	this.firstName = firstName;
     }
 }

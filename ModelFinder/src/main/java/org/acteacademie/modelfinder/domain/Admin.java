@@ -16,7 +16,7 @@ public class Admin {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(unique = false, nullable = false)
+	@Column(unique = true, nullable = false)
 	private String mail;
 	
 	@Column(name="NOM", unique = false, nullable = false)

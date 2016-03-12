@@ -6,7 +6,7 @@
 	<groupId>org.acteacademie.modelfinder</groupId>
 	<artifactId>ModelFinder</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>ModelFinder</name>
 	<description>Project ModelFinder</description>
@@ -65,14 +65,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+			</plugin>	
 			<plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <configuration>
                         <warSourceDirectory>src/main/webapp</warSourceDirectory>
-                        <warName>Spring4MVCAngularJSExample</warName>
+                        <warName>ModelFinderWar</warName>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
+                        <webResources>
+           					 <resource>
+            			  <directory>src/main/resources</directory>
+          				  </resource>
+       				   </webResources>
                     </configuration>
                 </plugin>
 		</plugins>

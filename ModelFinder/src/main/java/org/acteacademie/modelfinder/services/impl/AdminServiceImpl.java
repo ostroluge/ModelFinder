@@ -20,4 +20,8 @@ public class AdminServiceImpl implements AdminService{
 		return this.adminRepository.findAll();
 	}
 
+	@Override
+	public Admin findOne(Long id) {
+		return this.adminRepository.findOne(id);
+	}
 }

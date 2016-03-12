@@ -7,4 +7,6 @@ import org.acteacademie.modelfinder.domain.Admin;
 public interface AdminService {
 
 	Collection<Admin> getAllAdmin();
+	
+	Admin findOne(Long id);
 }

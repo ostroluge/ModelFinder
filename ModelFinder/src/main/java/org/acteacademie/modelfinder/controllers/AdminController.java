@@ -1,12 +1,11 @@
 package org.acteacademie.modelfinder.controllers;
 
-import java.util.List;
-
+import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Admin;
+import org.acteacademie.modelfinder.services.AdminService;
 import org.acteacademie.modelfinder.domain.StringResponse;
-import org.acteacademie.modelfinder.repositories.AdminRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
 	@Resource
-	AdminRepository adminRepository;
+	AdminService adminService;
 	
 	@CrossOrigin
 	@RequestMapping("/adminList")
-	public List<Admin> getAll(){
-		return this.adminRepository.findAll();
+	public Collection<Admin> getAll(){
+		return this.adminService.getAllAdmin();
 	}
 	
 	@CrossOrigin
@@ -39,7 +38,7 @@ public class AdminController {
 	}
 
 	private boolean isAuthorized(Admin adminToCheck) {
-		for (Admin admin : adminRepository.findAll()) {
+		for (Admin admin : adminService.getAllAdmin()) {
 			if (admin.getMail().equals(adminToCheck.getMail())) {
 				return true;
 			}

@@ -19,5 +19,4 @@ public class AdminServiceImpl implements AdminService{
 	public Collection<Admin> getAllAdmin() {
 		return this.adminRepository.findAll();
 	}
-
 }

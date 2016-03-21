@@ -4,12 +4,8 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Admin;
-<<<<<<< HEAD
 import org.acteacademie.modelfinder.services.AdminService;
-=======
 import org.acteacademie.modelfinder.domain.StringResponse;
-import org.acteacademie.modelfinder.repositories.AdminRepository;
->>>>>>> refs/remotes/origin/master
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +38,7 @@ public class AdminController {
 	}
 
 	private boolean isAuthorized(Admin adminToCheck) {
-		for (Admin admin : adminRepository.findAll()) {
+		for (Admin admin : adminService.getAllAdmin()) {
 			if (admin.getMail().equals(adminToCheck.getMail())) {
 				return true;
 			}

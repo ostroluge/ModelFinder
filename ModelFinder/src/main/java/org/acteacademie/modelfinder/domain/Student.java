@@ -21,7 +21,7 @@ import javax.persistence.Table;
 		@Column(name="DATE_NAISSANCE", unique = false, nullable = false)
 		private Date birthDate;
 		
-		@Column(unique = true, nullable = false)
+		@Column(name="MAIL", unique = true, nullable = false)
 		private String mail;
 		
 		@Column(name="NOM", unique = false, nullable = false)
@@ -78,4 +78,4 @@ import javax.persistence.Table;
 			this.birthDate = birthDate;
 		}
 		
-	}
+}

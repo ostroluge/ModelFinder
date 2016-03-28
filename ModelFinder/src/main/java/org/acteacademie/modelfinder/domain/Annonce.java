@@ -9,6 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.acteacademie.modelfinder.enums.CategoriesEnum;
+import org.acteacademie.modelfinder.enums.EyeColorEnum;
+import org.acteacademie.modelfinder.enums.LengthHairEnum;
+import org.acteacademie.modelfinder.enums.SkinToneEnum;
+
 	@Entity
 	@Table(name="ANNONCE")
 	public class Annonce{
@@ -19,46 +24,46 @@ import javax.persistence.Table;
 		private long id;
 		
 		@Column(name="ETUDIANT_ID", unique = false, nullable = false)
-		private long id_etudiant;
+		private long idStudent;
 		
 		@Column(name="GROUPE_ACCESSOIRE_ID", unique = true, nullable = false)
-		private long id_accessoires;
+		private long idAccessories;
 		
-		@Column(name="TITRE", unique = false, nullable = false)
-		private String titre;
+		@Column(unique = false, nullable = false)
+		private String title;
 
 		@Column(name="CATEGORIE_PRESTATION", unique = false, nullable = false)
-		private String categorie_prestation;
+		private CategoriesEnum categoryService;
 		
 		@Column(name="THEME_PRESTATION", unique = false, nullable = false)
-		private String theme_prestation;
+		private String themeService;
 		
 		@Column(name="CARNATION_PEAU", unique = false, nullable = false)
-		private String carnation_peau;
+		private SkinToneEnum skinTone;
 
 		@Column(name="COULEUR_CHEVEUX", unique = false, nullable = false)
-		private String couleur_cheveux;
+		private String hairColor;
 		
 		@Column(name="COULEUR_YEUX", unique = false, nullable = false)
-		private String couleur_yeux;
+		private EyeColorEnum eyeColor;
 		
 		@Column(name="LONGUEUR_CHEVEUX", unique = false, nullable = false)
-		private String longueur_cheveux;
+		private LengthHairEnum lengthHair;
 		
 		@Column(name="TAILLE_MODELE_MIN", unique = false, nullable = false)
-		private int taille_modele_min;
+		private int heightMin;
 		
 		@Column(name="TAILLE_MODELE_MAX", unique = false, nullable = false)
-		private int taille_modele_max;
+		private int heightMax;
 		
 		@Column(name="DATE_DEBUT", unique = false, nullable = false)
-		private Date date_debut;
+		private Date dateBegin;
 
 		@Column(name="DATE_FIN", unique = false, nullable = false)
-		private Date date_fin;
+		private Date dateEnd;
 		
 		@Column(name="COMMENTAIRE", unique = false, nullable = false)
-		private String commentaire;
+		private String comment;
 
 		public long getId() {
 			return id;
@@ -68,126 +73,126 @@ import javax.persistence.Table;
 			this.id = id;
 		}
 
-		public long getId_etudiant() {
-			return id_etudiant;
+		public long getIdStudent() {
+			return idStudent;
 		}
 
-		public void setId_etudiant(long id_etudiant) {
-			this.id_etudiant = id_etudiant;
+		public void setIdStudent(long idStudent) {
+			this.idStudent = idStudent;
 		}
 
-		public long getId_accessoires() {
-			return id_accessoires;
+		public long getIdAccessories() {
+			return idAccessories;
 		}
 
-		public void setId_accessoires(long id_accessoires) {
-			this.id_accessoires = id_accessoires;
+		public void setIdAccessories(long idAccessories) {
+			this.idAccessories = idAccessories;
 		}
 
-		public String getTitre() {
-			return titre;
+		public String getTitle() {
+			return title;
 		}
 
-		public void setTitre(String titre) {
-			this.titre = titre;
+		public void setTitle(String title) {
+			this.title = title;
 		}
 
-		public String getCategorie_prestation() {
-			return categorie_prestation;
+		public CategoriesEnum getCategoryService() {
+			return categoryService;
 		}
 
-		public void setCategorie_prestation(String categorie_prestation) {
-			this.categorie_prestation = categorie_prestation;
+		public void setCategoryService(CategoriesEnum categoryService) {
+			this.categoryService = categoryService;
 		}
 
-		public String getTheme_prestation() {
-			return theme_prestation;
+		public String getThemeService() {
+			return themeService;
 		}
 
-		public void setTheme_prestation(String theme_prestation) {
-			this.theme_prestation = theme_prestation;
+		public void setThemeService(String themeService) {
+			this.themeService = themeService;
 		}
 
-		public String getCarnation_peau() {
-			return carnation_peau;
+		public SkinToneEnum getSkinTone() {
+			return skinTone;
 		}
 
-		public void setCarnation_peau(String carnation_peau) {
-			this.carnation_peau = carnation_peau;
+		public void setSkinTone(SkinToneEnum skinTone) {
+			this.skinTone = skinTone;
 		}
 
-		public String getCouleur_cheveux() {
-			return couleur_cheveux;
+		public String getHairColor() {
+			return hairColor;
 		}
 
-		public void setCouleur_cheveux(String couleur_cheveux) {
-			this.couleur_cheveux = couleur_cheveux;
+		public void setHairColor(String hairColor) {
+			this.hairColor = hairColor;
 		}
 
-		public String getCouleur_yeux() {
-			return couleur_yeux;
+		public EyeColorEnum getEyeColor() {
+			return eyeColor;
 		}
 
-		public void setCouleur_yeux(String couleur_yeux) {
-			this.couleur_yeux = couleur_yeux;
+		public void setEyeColor(EyeColorEnum eyeColor) {
+			this.eyeColor = eyeColor;
 		}
 
-		public String getLongueur_cheveux() {
-			return longueur_cheveux;
+		public LengthHairEnum getLengthHair() {
+			return lengthHair;
 		}
 
-		public void setLongueur_cheveux(String longueur_cheveux) {
-			this.longueur_cheveux = longueur_cheveux;
+		public void setLengthHair(LengthHairEnum lengthHair) {
+			this.lengthHair = lengthHair;
 		}
 
-		public int getTaille_modele_min() {
-			return taille_modele_min;
+		public int getHeightMin() {
+			return heightMin;
 		}
 
-		public void setTaille_modele_min(int taille_modele_min) {
-			this.taille_modele_min = taille_modele_min;
+		public void setHeightMin(int heightMin) {
+			this.heightMin = heightMin;
 		}
 
-		public int getTaille_modele_max() {
-			return taille_modele_max;
+		public int getHeightMax() {
+			return heightMax;
 		}
 
-		public void setTaille_modele_max(int taille_modele_max) {
-			this.taille_modele_max = taille_modele_max;
+		public void setHeightMax(int heightMax) {
+			this.heightMax = heightMax;
 		}
 
-		public Date getDate_debut() {
-			return date_debut;
+		public Date getDateBegin() {
+			return dateBegin;
 		}
 
-		public void setDate_debut(Date date_debut) {
-			this.date_debut = date_debut;
+		public void setDateBegin(Date dateBegin) {
+			this.dateBegin = dateBegin;
 		}
 
-		public Date getDate_fin() {
-			return date_fin;
+		public Date getDateEnd() {
+			return dateEnd;
 		}
 
-		public void setDate_fin(Date date_fin) {
-			this.date_fin = date_fin;
+		public void setDateEnd(Date dateEnd) {
+			this.dateEnd = dateEnd;
 		}
 
-		public String getCommentaire() {
-			return commentaire;
+		public String getComment() {
+			return comment;
 		}
 
-		public void setCommentaire(String commentaire) {
-			this.commentaire = commentaire;
+		public void setComment(String comment) {
+			this.comment = comment;
 		}
 
 		@Override
 		public String toString() {
-			return "Annonce [id=" + id + ", id_etudiant=" + id_etudiant + ", id_accessoires=" + id_accessoires
-					+ ", titre=" + titre + ", categorie_prestation=" + categorie_prestation + ", theme_prestation="
-					+ theme_prestation + ", carnation_peau=" + carnation_peau + ", couleur_cheveux=" + couleur_cheveux
-					+ ", couleur_yeux=" + couleur_yeux + ", longueur_cheveux=" + longueur_cheveux
-					+ ", taille_modele_min=" + taille_modele_min + ", taille_modele_max=" + taille_modele_max
-					+ ", date_debut=" + date_debut + ", date_fin=" + date_fin + ", commentaire=" + commentaire + "]";
+			return "Annonce [id=" + id + ", id_etudiant=" + idStudent + ", id_accessoires=" + idAccessories
+					+ ", titre=" + title + ", categorie_prestation=" + categoryService + ", theme_prestation="
+					+ themeService + ", carnation_peau=" + skinTone + ", couleur_cheveux=" + hairColor
+					+ ", couleur_yeux=" + eyeColor + ", longueur_cheveux=" + lengthHair
+					+ ", taille_modele_min=" + heightMin + ", taille_modele_max=" + heightMax
+					+ ", date_debut=" + dateBegin + ", date_fin=" + dateEnd + ", commentaire=" + comment + "]";
 		}
 
 	

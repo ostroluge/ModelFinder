@@ -1,4 +1,4 @@
-package org.acateacademie.modelfinder.enums;
+package org.acteacademie.modelfinder.enums;
 
 public enum CategoriesEnum {
 

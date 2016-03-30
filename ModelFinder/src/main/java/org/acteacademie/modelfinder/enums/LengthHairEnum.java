@@ -6,7 +6,7 @@ public enum LengthHairEnum {
 		  MI_LONGS("Mi-longs"),
 		  LONGS("Longs");
 
-		  private String length = "";
+		  private String length;
 		   
 		  private LengthHairEnum(String length){
 		    this.length = length;

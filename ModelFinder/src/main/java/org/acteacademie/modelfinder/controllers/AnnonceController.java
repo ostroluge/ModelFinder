@@ -38,4 +38,14 @@ public class AnnonceController {
 	public String getOneTitle(@PathVariable("id") long id){
 		return this.annonceService.getOneAnnonce(id).getTitle();
 	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody StringResponse createAnnonce(@RequestBody Annonce annonce) {
+		this.annonceService.createAnnonce(annonce);
+		
+		StringResponse response;
+			response = new StringResponse("success");
+		return response;
+	}
 }

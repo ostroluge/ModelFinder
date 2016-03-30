@@ -1,5 +1,9 @@
 package org.acteacademie.modelfinder.enums;
 
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum CategoriesEnum {
 
 	SHOOTING_MODE("Shooting mode"),
@@ -14,7 +18,18 @@ public enum CategoriesEnum {
 	    this.category = category;
 	  }
 	  
+	  @JsonValue
 	  public String getCategory(){
 		  return this.category;
+	  }
+	  
+	  @JsonCreator
+	  public static CategoriesEnum fromValue(String val) {
+	        for (final  CategoriesEnum code : CategoriesEnum.values()) {
+	            if (code.getCategory().equals(val)) {
+	                return code;
+	            }
+	        }
+	        throw new IllegalArgumentException(val);
 	  }
 }

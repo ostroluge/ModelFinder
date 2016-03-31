@@ -14,7 +14,7 @@ public class AnnonceServiceImpl implements AnnonceService{
 
 	@Resource
 	private AnnonceRepository annonceRepository;
-	
+			
 	@Override
 	public Collection<Annonce> getAllAnnonce() {
 		return this.annonceRepository.findAll();

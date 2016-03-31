@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,25 +31,29 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		@Column(name="GROUPE_ACCESSOIRE_ID", unique = true, nullable = false)
 		private long idAccessories;
 		
-		@Column(unique = false, nullable = false)
+		@Column(name="TITRE", unique = false, nullable = false)
 		private String title;
 
 		@Column(name="CATEGORIE_PRESTATION", unique = false, nullable = false)
+		@Enumerated(EnumType.STRING)
 		private CategoriesEnum categoryService;
 		
 		@Column(name="THEME_PRESTATION", unique = false, nullable = false)
 		private String themeService;
 		
 		@Column(name="CARNATION_PEAU", unique = false, nullable = false)
+		@Enumerated(EnumType.STRING)
 		private SkinToneEnum skinTone;
 
 		@Column(name="COULEUR_CHEVEUX", unique = false, nullable = false)
 		private String hairColor;
 		
 		@Column(name="COULEUR_YEUX", unique = false, nullable = false)
+		@Enumerated(EnumType.STRING)
 		private EyeColorEnum eyeColor;
 		
 		@Column(name="LONGUEUR_CHEVEUX", unique = false, nullable = false)
+		@Enumerated(EnumType.STRING)
 		private LengthHairEnum lengthHair;
 		
 		@Column(name="TAILLE_MODELE_MIN", unique = false, nullable = false)
@@ -65,6 +71,8 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		@Column(name="COMMENTAIRE", unique = false, nullable = false)
 		private String comment;
 
+		protected Annonce(){}
+		
 		public long getId() {
 			return id;
 		}
@@ -100,7 +108,7 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		public CategoriesEnum getCategoryService() {
 			return categoryService;
 		}
-
+		
 		public void setCategoryService(CategoriesEnum categoryService) {
 			this.categoryService = categoryService;
 		}

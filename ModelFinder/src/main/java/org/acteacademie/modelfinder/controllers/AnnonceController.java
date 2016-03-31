@@ -42,6 +42,9 @@ public class AnnonceController {
 	@CrossOrigin
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createAnnonce(@RequestBody Annonce annonce) {
+		annonce.setIdStudent(1L);
+		annonce.setIdAccessories(1L);
+		
 		this.annonceService.createAnnonce(annonce);
 		
 		StringResponse response;

@@ -9,12 +9,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import org.acteacademie.modelfinder.enums.CategoriesEnum;
 import org.acteacademie.modelfinder.enums.EyeColorEnum;
 import org.acteacademie.modelfinder.enums.LengthHairEnum;
 import org.acteacademie.modelfinder.enums.SkinToneEnum;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 	@Entity
 	@Table(name="ANNONCE")
@@ -28,8 +31,8 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		@Column(name="ETUDIANT_ID", unique = false, nullable = false)
 		private long idStudent;
 		
-		@Column(name="GROUPE_ACCESSOIRE_ID", unique = true, nullable = false)
-		private long idAccessories;
+		@Column(name="GROUPE_ACCESSOIRE_ID", unique= true, nullable = true)
+		private long accessories;
 		
 		@Column(name="TITRE", unique = false, nullable = false)
 		private String title;
@@ -89,12 +92,12 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 			this.idStudent = idStudent;
 		}
 
-		public long getIdAccessories() {
-			return idAccessories;
+		public long getAccessories() {
+			return accessories;
 		}
 
-		public void setIdAccessories(long idAccessories) {
-			this.idAccessories = idAccessories;
+		public void setAccessories(long accessories) {
+			this.accessories = accessories;
 		}
 
 		public String getTitle() {
@@ -195,7 +198,7 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 
 		@Override
 		public String toString() {
-			return "Annonce [id=" + id + ", id_etudiant=" + idStudent + ", id_accessoires=" + idAccessories
+			return "Annonce [id=" + id + ", id_etudiant=" + idStudent + ", id_accessoires=" + accessories
 					+ ", titre=" + title + ", categorie_prestation=" + categoryService + ", theme_prestation="
 					+ themeService + ", carnation_peau=" + skinTone + ", couleur_cheveux=" + hairColor
 					+ ", couleur_yeux=" + eyeColor + ", longueur_cheveux=" + lengthHair

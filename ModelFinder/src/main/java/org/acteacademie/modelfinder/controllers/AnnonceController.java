@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AnnonceController {
 
-	private static final Logger LOG = Logger.getLogger( EnumType.class.getName() );
-	
 	@Resource
 	AnnonceService annonceService;
 	
@@ -53,7 +51,7 @@ public class AnnonceController {
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createAnnonce(@RequestBody Annonce annonce) {
 		annonce.setIdStudent(1L);
-		annonce.setIdAccessories(1L);
+		annonce.setAccessories(1L);
 		
 		this.annonceService.createAnnonce(annonce);
 		

@@ -35,6 +35,7 @@ tmp/
 local.properties
 .settings/
 .loadpath
+WebContent/
 
 # Eclipse Core
 .project

@@ -9,4 +9,6 @@ public interface AnnonceService {
 	Collection<Annonce> getAllAnnonce();
 	
 	Annonce getOneAnnonce(long id);
+
+	void createAnnonce(Annonce annonce);
 }

@@ -24,4 +24,9 @@ public class AnnonceServiceImpl implements AnnonceService{
 	public Annonce getOneAnnonce(long id) {
 		return this.annonceRepository.findOne(id);
 	}
+
+	@Override
+	public void createAnnonce(Annonce annonce) {
+		this.annonceRepository.save(annonce);
+	}
 }

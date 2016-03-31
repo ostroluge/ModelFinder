@@ -1,4 +1,9 @@
-package org.acteacademie.modelfinder.enums;
+	package org.acteacademie.modelfinder.enums;
+
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public enum CategoriesEnum {
 
@@ -14,7 +19,18 @@ public enum CategoriesEnum {
 	    this.category = category;
 	  }
 	  
+	  @JsonValue
 	  public String getCategory(){
 		  return this.category;
+	  }
+	  
+	  @JsonCreator
+	  public static CategoriesEnum fromValue(String cat) {
+	        for (final  CategoriesEnum category : CategoriesEnum.values()) {
+	            if (category.getCategory().equals(cat)) {
+	                return category;
+	            }
+	        }
+	        throw new IllegalArgumentException(cat);
 	  }
 }

@@ -26,7 +26,7 @@ public class AnnonceServiceImpl implements AnnonceService{
 	}
 
 	@Override
-	public void createAnnonce(Annonce annonce) {
+	public void saveAnnonce(Annonce annonce) {
 		this.annonceRepository.save(annonce);
 	}
 }

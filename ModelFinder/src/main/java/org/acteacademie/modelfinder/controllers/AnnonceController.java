@@ -42,7 +42,7 @@ public class AnnonceController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping("/detail_annonce/{id}")
+	@RequestMapping("/detailAnnonce/{id}")
 	public Annonce getDetail(@PathVariable("id") long id){
 		return this.annonceService.getOneAnnonce(id);
 	}
@@ -53,10 +53,45 @@ public class AnnonceController {
 		annonce.setIdStudent(1L);
 		annonce.setAccessories(1L);
 		
-		this.annonceService.createAnnonce(annonce);
+		this.annonceService.saveAnnonce(annonce);
 		
 		StringResponse response;
 			response = new StringResponse("success");
 		return response;
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody StringResponse updateAnnonce(@RequestBody Annonce newAnnonce) {
+		newAnnonce.setIdStudent(1L);
+		newAnnonce.setAccessories(1L);
+		Annonce oldAnnonce = this.annonceService.getOneAnnonce(newAnnonce.getId());
+		this.updateFieldAnnonce(oldAnnonce, newAnnonce);
+		this.annonceService.saveAnnonce(oldAnnonce);
+		
+		StringResponse response;
+			response = new StringResponse("success");
+		return response;
+	}
+
+	/**
+	 * Mise à jour des champs de l'objet à update
+	 * @param oldAnnonce
+	 * @param newAnnonce
+	 */
+	private void updateFieldAnnonce(Annonce oldAnnonce, Annonce newAnnonce) {
+		oldAnnonce.setCategoryService(newAnnonce.getCategoryService());
+		if(newAnnonce.getComment() == null){
+			oldAnnonce.setComment(newAnnonce.getComment());
+		}
+		oldAnnonce.setDateBegin(newAnnonce.getDateBegin());
+		oldAnnonce.setDateEnd(newAnnonce.getDateEnd());
+		oldAnnonce.setEyeColor(newAnnonce.getEyeColor());
+		oldAnnonce.setHairColor(newAnnonce.getHairColor());
+		oldAnnonce.setHeightMax(newAnnonce.getHeightMax());
+		oldAnnonce.setLengthHair(newAnnonce.getLengthHair());
+		oldAnnonce.setSkinTone(newAnnonce.getSkinTone());
+		oldAnnonce.setThemeService(newAnnonce.getThemeService());
+		oldAnnonce.setTitle(newAnnonce.getTitle());
 	}
 }

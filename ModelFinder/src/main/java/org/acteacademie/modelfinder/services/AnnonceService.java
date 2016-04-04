@@ -10,5 +10,5 @@ public interface AnnonceService {
 	
 	Annonce getOneAnnonce(long id);
 
-	void createAnnonce(Annonce annonce);
+	void saveAnnonce(Annonce annonce);
 }

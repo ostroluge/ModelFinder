@@ -205,7 +205,4 @@ import org.hibernate.annotations.NotFoundAction;
 					+ ", taille_modele_min=" + heightMin + ", taille_modele_max=" + heightMax
 					+ ", date_debut=" + dateBegin + ", date_fin=" + dateEnd + ", commentaire=" + comment + "]";
 		}
-
-	
-	
 }

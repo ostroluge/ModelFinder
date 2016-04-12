@@ -85,7 +85,7 @@ public class AnnonceController {
 			oldAnnonce.setComment(newAnnonce.getComment());
 		}
 		oldAnnonce.setDateBegin(newAnnonce.getDateBegin());
-		oldAnnonce.setDateEnd(newAnnonce.getDateEnd());
+		oldAnnonce.setDuration(newAnnonce.getDuration());
 		oldAnnonce.setEyeColor(newAnnonce.getEyeColor());
 		oldAnnonce.setHairColor(newAnnonce.getHairColor());
 		oldAnnonce.setHeightMax(newAnnonce.getHeightMax());

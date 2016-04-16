@@ -4,7 +4,11 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
+import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
+import org.acteacademie.modelfinder.enums.EyeColorEnum;
+import org.acteacademie.modelfinder.enums.LengthHairEnum;
+import org.acteacademie.modelfinder.enums.SkinToneEnum;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.hibernate.type.EnumType;
 import org.jboss.logging.Logger;
@@ -28,5 +32,21 @@ public class ModelController {
 		System.out.println("aaaa");
 		return this.modelService.getAllModel();
 	}
+	
+	@CrossOrigin
+	@RequestMapping("/suggestionModel/{skinTone}/{hairColor}/{eyeColor}/{lengthHair}/{height_min}/{height_max}")
+	public Collection<Model> getByDetails(@PathVariable("skinTone") String skinTone, @PathVariable("hairColor") 
+	String hairColor, @PathVariable("eyeColor") String eyeColor, @PathVariable("lengthHair") String lengthHair, @PathVariable("height_min") long height_min, @PathVariable("height_max") long height_max){
+		System.out.println("bbbb");
+		SkinToneEnum skinToneB = SkinToneEnum.fromValue(skinTone);
+		EyeColorEnum eyeColorB = EyeColorEnum.fromValue(eyeColor);
+		LengthHairEnum lengthHairB = LengthHairEnum.fromValue(lengthHair);
+		return this.modelService.getModelByDetails(skinToneB, hairColor, eyeColorB, lengthHairB, height_min, height_max);
+	}
 
+	@CrossOrigin
+	@RequestMapping("/detailModel/{id}")
+	public Model getOne(@PathVariable("id") long id){
+		return this.modelService.findById(id);
+	}
 }

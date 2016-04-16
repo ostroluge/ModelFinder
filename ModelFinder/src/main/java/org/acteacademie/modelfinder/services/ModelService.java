@@ -15,7 +15,7 @@ public interface ModelService {
 
 	void saveModel(Model model);
 	
-	Collection<Model> getModelByDetails(SkinToneEnum skinTone, String hairColor, EyeColorEnum eyeColor, LengthHairEnum lengthHair, long height_min, long height_max);
+	Collection<Model> getModelByDetails(SkinToneEnum skinTone, EyeColorEnum eyeColor, LengthHairEnum lengthHair, long height_min, long height_max);
 
 	Model findById(long id);
 }

@@ -14,8 +14,8 @@ public interface ModelRepository extends CrudRepository<Model, Long>{
 	
 	Model findOne(Long id);
 	
-	Collection<Model> findBySkinToneAndHairColorAndEyeColorAndLengthHairAndHeightBetween(SkinToneEnum skinTone,
-			String hairColor, EyeColorEnum eyeColor, LengthHairEnum lengthHair, long height_min, long height_max);
+	Collection<Model> findBySkinToneAndEyeColorAndLengthHairAndHeightBetween(SkinToneEnum skinTone,
+			EyeColorEnum eyeColor, LengthHairEnum lengthHair, long height_min, long height_max);
 
 	Model findById(long id);
 }

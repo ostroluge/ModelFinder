@@ -5,10 +5,10 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Annonce;
+import org.acteacademie.modelfinder.domain.AnnonceAccessories;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
-import org.hibernate.type.EnumType;
-import org.jboss.logging.Logger;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +22,9 @@ public class AnnonceController {
 
 	@Resource
 	AnnonceService annonceService;
+	
+	@Resource
+	AccessoriesService accessoriesService;
 	
 	@CrossOrigin
 	@RequestMapping("/annonceList")
@@ -49,11 +52,11 @@ public class AnnonceController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createAnnonce(@RequestBody Annonce annonce) {
-		annonce.setIdStudent(1L);
-		annonce.setAccessories(1L);
-		
-		this.annonceService.saveAnnonce(annonce);
+	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories) {
+		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
+		annonceAccessories.getAnnonce().setAccessories(annonceAccessories.getAccessories().getIdAccessories());
+		annonceAccessories.getAnnonce().setIdStudent(1L);
+		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
 		
 		StringResponse response;
 			response = new StringResponse("success");

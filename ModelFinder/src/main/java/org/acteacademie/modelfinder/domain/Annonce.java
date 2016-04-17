@@ -10,15 +10,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import org.acteacademie.modelfinder.enums.CategoriesEnum;
 import org.acteacademie.modelfinder.enums.EyeColorEnum;
 import org.acteacademie.modelfinder.enums.LengthHairEnum;
 import org.acteacademie.modelfinder.enums.SkinToneEnum;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+
 
 	@Entity
 	@Table(name="ANNONCE")

@@ -1,5 +1,4 @@
 package org.acteacademie.modelfinder;
-
 import org.acteacademie.modelfinder.domain.Admin;
 import org.acteacademie.modelfinder.domain.Student;
 import org.acteacademie.modelfinder.repositories.AdminRepository;

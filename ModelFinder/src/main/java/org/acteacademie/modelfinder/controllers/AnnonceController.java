@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.services.AnnonceService;
-import org.hibernate.type.EnumType;
-import org.jboss.logging.Logger;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

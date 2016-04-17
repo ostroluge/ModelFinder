@@ -17,4 +17,9 @@ public class AccessoriesServiceImpl implements AccessoriesService{
 	public void saveAccessories(Accessories accessories) {
 		this.accessoriesRepository.save(accessories);
 	}
+
+	@Override
+	public Accessories getOneAccessories(Long id) {
+		return this.accessoriesRepository.findOne(id);
+	}
 }

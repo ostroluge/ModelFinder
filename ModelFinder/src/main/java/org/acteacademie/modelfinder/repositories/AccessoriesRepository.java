@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface AccessoriesRepository  extends CrudRepository<Accessories, Long>{
 
+	Accessories findOne(Long id);
 }

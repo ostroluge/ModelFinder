@@ -21,9 +21,8 @@ public class ModelServiceImpl implements ModelService{
 	}
 
 	@Override
-	public Model getOneModel(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Model getOneModel(Long id) {
+		return this.modelRepository.findOne(id);
 	}
 
 	@Override

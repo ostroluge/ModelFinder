@@ -8,4 +8,6 @@ public interface StudentService {
 
 	Collection<Student> getAllStudent();
 
+	Student getOneStudent(Long id);
+
 }

@@ -8,7 +8,7 @@ public interface ModelService {
 	
 	Collection<Model> getAllModel();
 	
-	Model getOneModel(long id);
+	Model getOneModel(Long id);
 
 	void saveModel(Model model);
 }

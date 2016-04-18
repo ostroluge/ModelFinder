@@ -1,8 +1,6 @@
 package org.acteacademie.modelfinder.domain;
 
 import java.sql.Date;
-import java.sql.Time;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.acteacademie.modelfinder.enums.CategoriesEnum;
@@ -27,8 +27,9 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		private long id;
 		
-		@Column(name="ETUDIANT_ID", unique = false, nullable = false)
-		private long idStudent;
+		@ManyToOne
+	    @JoinColumn(name = "ETUDIANT_ID")
+		private Student student;
 		
 		@Column(name="GROUPE_ACCESSOIRE_ID", unique= true, nullable = true)
 		private long accessories;
@@ -83,12 +84,12 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 			this.id = id;
 		}
 
-		public long getIdStudent() {
-			return idStudent;
+		public Student getStudent() {
+			return student;
 		}
 
-		public void setIdStudent(long idStudent) {
-			this.idStudent = idStudent;
+		public void setStudent(Student student) {
+			this.student = student;
 		}
 
 		public long getAccessories() {
@@ -197,7 +198,7 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 
 		@Override
 		public String toString() {
-			return "Annonce [id=" + id + ", id_etudiant=" + idStudent + ", id_accessoires=" + accessories
+			return "Annonce [id=" + id + ", etudiant=" + student + ", id_accessoires=" + accessories
 					+ ", titre=" + title + ", categorie_prestation=" + categoryService + ", theme_prestation="
 					+ themeService + ", carnation_peau=" + skinTone + ", couleur_cheveux=" + hairColor
 					+ ", couleur_yeux=" + eyeColor + ", longueur_cheveux=" + lengthHair

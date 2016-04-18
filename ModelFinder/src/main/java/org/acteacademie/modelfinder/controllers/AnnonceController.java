@@ -4,12 +4,14 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
+
 import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.AnnonceAccessories;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
+import org.acteacademie.modelfinder.services.StudentService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,9 @@ public class AnnonceController {
 	
 	@Resource
 	AccessoriesService accessoriesService;
+	
+	@Resource
+	StudentService studentService;
 	
 	@CrossOrigin
 	@RequestMapping("/annonceList")
@@ -60,7 +65,7 @@ public class AnnonceController {
 	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
 		annonceAccessories.getAnnonce().setAccessories(annonceAccessories.getAccessories().getIdAccessories());
-		annonceAccessories.getAnnonce().setIdStudent(1L);
+		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
 		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
 		
 		StringResponse response;
@@ -71,7 +76,7 @@ public class AnnonceController {
 	@CrossOrigin
 	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse updateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories) {
-		newAnnonceAccessories.getAnnonce().setIdStudent(1L);
+		newAnnonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));;
 		
 		//Mise à jour des champs de l'annonce
 		Annonce oldAnnonce = this.annonceService.getOneAnnonce(newAnnonceAccessories.getAnnonce().getId());

@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
-
 import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.AnnonceAccessories;
@@ -76,7 +75,7 @@ public class AnnonceController {
 	@CrossOrigin
 	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse updateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories) {
-		newAnnonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));;
+		newAnnonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
 		
 		//Mise à jour des champs de l'annonce
 		Annonce oldAnnonce = this.annonceService.getOneAnnonce(newAnnonceAccessories.getAnnonce().getId());

@@ -5,6 +5,9 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Model;
+import org.acteacademie.modelfinder.enums.EyeColorEnum;
+import org.acteacademie.modelfinder.enums.LengthHairEnum;
+import org.acteacademie.modelfinder.enums.SkinToneEnum;
 import org.acteacademie.modelfinder.repositories.ModelRepository;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.springframework.stereotype.Service;
@@ -30,4 +33,17 @@ public class ModelServiceImpl implements ModelService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Collection<Model> getModelByDetails(SkinToneEnum skinTone, EyeColorEnum eyeColor, LengthHairEnum lengthHair, long height_min, long height_max) {
+		return this.modelRepository.findBySkinToneAndEyeColorAndLengthHairAndHeightBetween(skinTone, eyeColor, lengthHair, height_min, height_max);
+	}
+
+	@Override
+	public Model findById(long id) {
+		return this.modelRepository.findById(id);
+	}
+	
+	
+	
 }

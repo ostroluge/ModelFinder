@@ -67,8 +67,8 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		@Column(name="DATE_DEBUT", unique = false, nullable = false)
 		private Date dateBegin;
 
-		@Column(name="DUREE", unique = false, nullable = false)
-		private Time duration;
+		@Column(name="DATE_FIN", unique = false, nullable = false)
+		private Date dateEnd;
 		
 		@Column(name="COMMENTAIRE", unique = false, nullable = false)
 		private String comment;
@@ -179,12 +179,12 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 			this.dateBegin = dateBegin;
 		}
 
-		public Time getDuration() {
-			return duration;
+		public Date getDateEnd() {
+			return dateEnd;
 		}
 
-		public void setDuration(Time duration) {
-			this.duration = duration;
+		public void setDateEnd(Date dateEnd) {
+			this.dateEnd = dateEnd;
 		}
 
 		public String getComment() {
@@ -202,6 +202,6 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 					+ themeService + ", carnation_peau=" + skinTone + ", couleur_cheveux=" + hairColor
 					+ ", couleur_yeux=" + eyeColor + ", longueur_cheveux=" + lengthHair
 					+ ", taille_modele_min=" + heightMin + ", taille_modele_max=" + heightMax
-					+ ", date_debut=" + dateBegin + ", duree=" + duration + ", commentaire=" + comment + "]";
+					+ ", date_debut=" + dateBegin + ", date_fin=" + dateEnd + ", commentaire=" + comment + "]";
 		}
 }

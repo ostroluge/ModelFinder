@@ -4,8 +4,11 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
+import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
+import org.acteacademie.modelfinder.domain.AnnonceAccessories;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,9 @@ public class AnnonceController {
 
 	@Resource
 	AnnonceService annonceService;
+	
+	@Resource
+	AccessoriesService accessoriesService;
 	
 	@CrossOrigin
 	@RequestMapping("/annonceList")
@@ -41,17 +47,21 @@ public class AnnonceController {
 	
 	@CrossOrigin
 	@RequestMapping("/detailAnnonce/{id}")
-	public Annonce getDetail(@PathVariable("id") long id){
-		return this.annonceService.getOneAnnonce(id);
+	public AnnonceAccessories getDetail(@PathVariable("id") long id){
+		AnnonceAccessories annonceAccessories = new AnnonceAccessories();
+		annonceAccessories.setAnnonce(this.annonceService.getOneAnnonce(id));
+		annonceAccessories.setAccessories(this.accessoriesService.getOneAccessories(annonceAccessories.getAnnonce().getAccessories()));
+		
+		return annonceAccessories;
 	}
 	
 	@CrossOrigin
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createAnnonce(@RequestBody Annonce annonce) {
-		annonce.setIdStudent(1L);
-		annonce.setAccessories(1L);
-		
-		this.annonceService.saveAnnonce(annonce);
+	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories) {
+		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
+		annonceAccessories.getAnnonce().setAccessories(annonceAccessories.getAccessories().getIdAccessories());
+		annonceAccessories.getAnnonce().setIdStudent(1L);
+		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
 		
 		StringResponse response;
 			response = new StringResponse("success");
@@ -60,17 +70,24 @@ public class AnnonceController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse updateAnnonce(@RequestBody Annonce newAnnonce) {
-		newAnnonce.setIdStudent(1L);
-		newAnnonce.setAccessories(1L);
-		Annonce oldAnnonce = this.annonceService.getOneAnnonce(newAnnonce.getId());
-		this.updateFieldAnnonce(oldAnnonce, newAnnonce);
+	public @ResponseBody StringResponse updateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories) {
+		newAnnonceAccessories.getAnnonce().setIdStudent(1L);
+		
+		//Mise à jour des champs de l'annonce
+		Annonce oldAnnonce = this.annonceService.getOneAnnonce(newAnnonceAccessories.getAnnonce().getId());
+		this.updateFieldAnnonce(oldAnnonce, newAnnonceAccessories.getAnnonce());
 		this.annonceService.saveAnnonce(oldAnnonce);
+
+		//Mise à jour des champs des accessoires
+		Accessories oldAccessories = this.accessoriesService.getOneAccessories(newAnnonceAccessories.getAccessories().getIdAccessories());
+		this.updateFieldAccessories(oldAccessories, newAnnonceAccessories.getAccessories());
+		this.accessoriesService.saveAccessories(oldAccessories);
 		
 		StringResponse response;
 			response = new StringResponse("success");
 		return response;
 	}
+
 
 	/**
 	 * Mise à jour des champs de l'objet à update
@@ -83,7 +100,7 @@ public class AnnonceController {
 			oldAnnonce.setComment(newAnnonce.getComment());
 		}
 		oldAnnonce.setDateBegin(newAnnonce.getDateBegin());
-		oldAnnonce.setDuration(newAnnonce.getDuration());
+		oldAnnonce.setDateEnd(newAnnonce.getDateEnd());
 		oldAnnonce.setEyeColor(newAnnonce.getEyeColor());
 		oldAnnonce.setHairColor(newAnnonce.getHairColor());
 		oldAnnonce.setHeightMax(newAnnonce.getHeightMax());
@@ -91,5 +108,13 @@ public class AnnonceController {
 		oldAnnonce.setSkinTone(newAnnonce.getSkinTone());
 		oldAnnonce.setThemeService(newAnnonce.getThemeService());
 		oldAnnonce.setTitle(newAnnonce.getTitle());
+	}
+
+	private void updateFieldAccessories(Accessories oldAccessories, Accessories newAccessories) {
+		oldAccessories.setAccessory1(newAccessories.getAccessory1());
+		oldAccessories.setAccessory2(newAccessories.getAccessory2());
+		oldAccessories.setAccessory3(newAccessories.getAccessory3());
+		oldAccessories.setAccessory4(newAccessories.getAccessory4());
+		oldAccessories.setAccessory5(newAccessories.getAccessory5());
 	}
 }

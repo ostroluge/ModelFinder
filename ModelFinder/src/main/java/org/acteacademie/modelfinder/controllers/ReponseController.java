@@ -2,7 +2,6 @@ package org.acteacademie.modelfinder.controllers;
 
 import java.util.Collection;
 import javax.annotation.Resource;
-import org.acteacademie.modelfinder.domain.Reponse;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ReponseService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +21,5 @@ public class ReponseController {
 	public Collection<Reponse> getAll(){
 		return this.reponseService.getAllReponse();
 	}
-	
 }
 

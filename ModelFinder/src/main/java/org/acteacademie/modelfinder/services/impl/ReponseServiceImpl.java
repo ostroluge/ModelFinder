@@ -24,4 +24,9 @@ public class ReponseServiceImpl implements ReponseService{
 	public Reponse getOneReponse(long id) {
 		return this.reponseRepository.findOne(id);
 	}
+	
+	@Override
+	public void saveReponse(Reponse reponse) {
+		this.reponseRepository.save(reponse);
+	}
 }

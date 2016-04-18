@@ -10,4 +10,6 @@ public interface ReponseService {
 	
 	Reponse getOneReponse(long id);
 
+	void saveReponse(Reponse reponse);
+
 }

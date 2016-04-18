@@ -1,6 +1,7 @@
 package org.acteacademie.modelfinder.controllers;
 
 import java.util.Collection;
+
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Reponse;
@@ -20,7 +21,6 @@ public class ReponseController {
 	public Collection<Reponse> getAll(){
 		return this.reponseService.getAllReponse();
 	}
-	
 	
 }
 

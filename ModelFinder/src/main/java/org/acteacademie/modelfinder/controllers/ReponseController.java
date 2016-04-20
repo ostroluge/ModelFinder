@@ -11,6 +11,7 @@ import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.acteacademie.modelfinder.services.ReponseService;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,13 @@ public class ReponseController {
 	public Collection<Reponse> getAll(){
 		return this.reponseService.getAllReponse();
 	}
+	
+	@CrossOrigin
+	@RequestMapping("/OneReponse/{id}")
+	public Reponse getOne(@PathVariable("id") long id){
+		return this.reponseService.getOneReponse(id);
+	}
+	
 
 	@CrossOrigin
 	@RequestMapping(value="/apply", method=RequestMethod.POST, produces = "application/json")
@@ -67,7 +75,17 @@ public class ReponseController {
 		if (applyForm.getAccessory5() != null) {
 			reponse.setStatusAccessory5(applyForm.getAccessory5());
 		}
+		reponse.setStatut("En attente");
 		reponseService.saveReponse(reponse);
 	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/modifyReponse", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody StringResponse modifyReponse(@RequestBody Reponse reponse) {
+		reponseService.saveReponse(reponse);
+		StringResponse response = new StringResponse("success");
+		return response;
+	}
+
 }
 

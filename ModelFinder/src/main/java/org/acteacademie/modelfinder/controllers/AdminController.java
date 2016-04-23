@@ -1,11 +1,11 @@
 package org.acteacademie.modelfinder.controllers;
 
 import java.util.Collection;
+
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Admin;
 import org.acteacademie.modelfinder.services.AdminService;
-import org.acteacademie.modelfinder.domain.StringResponse;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +27,12 @@ public class AdminController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse loginSubmit(@RequestBody Admin admin) {
-		StringResponse response;
+	public @ResponseBody String loginSubmit(@RequestBody Admin admin) {
+		String response;
 		if (isAuthorized(admin)) {
-			response = new StringResponse("success");
+			response = new String("success");
 		} else {
-			response = new StringResponse("fail");
+			response = new String("fail");
 		}
 		return response;
 	}

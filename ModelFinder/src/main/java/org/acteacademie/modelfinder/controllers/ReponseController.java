@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Response;
-import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.customobject.ApplyForm;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
@@ -43,10 +42,9 @@ public class ReponseController {
 
 	@CrossOrigin
 	@RequestMapping(value="/apply", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse apply(@RequestBody ApplyForm applyForm) {
+	public @ResponseBody String apply(@RequestBody ApplyForm applyForm) {
 		saveReponse(applyForm);
-		StringResponse response = new StringResponse("success");
-		return response;
+		return "success";
 	}
 
 	private void saveReponse(ApplyForm applyForm) {
@@ -81,10 +79,9 @@ public class ReponseController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/modifyReponse", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse modifyReponse(@RequestBody Response reponse) {
+	public @ResponseBody String modifyReponse(@RequestBody Response reponse) {
 		reponseService.saveReponse(reponse);
-		StringResponse response = new StringResponse("success");
-		return response;
+		return "success";
 	}
 
 }

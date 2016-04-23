@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
-import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
@@ -61,20 +60,19 @@ public class AnnonceController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories) {
+	public @ResponseBody String createAnnonce(@RequestBody AnnonceAccessories annonceAccessories) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
 		annonceAccessories.getAnnonce().setAccessories(annonceAccessories.getAccessories().getIdAccessories());
 		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
 		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
 		
-		StringResponse response;
-			response = new StringResponse("success");
-		return response;
+			
+		return "success";
 	}
 	
 	@CrossOrigin
 	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse updateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories) {
+	public @ResponseBody String supdateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories) {
 		newAnnonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
 		
 		//Mise à jour des champs de l'annonce
@@ -87,9 +85,7 @@ public class AnnonceController {
 		this.updateFieldAccessories(oldAccessories, newAnnonceAccessories.getAccessories());
 		this.accessoriesService.saveAccessories(oldAccessories);
 		
-		StringResponse response;
-			response = new StringResponse("success");
-		return response;
+		return "success";
 	}
 
 

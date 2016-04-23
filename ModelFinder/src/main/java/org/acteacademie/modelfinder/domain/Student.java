@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 	@Entity
-	@Table(name="ETUDIANT")
+	@Table(name="STUDENT")
 	public class Student{
 		
 		@Id
@@ -18,16 +18,16 @@ import javax.persistence.Table;
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		private long id;
 		
-		@Column(name="DATE_NAISSANCE", unique = false, nullable = false)
+		@Column(name="BIRTH_DATE", unique = false, nullable = false)
 		private Date birthDate;
 		
-		@Column(name="MAIL", unique = true, nullable = false)
+		@Column(name="EMAIL", unique = true, nullable = false)
 		private String mail;
 		
-		@Column(name="NOM", unique = false, nullable = false)
+		@Column(name="LAST_NAME", unique = false, nullable = false)
 		private String lastName;
 
-		@Column(name="PRENOM", unique = false, nullable = false)
+		@Column(name="FIRST_NAME", unique = false, nullable = false)
 		private String firstName;
 		
 		

@@ -16,13 +16,13 @@ public class Admin {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(name="MAIL", unique = true, nullable = false)
+	@Column(name="EMAIL", unique = true, nullable = false)
 	private String mail;
 	
-	@Column(name="NOM", unique = false, nullable = false)
+	@Column(name="LAST_NAME", unique = false, nullable = false)
 	private String lastName;
 
-	@Column(name="PRENOM", unique = false, nullable = false)
+	@Column(name="FIRST_NAME", unique = false, nullable = false)
 	private String firstName;
 	
 	protected Admin(){}

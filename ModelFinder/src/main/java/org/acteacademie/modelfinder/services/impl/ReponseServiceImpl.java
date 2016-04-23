@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.repositories.ReponseRepository;
 import org.acteacademie.modelfinder.services.ReponseService;
-import org.acteacademie.modelfinder.domain.Reponse;
+import org.acteacademie.modelfinder.domain.Response;
 import org.springframework.stereotype.Service;
 
 @Service(value = "ReponseService")
@@ -16,17 +16,17 @@ public class ReponseServiceImpl implements ReponseService{
 	private ReponseRepository reponseRepository;
 				
 	@Override
-	public Collection<Reponse> getAllReponse() {
+	public Collection<Response> getAllReponse() {
 		return this.reponseRepository.findAll();
 	}
 
 	@Override
-	public Reponse getOneReponse(long id) {
+	public Response getOneReponse(long id) {
 		return this.reponseRepository.findOne(id);
 	}
 	
 	@Override
-	public void saveReponse(Reponse reponse) {
+	public void saveReponse(Response reponse) {
 		this.reponseRepository.save(reponse);
 	}
 }

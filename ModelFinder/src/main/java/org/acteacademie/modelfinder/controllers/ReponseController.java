@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.ApplyForm;
-import org.acteacademie.modelfinder.domain.Reponse;
+import org.acteacademie.modelfinder.domain.Response;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
@@ -30,13 +30,13 @@ public class ReponseController {
 	
 	@CrossOrigin
 	@RequestMapping("/reponseList")
-	public Collection<Reponse> getAll(){
+	public Collection<Response> getAll(){
 		return this.reponseService.getAllReponse();
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/OneReponse/{id}")
-	public Reponse getOne(@PathVariable("id") long id){
+	public Response getOne(@PathVariable("id") long id){
 		return this.reponseService.getOneReponse(id);
 	}
 	
@@ -50,7 +50,7 @@ public class ReponseController {
 	}
 
 	private void saveReponse(ApplyForm applyForm) {
-		Reponse reponse = new Reponse();
+		Response reponse = new Response();
 		if (applyForm.getComment() != null && !applyForm.getComment().equals("")) {
 			reponse.setComment(applyForm.getComment());
 		}
@@ -81,7 +81,7 @@ public class ReponseController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/modifyReponse", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse modifyReponse(@RequestBody Reponse reponse) {
+	public @ResponseBody StringResponse modifyReponse(@RequestBody Response reponse) {
 		reponseService.saveReponse(reponse);
 		StringResponse response = new StringResponse("success");
 		return response;

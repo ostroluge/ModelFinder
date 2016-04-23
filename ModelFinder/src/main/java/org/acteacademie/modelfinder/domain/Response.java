@@ -3,8 +3,8 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="R_REPONSE")
-public class Reponse{
+@Table(name="R_RESPONSE")
+public class Response{
 
 		@Id
 		@Column(name="REPONSE_ID")
@@ -19,25 +19,25 @@ public class Reponse{
 	    @JoinColumn(name = "MODELE_ID")
 		private Model Model;
 		
-		@Column(name="STATUT_ACCESSOIRE_1", unique = false, nullable = true)
+		@Column(name="STATUS_ACCESSORY_1", unique = false, nullable = true)
 		private String StatusAccessory1;
 		
-		@Column(name="STATUT_ACCESSOIRE_2", unique = false, nullable = true)
+		@Column(name="STATUS_ACCESSORY_2", unique = false, nullable = true)
 		private String StatusAccessory2;
 		
-		@Column(name="STATUT_ACCESSOIRE_3", unique = false, nullable = true)
+		@Column(name="STATUS_ACCESSORY_3", unique = false, nullable = true)
 		private String StatusAccessory3;
 		
-		@Column(name="STATUT_ACCESSOIRE_4", unique = false, nullable = true)
+		@Column(name="STATUS_ACCESSORY_4", unique = false, nullable = true)
 		private String StatusAccessory4;
 		
-		@Column(name="STATUT_ACCESSOIRE_5", unique = false, nullable = true)
+		@Column(name="STATUS_ACCESSORY_5", unique = false, nullable = true)
 		private String StatusAccessory5;
 		
-		@Column(name="REPONSE_STATUT", unique = false, nullable = false)
+		@Column(name="RESPONSE_STATUT", unique = false, nullable = false)
 		private String Statut;
 
-		@Column(name="COMMENTAIRE", unique = false, nullable = false)
+		@Column(name="COMMENT", unique = false, nullable = false)
 		private String Comment;
 
 		public long getId() {

@@ -21,7 +21,7 @@ package org.acteacademie.modelfinder.domain;
 	import org.hibernate.annotations.NotFoundAction;
 
 		@Entity
-		@Table(name="MODELE")
+		@Table(name="MODEL")
 		public class Model{
 			
 			@Id
@@ -29,61 +29,61 @@ package org.acteacademie.modelfinder.domain;
 			@GeneratedValue(strategy=GenerationType.AUTO)
 			private long id;
 			
-			@Column(name="PASSWORD_MODELE", unique = false, nullable = false)
+			@Column(name="PASSWORD_MODEL", unique = false, nullable = false)
 			private String password;
 			
-			@Column(name="NOM", unique= true, nullable = true)
+			@Column(name="LAST_NAME", unique= true, nullable = true)
 			private String lastName;
 			
-			@Column(name="PRENOM", unique = false, nullable = false)
+			@Column(name="FIRST_NAME", unique = false, nullable = false)
 			private String name;
 
-			@Column(name="MAIL", unique = false, nullable = false)
+			@Column(name="EMAIL", unique = false, nullable = false)
 			private String mail;
 			
-			@Column(name="DATE_NAISSANCE", unique = false, nullable = false)
+			@Column(name="BIRTH_DATE", unique = false, nullable = false)
 			private Date dateOfBirth;
 			
-			@Column(name="SEXE", unique = false, nullable = false)
+			@Column(name="GENDER", unique = false, nullable = false)
 			private String gender;
 			
 			//@Column(name="NUM_TELEPHONE", unique = false, nullable = false)
 			//private String phoneNumber;
 			
-			@Column(name="CARNATION_PEAU", unique = false, nullable = false)
+			@Column(name="SKIN_TONE", unique = false, nullable = false)
 			@Enumerated(EnumType.STRING)
 			private SkinToneEnum skinTone;
 
-			@Column(name="COULEUR_CHEVEUX", unique = false, nullable = false)
+			@Column(name="HAIR_COLOR", unique = false, nullable = false)
 			private String hairColor;
 			
-			@Column(name="COULEUR_YEUX", unique = false, nullable = false)
+			@Column(name="EYE_COLOR", unique = false, nullable = false)
 			@Enumerated(EnumType.STRING)
 			private EyeColorEnum eyeColor;
 			
-			@Column(name="LONGUEUR_CHEVEUX", unique = false, nullable = false)
+			@Column(name="HAIR_LENGTH", unique = false, nullable = false)
 			@Enumerated(EnumType.STRING)
 			private LengthHairEnum lengthHair;
 			
-			@Column(name="TAILLE", unique = false, nullable = false)
+			@Column(name="SIZE", unique = false, nullable = false)
 			private long height;
 			
-			@Column(name="POINTURE", unique = false, nullable = false)
+			@Column(name="SHOE_SIZE", unique = false, nullable = false)
 			private long shoeSize;
 			
-			@Column(name="TAILLE_HAUT", unique = false, nullable = false)
+			@Column(name="SHIRT_SIZE", unique = false, nullable = false)
 			private long highHeight;
 
-			@Column(name="TAILLE_BAS", unique = false, nullable = false)
+			@Column(name="PANTS_SIZE", unique = false, nullable = false)
 			private long lowHeight;
 
 			@Column(name="DESCRIPTION", unique = false, nullable = false)
 			private String description;
 			
-			@Column(name="COMMENTAIRE", unique = false, nullable = false)
+			@Column(name="COMMENT", unique = false, nullable = false)
 			private String comment;
 
-			@Column(name="EST_VALIDE", unique = false, nullable = false)
+			@Column(name="IS_VALIDATED", unique = false, nullable = false)
 			private String isValidated;
 
 			protected Model(){}

@@ -2,14 +2,14 @@ package org.acteacademie.modelfinder.services;
 
 import java.util.Collection;
 
-import org.acteacademie.modelfinder.domain.Reponse;
+import org.acteacademie.modelfinder.domain.Response;
 
 public interface ReponseService {
 
-	Collection<Reponse> getAllReponse();
+	Collection<Response> getAllReponse();
 	
-	Reponse getOneReponse(long id);
+	Response getOneReponse(long id);
 
-	void saveReponse(Reponse reponse);
+	void saveReponse(Response reponse);
 
 }

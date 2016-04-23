@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="GROUPE_ACCESSOIRE")
+@Table(name="GROUP_ACCESSORY")
 public class Accessories {
 	
 	@Id
@@ -16,19 +16,19 @@ public class Accessories {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long idAccessories;
 	
-	@Column(name="LIBELLE_ACCESSOIRE_1", unique = false, nullable = true)
+	@Column(name="WORDING_ACCESSORY_1", unique = false, nullable = true)
 	private String accessory1;
 	
-	@Column(name="LIBELLE_ACCESSOIRE_2", unique = false, nullable = true)
+	@Column(name="WORDING_ACCESSORY_2", unique = false, nullable = true)
 	private String accessory2;
 
-	@Column(name="LIBELLE_ACCESSOIRE_3", unique = false, nullable = true)
+	@Column(name="WORDING_ACCESSORY_3", unique = false, nullable = true)
 	private String accessory3;
 	
-	@Column(name="LIBELLE_ACCESSOIRE_4", unique = false, nullable = true)
+	@Column(name="WORDING_ACCESSORY_4", unique = false, nullable = true)
 	private String accessory4;
 	
-	@Column(name="LIBELLE_ACCESSOIRE_5", unique = false, nullable = true)
+	@Column(name="WORDING_ACCESSORY_5", unique = false, nullable = true)
 	private String accessory5;
 	
 	public long getIdAccessories(){

@@ -1,14 +1,14 @@
 package org.acteacademie.modelfinder.repositories;
 
 import java.util.Collection;
-import org.acteacademie.modelfinder.domain.Reponse;
+import org.acteacademie.modelfinder.domain.Response;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ReponseRepository extends CrudRepository<Reponse, Long>{
+public interface ReponseRepository extends CrudRepository<Response, Long>{
 	
-	Collection<Reponse> findAll();
+	Collection<Response> findAll();
 	
-	Reponse findOne(Long id);
+	Response findOne(Long id);
 	
 	
 }

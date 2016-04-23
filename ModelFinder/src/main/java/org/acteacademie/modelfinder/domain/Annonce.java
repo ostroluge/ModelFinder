@@ -19,7 +19,7 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 
 
 	@Entity
-	@Table(name="ANNONCE")
+	@Table(name="SERVICE")
 	public class Annonce{
 		
 		@Id
@@ -34,44 +34,44 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		@Column(name="GROUPE_ACCESSOIRE_ID", unique= true, nullable = true)
 		private long accessories;
 		
-		@Column(name="TITRE", unique = false, nullable = false)
+		@Column(name="TITLE", unique = false, nullable = false)
 		private String title;
 
-		@Column(name="CATEGORIE_PRESTATION", unique = false, nullable = false)
+		@Column(name="CATEGORY_SERVICE", unique = false, nullable = false)
 		@Enumerated(EnumType.STRING)
 		private CategoriesEnum categoryService;
 		
-		@Column(name="THEME_PRESTATION", unique = false, nullable = false)
+		@Column(name="THEME_SERVICE", unique = false, nullable = false)
 		private String themeService;
 		
-		@Column(name="CARNATION_PEAU", unique = false, nullable = false)
+		@Column(name="SKIN_TONE", unique = false, nullable = false)
 		@Enumerated(EnumType.STRING)
 		private SkinToneEnum skinTone;
 
-		@Column(name="COULEUR_CHEVEUX", unique = false, nullable = false)
+		@Column(name="HAIR_COLOR", unique = false, nullable = false)
 		private String hairColor;
 		
-		@Column(name="COULEUR_YEUX", unique = false, nullable = false)
+		@Column(name="EYE_COLOR", unique = false, nullable = false)
 		@Enumerated(EnumType.STRING)
 		private EyeColorEnum eyeColor;
 		
-		@Column(name="LONGUEUR_CHEVEUX", unique = false, nullable = false)
+		@Column(name="HAIR_LENGTH", unique = false, nullable = false)
 		@Enumerated(EnumType.STRING)
 		private LengthHairEnum lengthHair;
 		
-		@Column(name="TAILLE_MODELE_MIN", unique = false, nullable = false)
+		@Column(name="MINIMUM_SIZE", unique = false, nullable = false)
 		private int heightMin;
 		
-		@Column(name="TAILLE_MODELE_MAX", unique = false, nullable = false)
+		@Column(name="MAXIMUM_SIZE", unique = false, nullable = false)
 		private int heightMax;
 		
-		@Column(name="DATE_DEBUT", unique = false, nullable = false)
+		@Column(name="START_DATE", unique = false, nullable = false)
 		private Date dateBegin;
 
-		@Column(name="DATE_FIN", unique = false, nullable = false)
+		@Column(name="END_DATE", unique = false, nullable = false)
 		private Date dateEnd;
 		
-		@Column(name="COMMENTAIRE", unique = false, nullable = false)
+		@Column(name="COMMENT", unique = false, nullable = false)
 		private String comment;
 
 		protected Annonce(){}

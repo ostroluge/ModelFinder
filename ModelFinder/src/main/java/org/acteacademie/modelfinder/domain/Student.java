@@ -18,6 +18,9 @@ import javax.persistence.Table;
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		private long id;
 		
+		@Column(name="PASSWORD_STUDENT", unique = false, nullable = false)
+		private String password;
+		
 		@Column(name="BIRTH_DATE", unique = false, nullable = false)
 		private Date birthDate;
 		
@@ -30,6 +33,8 @@ import javax.persistence.Table;
 		@Column(name="FIRST_NAME", unique = false, nullable = false)
 		private String firstName;
 		
+		@Column(name="IS_VALIDATED", unique = false, nullable = false)
+		private Boolean isValidated;
 		
 	    @Override
 	    public String toString() {
@@ -76,6 +81,14 @@ import javax.persistence.Table;
 		
 		private void setBirthDate(Date birthDate){
 			this.birthDate = birthDate;
+		}
+		
+		public Boolean getIsValidated(){
+			return this.isValidated;
+		}
+		
+		private void setIsValidated(Boolean validation){
+			this.isValidated = validation;
 		}
 		
 }

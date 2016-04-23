@@ -1,4 +1,4 @@
-package org.acteacademie.modelfinder.domain;
+package org.acteacademie.modelfinder.domain.customobject;
 
 public class ApplyForm {
 

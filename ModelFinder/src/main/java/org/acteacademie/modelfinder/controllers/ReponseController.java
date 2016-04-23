@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
-import org.acteacademie.modelfinder.domain.ApplyForm;
 import org.acteacademie.modelfinder.domain.Response;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.customobject.ApplyForm;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.acteacademie.modelfinder.services.ReponseService;

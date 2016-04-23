@@ -37,7 +37,7 @@ public class Response{
 		@Column(name="RESPONSE_STATUT", unique = false, nullable = false)
 		private String Statut;
 
-		@Column(name="COMMENT", unique = false, nullable = false)
+		@Column(name="COMMENT", unique = false, nullable = true)
 		private String Comment;
 
 		public long getId() {

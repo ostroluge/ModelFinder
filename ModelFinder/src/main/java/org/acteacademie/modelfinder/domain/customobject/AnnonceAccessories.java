@@ -1,4 +1,7 @@
-package org.acteacademie.modelfinder.domain;
+package org.acteacademie.modelfinder.domain.customobject;
+
+import org.acteacademie.modelfinder.domain.Accessories;
+import org.acteacademie.modelfinder.domain.Annonce;
 
 public class AnnonceAccessories {
 

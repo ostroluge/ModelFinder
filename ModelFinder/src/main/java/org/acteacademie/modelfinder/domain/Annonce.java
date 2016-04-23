@@ -44,25 +44,25 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		@Column(name="THEME_SERVICE", unique = false, nullable = false)
 		private String themeService;
 		
-		@Column(name="SKIN_TONE", unique = false, nullable = false)
+		@Column(name="SKIN_TONE", unique = false, nullable = true)
 		@Enumerated(EnumType.STRING)
 		private SkinToneEnum skinTone;
 
-		@Column(name="HAIR_COLOR", unique = false, nullable = false)
+		@Column(name="HAIR_COLOR", unique = false, nullable = true)
 		private String hairColor;
 		
-		@Column(name="EYE_COLOR", unique = false, nullable = false)
+		@Column(name="EYE_COLOR", unique = false, nullable = true)
 		@Enumerated(EnumType.STRING)
 		private EyeColorEnum eyeColor;
 		
-		@Column(name="HAIR_LENGTH", unique = false, nullable = false)
+		@Column(name="HAIR_LENGTH", unique = false, nullable = true)
 		@Enumerated(EnumType.STRING)
 		private LengthHairEnum lengthHair;
 		
-		@Column(name="MINIMUM_SIZE", unique = false, nullable = false)
+		@Column(name="MINIMUM_SIZE", unique = false, nullable = true)
 		private int heightMin;
 		
-		@Column(name="MAXIMUM_SIZE", unique = false, nullable = false)
+		@Column(name="MAXIMUM_SIZE", unique = false, nullable = true)
 		private int heightMax;
 		
 		@Column(name="START_DATE", unique = false, nullable = false)
@@ -71,7 +71,7 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		@Column(name="END_DATE", unique = false, nullable = false)
 		private Date dateEnd;
 		
-		@Column(name="COMMENT", unique = false, nullable = false)
+		@Column(name="COMMENT", unique = false, nullable = true)
 		private String comment;
 
 		protected Annonce(){}

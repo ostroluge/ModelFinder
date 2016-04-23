@@ -32,7 +32,7 @@ package org.acteacademie.modelfinder.domain;
 			@Column(name="PASSWORD_MODEL", unique = false, nullable = false)
 			private String password;
 			
-			@Column(name="LAST_NAME", unique= true, nullable = true)
+			@Column(name="LAST_NAME", unique= true, nullable = false)
 			private String lastName;
 			
 			@Column(name="FIRST_NAME", unique = false, nullable = false)
@@ -47,8 +47,8 @@ package org.acteacademie.modelfinder.domain;
 			@Column(name="GENDER", unique = false, nullable = false)
 			private String gender;
 			
-			//@Column(name="NUM_TELEPHONE", unique = false, nullable = false)
-			//private String phoneNumber;
+			@Column(name="PHONE_NUMBER", unique = false, nullable = true)
+			private String phoneNumber;
 			
 			@Column(name="SKIN_TONE", unique = false, nullable = false)
 			@Enumerated(EnumType.STRING)
@@ -77,14 +77,11 @@ package org.acteacademie.modelfinder.domain;
 			@Column(name="PANTS_SIZE", unique = false, nullable = false)
 			private long lowHeight;
 
-			@Column(name="DESCRIPTION", unique = false, nullable = false)
+			@Column(name="DESCRIPTION", unique = false, nullable = true)
 			private String description;
 			
-			@Column(name="COMMENT", unique = false, nullable = false)
+			@Column(name="COMMENT", unique = false, nullable = true)
 			private String comment;
-
-			@Column(name="IS_VALIDATED", unique = false, nullable = false)
-			private String isValidated;
 
 			protected Model(){}
 
@@ -145,12 +142,11 @@ package org.acteacademie.modelfinder.domain;
 			}
 
 			public String getPhoneNumber() {
-				return "";
-				//return phoneNumber;
+				return phoneNumber;
 			}
 
 			public void setPhoneNumber(String phoneNumber) {
-				//this.phoneNumber = phoneNumber;
+				this.phoneNumber = phoneNumber;
 			}
 
 			public SkinToneEnum getSkinTone() {
@@ -233,14 +229,6 @@ package org.acteacademie.modelfinder.domain;
 				this.comment = comment;
 			}
 
-			public String getIsValidated() {
-				return isValidated;
-			}
-
-			public void setIsValidated(String isValidated) {
-				this.isValidated = isValidated;
-			}
-			
 			@Override
 			public String toString() {
 				return "Model [id=" + id + ", nom=" + lastName + ", prenom=" + name + "]";

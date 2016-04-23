@@ -34,7 +34,7 @@ public class Response{
 		@Column(name="STATUS_ACCESSORY_5", unique = false, nullable = true)
 		private String StatusAccessory5;
 		
-		@Column(name="RESPONSE_STATUT", unique = false, nullable = false)
+		@Column(name="RESPONSE_STATUS", unique = false, nullable = false)
 		private String Statut;
 
 		@Column(name="COMMENT", unique = false, nullable = true)

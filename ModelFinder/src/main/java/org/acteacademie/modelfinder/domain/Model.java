@@ -83,9 +83,6 @@ package org.acteacademie.modelfinder.domain;
 			@Column(name="COMMENT", unique = false, nullable = false)
 			private String comment;
 
-			@Column(name="IS_VALIDATED", unique = false, nullable = false)
-			private String isValidated;
-
 			protected Model(){}
 
 			public long getId() {
@@ -231,14 +228,6 @@ package org.acteacademie.modelfinder.domain;
 
 			public void setComment(String comment) {
 				this.comment = comment;
-			}
-
-			public String getIsValidated() {
-				return isValidated;
-			}
-
-			public void setIsValidated(String isValidated) {
-				this.isValidated = isValidated;
 			}
 			
 			@Override

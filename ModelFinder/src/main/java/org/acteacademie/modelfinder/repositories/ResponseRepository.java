@@ -4,7 +4,7 @@ import java.util.Collection;
 import org.acteacademie.modelfinder.domain.Response;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ReponseRepository extends CrudRepository<Response, Long>{
+public interface ResponseRepository extends CrudRepository<Response, Long>{
 	
 	Collection<Response> findAll();
 	

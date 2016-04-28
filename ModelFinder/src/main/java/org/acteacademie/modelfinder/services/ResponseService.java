@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.acteacademie.modelfinder.domain.Response;
 
-public interface ReponseService {
+public interface ResponseService {
 
 	Collection<Response> getAllReponse();
 	

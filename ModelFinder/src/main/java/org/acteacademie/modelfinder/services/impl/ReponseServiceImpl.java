@@ -4,16 +4,16 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
-import org.acteacademie.modelfinder.repositories.ReponseRepository;
-import org.acteacademie.modelfinder.services.ReponseService;
+import org.acteacademie.modelfinder.repositories.ResponseRepository;
+import org.acteacademie.modelfinder.services.ResponseService;
 import org.acteacademie.modelfinder.domain.Response;
 import org.springframework.stereotype.Service;
 
 @Service(value = "ReponseService")
-public class ReponseServiceImpl implements ReponseService{
+public class ReponseServiceImpl implements ResponseService{
 		
 	@Resource
-	private ReponseRepository reponseRepository;
+	private ResponseRepository reponseRepository;
 				
 	@Override
 	public Collection<Response> getAllReponse() {

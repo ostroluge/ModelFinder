@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Admin;
+import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.services.AdminService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,12 +28,12 @@ public class AdminController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody String loginSubmit(@RequestBody Admin admin) {
-		String response;
+	public @ResponseBody StringResponse loginSubmit(@RequestBody Admin admin) {
+		StringResponse response;
 		if (isAuthorized(admin)) {
-			response = new String("success");
+			response = new StringResponse("success");
 		} else {
-			response = new String("fail");
+			response = new StringResponse("fail");
 		}
 		return response;
 	}

@@ -33,7 +33,6 @@ public class ModelController {
 	@CrossOrigin
 	@RequestMapping("/suggestionModel/{skinTone}/{eyeColor}/{lengthHair}/{height_min}/{height_max}")
 	public Collection<Model> getByDetails(@PathVariable("skinTone") String skinTone, @PathVariable("eyeColor") String eyeColor, @PathVariable("lengthHair") String lengthHair, @PathVariable("height_min") long height_min, @PathVariable("height_max") long height_max){
-		System.out.println("bbbb");
 		SkinToneEnum skinToneB = SkinToneEnum.fromValue(skinTone);
 		EyeColorEnum eyeColorB = EyeColorEnum.fromValue(eyeColor);
 		LengthHairEnum lengthHairB = LengthHairEnum.fromValue(lengthHair);

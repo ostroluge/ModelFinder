@@ -1,24 +1,26 @@
 package org.acteacademie.modelfinder.domain;
 
 	import java.sql.Date;
-	import java.sql.Time;
+import java.util.HashSet;
 
-	import javax.persistence.Column;
-	import javax.persistence.Entity;
-	import javax.persistence.EnumType;
-	import javax.persistence.Enumerated;
-	import javax.persistence.GeneratedValue;
-	import javax.persistence.GenerationType;
-	import javax.persistence.Id;
-	import javax.persistence.JoinColumn;
-	import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-	import org.acteacademie.modelfinder.enums.CategoriesEnum;
-	import org.acteacademie.modelfinder.enums.EyeColorEnum;
-	import org.acteacademie.modelfinder.enums.LengthHairEnum;
-	import org.acteacademie.modelfinder.enums.SkinToneEnum;
-	import org.hibernate.annotations.NotFound;
-	import org.hibernate.annotations.NotFoundAction;
+import org.acteacademie.modelfinder.enums.EyeColorEnum;
+import org.acteacademie.modelfinder.enums.LengthHairEnum;
+import org.acteacademie.modelfinder.enums.SkinToneEnum;
+import java.util.Set;
+import java.util.HashSet;
 
 		@Entity
 		@Table(name="MODEL")
@@ -83,6 +85,12 @@ package org.acteacademie.modelfinder.domain;
 			@Column(name="COMMENT", unique = false, nullable = true)
 			private String comment;
 
+			@ManyToMany(fetch = FetchType.LAZY)
+		    @JoinTable(name = "R_MODEL_PHOTO", 
+		             joinColumns = { @JoinColumn(name = "MODELE_ID") }, 
+		             inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID") })
+		    private Set<Photo> modelPhoto = new HashSet<Photo>();
+			
 			protected Model(){}
 
 			public long getId() {
@@ -229,6 +237,14 @@ package org.acteacademie.modelfinder.domain;
 				this.comment = comment;
 			}
 
+			public Set<Photo> getModelPhoto() {
+		        return modelPhoto;
+		    }
+		 
+		    public void setModelPhoto(Set<Photo> modelPhoto) {
+		        this.modelPhoto = modelPhoto;
+		    }
+		    
 			@Override
 			public String toString() {
 				return "Model [id=" + id + ", nom=" + lastName + ", prenom=" + name + "]";

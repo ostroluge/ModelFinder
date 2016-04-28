@@ -11,5 +11,7 @@ public interface ReponseService {
 	Response getOneReponse(long id);
 
 	void saveReponse(Response reponse);
+	
+	void deleteReponse(long id);
 
 }

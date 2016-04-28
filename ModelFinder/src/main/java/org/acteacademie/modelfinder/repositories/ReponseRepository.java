@@ -10,5 +10,5 @@ public interface ReponseRepository extends CrudRepository<Response, Long>{
 	
 	Response findOne(Long id);
 	
-	
+	void delete(Long id);
 }

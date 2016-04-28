@@ -29,4 +29,8 @@ public class ReponseServiceImpl implements ReponseService{
 	public void saveReponse(Response reponse) {
 		this.reponseRepository.save(reponse);
 	}
+	
+	public void deleteReponse(long id){
+		this.reponseRepository.delete(id);
+	};
 }

@@ -9,7 +9,7 @@ import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.customobject.ApplyForm;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
-import org.acteacademie.modelfinder.services.ReponseService;
+import org.acteacademie.modelfinder.services.ResponseService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ReponseController {
+public class ResponseController {
 	
 	@Resource
-	ReponseService reponseService;
+	ResponseService reponseService;
 	@Resource
 	ModelService modelService;
 	@Resource 

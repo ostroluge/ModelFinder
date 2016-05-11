@@ -1,3 +1,4 @@
+package org.acteacademie.modelfinder.domain.customid;
 //package org.acteacademie.modelfinder.domain.customid;
 //
 //public class ReponseId {

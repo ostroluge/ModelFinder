@@ -5,7 +5,7 @@ public class StringResponse {
 	String response;
 	
 	public StringResponse(String string){
-		
+		response=string;
 	}
 	
 	public String getResponse(){

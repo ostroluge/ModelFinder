@@ -54,7 +54,7 @@ public class AnnonceController {
 	public AnnonceAccessories getDetail(@PathVariable("id") long id){
 		AnnonceAccessories annonceAccessories = new AnnonceAccessories();
 		annonceAccessories.setAnnonce(this.annonceService.getOneAnnonce(id));
-		annonceAccessories.setAccessories(this.accessoriesService.getOneAccessories(annonceAccessories.getAnnonce().getAccessories()));
+		annonceAccessories.setAccessories(this.accessoriesService.getOneAccessories(annonceAccessories.getAnnonce().getAccessoriesId()));
 		
 		return annonceAccessories;
 	}
@@ -63,7 +63,7 @@ public class AnnonceController {
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
-		annonceAccessories.getAnnonce().setAccessories(annonceAccessories.getAccessories().getIdAccessories());
+		annonceAccessories.getAnnonce().setAccessoriesId(annonceAccessories.getAccessories().getIdAccessories());
 		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
 		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
 		
@@ -109,6 +109,7 @@ public class AnnonceController {
 		oldAnnonce.setSkinTone(newAnnonce.getSkinTone());
 		oldAnnonce.setThemeService(newAnnonce.getThemeService());
 		oldAnnonce.setTitle(newAnnonce.getTitle());
+		oldAnnonce.setStatus(newAnnonce.getStatus());
 	}
 
 	private void updateFieldAccessories(Accessories oldAccessories, Accessories newAccessories) {

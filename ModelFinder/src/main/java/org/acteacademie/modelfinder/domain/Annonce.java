@@ -32,7 +32,7 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		private Student student;
 		
 		@Column(name="GROUPE_ACCESSOIRE_ID", unique= true, nullable = true)
-		private long accessories;
+		private long accessoriesId;
 		
 		@Column(name="TITLE", unique = false, nullable = false)
 		private String title;
@@ -73,6 +73,9 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		
 		@Column(name="COMMENT", unique = false, nullable = true)
 		private String comment;
+		
+		@Column(name="STATUS", unique = false, nullable = false)
+		private String status;
 
 		protected Annonce(){}
 		
@@ -92,12 +95,12 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 			this.student = student;
 		}
 
-		public long getAccessories() {
-			return accessories;
+		public long getAccessoriesId() {
+			return accessoriesId;
 		}
 
-		public void setAccessories(long accessories) {
-			this.accessories = accessories;
+		public void setAccessoriesId(long accessoriesId) {
+			this.accessoriesId = accessoriesId;
 		}
 
 		public String getTitle() {
@@ -195,14 +198,23 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 		public void setComment(String comment) {
 			this.comment = comment;
 		}
+		
+		public String getStatus() {
+			return status;
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
 
 		@Override
 		public String toString() {
-			return "Annonce [id=" + id + ", etudiant=" + student + ", id_accessoires=" + accessories
+			return "Annonce [id=" + id + ", etudiant=" + student + ", id_accessoires=" + accessoriesId
 					+ ", titre=" + title + ", categorie_prestation=" + categoryService + ", theme_prestation="
 					+ themeService + ", carnation_peau=" + skinTone + ", couleur_cheveux=" + hairColor
 					+ ", couleur_yeux=" + eyeColor + ", longueur_cheveux=" + lengthHair
 					+ ", taille_modele_min=" + heightMin + ", taille_modele_max=" + heightMax
-					+ ", date_debut=" + dateBegin + ", date_fin=" + dateEnd + ", commentaire=" + comment + "]";
+					+ ", date_debut=" + dateBegin + ", date_fin=" + dateEnd + ", commentaire=" + comment 
+					+ ", statuts=" + status + "]";
 		}
 }

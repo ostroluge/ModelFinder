@@ -44,8 +44,9 @@ public class ReponseController {
 	@CrossOrigin
 	@RequestMapping(value="/apply", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse apply(@RequestBody ApplyForm applyForm) {
+		StringResponse rep = new StringResponse("success");
 		saveReponse(applyForm);
-		return new StringResponse("success");
+		return rep;
 	}
 
 	private void saveReponse(ApplyForm applyForm) {
@@ -87,9 +88,9 @@ public class ReponseController {
 	
 	@CrossOrigin
 	@RequestMapping(value = "/supprimerReponse", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody String supprimerRv(@RequestBody Long id) {
+	public @ResponseBody StringResponse supprimerRv(@RequestBody Long id) {
 		reponseService.deleteReponse(id);
-		return "success";
+		return new StringResponse("success");
 	}
 
 }

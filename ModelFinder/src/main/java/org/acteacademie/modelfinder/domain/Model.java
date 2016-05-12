@@ -1,6 +1,6 @@
 package org.acteacademie.modelfinder.domain;
 
-	import java.sql.Date;
+import java.sql.Date;
 import java.util.HashSet;
 
 import javax.persistence.Column;
@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,233 +18,213 @@ import org.acteacademie.modelfinder.enums.EyeColorEnum;
 import org.acteacademie.modelfinder.enums.LengthHairEnum;
 import org.acteacademie.modelfinder.enums.SkinToneEnum;
 import java.util.Set;
-import java.util.HashSet;
 
-		@Entity
-		@Table(name="MODEL")
-		public class Model{
-			
-			@Id
-			@Column(name="ID_MODELE")
-			@GeneratedValue(strategy=GenerationType.AUTO)
-			private long id;
-			
-			@Column(name="PASSWORD_MODEL", unique = false, nullable = false)
-			private String password;
-			
-			@Column(name="LAST_NAME", unique= true, nullable = false)
-			private String lastName;
-			
-			@Column(name="FIRST_NAME", unique = false, nullable = false)
-			private String name;
+@Entity
+@Table(name="MODEL")
+public class Model{
 
-			@Column(name="EMAIL", unique = false, nullable = false)
-			private String mail;
-			
-			@Column(name="BIRTH_DATE", unique = false, nullable = false)
-			private Date dateOfBirth;
-			
-			@Column(name="GENDER", unique = false, nullable = false)
-			private String gender;
-			
-			@Column(name="PHONE_NUMBER", unique = false, nullable = true)
-			private String phoneNumber;
-			
-			@Column(name="SKIN_TONE", unique = false, nullable = false)
-			@Enumerated(EnumType.STRING)
-			private SkinToneEnum skinTone;
+	@Id
+	@Column(name="ID_MODELE")
+	private long id;
 
-			@Column(name="HAIR_COLOR", unique = false, nullable = false)
-			private String hairColor;
-			
-			@Column(name="EYE_COLOR", unique = false, nullable = false)
-			@Enumerated(EnumType.STRING)
-			private EyeColorEnum eyeColor;
-			
-			@Column(name="HAIR_LENGTH", unique = false, nullable = false)
-			@Enumerated(EnumType.STRING)
-			private LengthHairEnum lengthHair;
-			
-			@Column(name="SIZE", unique = false, nullable = false)
-			private long height;
-			
-			@Column(name="SHOE_SIZE", unique = false, nullable = false)
-			private long shoeSize;
-			
-			@Column(name="SHIRT_SIZE", unique = false, nullable = false)
-			private long highHeight;
+	@Column(name="LAST_NAME", unique= true, nullable = false)
+	private String lastName;
 
-			@Column(name="PANTS_SIZE", unique = false, nullable = false)
-			private long lowHeight;
+	@Column(name="FIRST_NAME", unique = false, nullable = false)
+	private String name;
 
-			@Column(name="DESCRIPTION", unique = false, nullable = true)
-			private String description;
-			
-			@Column(name="COMMENT", unique = false, nullable = true)
-			private String comment;
+	@Column(name="BIRTH_DATE", unique = false, nullable = false)
+	private Date dateOfBirth;
 
-			@ManyToMany(fetch = FetchType.LAZY)
-		    @JoinTable(name = "R_MODEL_PHOTO", 
-		             joinColumns = { @JoinColumn(name = "MODELE_ID") }, 
-		             inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID") })
-		    private Set<Photo> modelPhoto = new HashSet<Photo>();
-			
-			protected Model(){}
+	@Column(name="GENDER", unique = false, nullable = false)
+	private String gender;
 
-			public long getId() {
-				return id;
-			}
+	@Column(name="PHONE_NUMBER", unique = false, nullable = true)
+	private String phoneNumber;
 
-			public void setId(long id) {
-				this.id = id;
-			}
+	@Column(name="SKIN_TONE", unique = false, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private SkinToneEnum skinTone;
 
-			public String getPassword() {
-				return password;
-			}
+	@Column(name="HAIR_COLOR", unique = false, nullable = false)
+	private String hairColor;
 
-			public void setPassword(String password) {
-				this.password = password;
-			}
+	@Column(name="EYE_COLOR", unique = false, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private EyeColorEnum eyeColor;
 
-			public String getLastName() {
-				return lastName;
-			}
+	@Column(name="HAIR_LENGTH", unique = false, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private LengthHairEnum lengthHair;
 
-			public void setLastName(String lastName) {
-				this.lastName = lastName;
-			}
+	@Column(name="SIZE", unique = false, nullable = false)
+	private long height;
 
-			public String getName() {
-				return name;
-			}
+	@Column(name="SHOE_SIZE", unique = false, nullable = false)
+	private long shoeSize;
 
-			public void setName(String name) {
-				this.name = name;
-			}
+	@Column(name="SHIRT_SIZE", unique = false, nullable = false)
+	private long highHeight;
 
-			public String getMail() {
-				return mail;
-			}
+	@Column(name="PANTS_SIZE", unique = false, nullable = false)
+	private long lowHeight;
 
-			public void setMail(String mail) {
-				this.mail = mail;
-			}
+	@Column(name="DESCRIPTION", unique = false, nullable = true)
+	private String description;
 
-			public Date getDateOfBirth() {
-				return dateOfBirth;
-			}
+	@Column(name="COMMENT", unique = false, nullable = true)
+	private String comment;
 
-			public void setDateOfBirth(Date dateOfBirth) {
-				this.dateOfBirth = dateOfBirth;
-			}
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "R_MODEL_PHOTO", 
+	joinColumns = { @JoinColumn(name = "MODELE_ID") }, 
+	inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID") })
+	private Set<Photo> modelPhoto = new HashSet<Photo>();
 
-			public String getGender() {
-				return gender;
-			}
+	protected Model(){}
 
-			public void setGender(String gender) {
-				this.gender = gender;
-			}
+	public long getId() {
+		return id;
+	}
 
-			public String getPhoneNumber() {
-				return phoneNumber;
-			}
+	public void setId(long id) {
+		this.id = id;
+	}
 
-			public void setPhoneNumber(String phoneNumber) {
-				this.phoneNumber = phoneNumber;
-			}
+	public String getLastName() {
+		return lastName;
+	}
 
-			public SkinToneEnum getSkinTone() {
-				return skinTone;
-			}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-			public void setSkinTone(SkinToneEnum skinTone) {
-				this.skinTone = skinTone;
-			}
+	public String getName() {
+		return name;
+	}
 
-			public String getHairColor() {
-				return hairColor;
-			}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-			public void setHairColor(String hairColor) {
-				this.hairColor = hairColor;
-			}
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-			public EyeColorEnum getEyeColor() {
-				return eyeColor;
-			}
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
-			public void setEyeColor(EyeColorEnum eyeColor) {
-				this.eyeColor = eyeColor;
-			}
+	public String getGender() {
+		return gender;
+	}
 
-			public LengthHairEnum getLengthHair() {
-				return lengthHair;
-			}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
-			public void setLengthHair(LengthHairEnum lengthHair) {
-				this.lengthHair = lengthHair;
-			}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-			public long getHeight() {
-				return height;
-			}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-			public void setHeight(long height) {
-				this.height = height;
-			}
+	public SkinToneEnum getSkinTone() {
+		return skinTone;
+	}
 
-			public long getShoeSize() {
-				return shoeSize;
-			}
+	public void setSkinTone(SkinToneEnum skinTone) {
+		this.skinTone = skinTone;
+	}
 
-			public void setShoeSize(long shoeSize) {
-				this.shoeSize = shoeSize;
-			}
+	public String getHairColor() {
+		return hairColor;
+	}
 
-			public long getHighHeight() {
-				return highHeight;
-			}
+	public void setHairColor(String hairColor) {
+		this.hairColor = hairColor;
+	}
 
-			public void setHighHeight(long highHeight) {
-				this.highHeight = highHeight;
-			}
+	public EyeColorEnum getEyeColor() {
+		return eyeColor;
+	}
 
-			public long getLowHeight() {
-				return lowHeight;
-			}
+	public void setEyeColor(EyeColorEnum eyeColor) {
+		this.eyeColor = eyeColor;
+	}
 
-			public void setLowHeight(long lowHeight) {
-				this.lowHeight = lowHeight;
-			}
+	public LengthHairEnum getLengthHair() {
+		return lengthHair;
+	}
 
-			public String getDescription() {
-				return description;
-			}
+	public void setLengthHair(LengthHairEnum lengthHair) {
+		this.lengthHair = lengthHair;
+	}
 
-			public void setDescription(String description) {
-				this.description = description;
-			}
+	public long getHeight() {
+		return height;
+	}
 
-			public String getComment() {
-				return comment;
-			}
+	public void setHeight(long height) {
+		this.height = height;
+	}
 
-			public void setComment(String comment) {
-				this.comment = comment;
-			}
+	public long getShoeSize() {
+		return shoeSize;
+	}
 
-			public Set<Photo> getModelPhoto() {
-		        return modelPhoto;
-		    }
-		 
-		    public void setModelPhoto(Set<Photo> modelPhoto) {
-		        this.modelPhoto = modelPhoto;
-		    }
-		    
-			@Override
-			public String toString() {
-				return "Model [id=" + id + ", nom=" + lastName + ", prenom=" + name + "]";
-			}
+	public void setShoeSize(long shoeSize) {
+		this.shoeSize = shoeSize;
+	}
+
+	public long getHighHeight() {
+		return highHeight;
+	}
+
+	public void setHighHeight(long highHeight) {
+		this.highHeight = highHeight;
+	}
+
+	public long getLowHeight() {
+		return lowHeight;
+	}
+
+	public void setLowHeight(long lowHeight) {
+		this.lowHeight = lowHeight;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public Set<Photo> getModelPhoto() {
+		return modelPhoto;
+	}
+
+	public void setModelPhoto(Set<Photo> modelPhoto) {
+		this.modelPhoto = modelPhoto;
+	}
+
+	@Override
+	public String toString() {
+		return "Model [id=" + id + ", lastName=" + lastName + ", name=" + name + ", dateOfBirth=" + dateOfBirth
+				+ ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", skinTone=" + skinTone + ", hairColor="
+				+ hairColor + ", eyeColor=" + eyeColor + ", lengthHair=" + lengthHair + ", height=" + height
+				+ ", shoeSize=" + shoeSize + ", highHeight=" + highHeight + ", lowHeight=" + lowHeight
+				+ ", description=" + description + ", comment=" + comment + ", modelPhoto=" + modelPhoto + "]";
+	}
 }

@@ -36,11 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.jdbcAuthentication()
 		.dataSource(dataSource)
 		.usersByUsernameQuery(
-				"select pseudo as username , passwd as password, isActive as enabled " +
-						"from appliuser " +
-				"where pseudo=?")
+				"select email as username, password, is_activated as enabled " +
+						"from USER " +
+				"where email=?")
 		.authoritiesByUsernameQuery(
-				"select pseudo as username, 'ROLE_USER' from appliuser where pseudo=?");
+				"select email as username, role from USER where email=?");
 	}
 
 	public DataSource getDataSource() {

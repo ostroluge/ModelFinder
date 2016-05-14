@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.repositories.ResponseRepository;
 import org.acteacademie.modelfinder.services.ResponseService;
+import org.acteacademie.modelfinder.domain.Annonce;
+import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.Response;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +34,19 @@ public class ReponseServiceImpl implements ResponseService{
 	
 	public void deleteReponse(long id){
 		this.reponseRepository.delete(id);
+	}
+
+	@Override
+	public Collection<Response> findByAnnonceAndModel(Annonce annonce, Model model) {
+		return this.reponseRepository.findByAnnonceAndModel(annonce, model);
+	};
+	
+	public Collection<Response> findByAnnonce(Annonce annonce) {
+		return this.reponseRepository.findByAnnonce(annonce);
+	}
+
+	@Override
+	public Collection<Response> findByAnnonceAndStatut(Annonce annonce, String statut) {
+		return reponseRepository.findByAnnonceAndStatut(annonce,statut);
 	};
 }

@@ -13,11 +13,11 @@ public class Response{
 	
 		@ManyToOne
 	    @JoinColumn(name = "ANNONCE_ID")
-		private Annonce Annonce;
+		private Annonce annonce;
 		
 		@ManyToOne
 	    @JoinColumn(name = "MODELE_ID")
-		private Model Model;
+		private Model model;
 		
 		@Column(name="STATUS_ACCESSORY_1", unique = false, nullable = true)
 		private String StatusAccessory1;
@@ -35,7 +35,7 @@ public class Response{
 		private String StatusAccessory5;
 		
 		@Column(name="RESPONSE_STATUS", unique = false, nullable = false)
-		private String Statut;
+		private String statut;
 
 		@Column(name="COMMENT", unique = false, nullable = true)
 		private String Comment;
@@ -49,19 +49,19 @@ public class Response{
 		}
 
 		public Annonce getAnnonce() {
-			return Annonce;
+			return annonce;
 		}
 
 		public void setAnnonce(Annonce annonce) {
-			Annonce = annonce;
+			this.annonce = annonce;
 		}
 
 		public Model getModel() {
-			return Model;
+			return model;
 		}
 
 		public void setModel(Model model) {
-			Model = model;
+			this.model = model;
 		}
 
 		public String getStatusAccessory1() {
@@ -105,11 +105,11 @@ public class Response{
 		}
 
 		public String getStatut() {
-			return Statut;
+			return statut;
 		}
 
 		public void setStatut(String statut) {
-			Statut = statut;
+			this.statut = statut;
 		}
 
 		public String getComment() {
@@ -122,10 +122,10 @@ public class Response{
 
 		@Override
 		public String toString() {
-			return "Reponse [id=" + id + ", Annonce=" + Annonce + ", Model=" + Model + ", StatusAccessory1="
+			return "Reponse [id=" + id + ", Annonce=" + annonce + ", Model=" + model + ", StatusAccessory1="
 					+ StatusAccessory1 + ", StatusAccessory2=" + StatusAccessory2 + ", StatusAccessory3="
 					+ StatusAccessory3 + ", StatusAccessory4=" + StatusAccessory4 + ", StatusAccessory5="
-					+ StatusAccessory5 + ", Statut=" + Statut + ", Comment=" + Comment + "]";
+					+ StatusAccessory5 + ", Statut=" + statut + ", Comment=" + Comment + "]";
 		}
 
 }

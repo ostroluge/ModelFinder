@@ -2,14 +2,12 @@ package org.acteacademie.modelfinder.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ADMIN")
-public class Admin {
+public class Admin extends User{
 
-	@Id
 	@Column(name="ID_ADMIN")
 	private long id;
 

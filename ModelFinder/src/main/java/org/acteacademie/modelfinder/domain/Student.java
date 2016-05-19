@@ -4,12 +4,14 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="STUDENT")
-public class Student extends User {
+public class Student {
 
+	@Id
 	@Column(name="ID_ETUDIANT")
 	private long id;
 

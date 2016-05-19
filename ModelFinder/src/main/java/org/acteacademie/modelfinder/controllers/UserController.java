@@ -7,11 +7,14 @@ import javax.annotation.Resource;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.services.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,19 +31,21 @@ public class UserController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse loginSubmit(@RequestBody User user) {
-		StringResponse response;
+	public ResponseEntity<StringResponse> loginSubmit(@RequestBody User user) {
 		if (isAuthorized(user)) {
-			response = new StringResponse("succes");
+			return ResponseEntity.ok(new StringResponse("success"));
 		} else {
-			response = new StringResponse("fail");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(new StringResponse("fail"));
 		}
-		return response;
 	}
 
 	private boolean isAuthorized(User userToCheck) {
 		for (User user : userService.getAllUsers()) {
 			if (user.getMail().equals(userToCheck.getMail())) {
+				PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+				String encodedPassword = passwordEncoder.encode(userToCheck.getPassword());
+				System.out.println(encodedPassword);
 				return true;
 			}
 		}

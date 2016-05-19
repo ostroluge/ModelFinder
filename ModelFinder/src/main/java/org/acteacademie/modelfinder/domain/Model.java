@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -20,8 +21,9 @@ import org.acteacademie.modelfinder.enums.SkinToneEnum;
 
 @Entity
 @Table(name="MODEL")
-public class Model extends User{
+public class Model {
 
+	@Id
 	@Column(name="ID_MODELE")
 	private long id;
 

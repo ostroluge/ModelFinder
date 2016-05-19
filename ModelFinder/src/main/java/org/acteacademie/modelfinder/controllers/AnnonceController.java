@@ -11,6 +11,8 @@ import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.StudentService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +35,8 @@ public class AnnonceController {
 	
 	@CrossOrigin
 	@RequestMapping("/annonceList")
-	public Collection<Annonce> getAll(){
-		return this.annonceService.getAllAnnonce();
+	public ResponseEntity<Collection<Annonce>> getAll(Authentication authentication) {
+		return ResponseEntity.ok(this.annonceService.getAllAnnonce());
 	}
 	
 	@CrossOrigin

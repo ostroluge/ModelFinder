@@ -9,5 +9,7 @@ public interface UserService {
 
 	Collection<User> getAllUsers();
 	
+	User getUserByMail(String email);
+	
 //	User getLoggedInUser(Authentication authentication);
 }

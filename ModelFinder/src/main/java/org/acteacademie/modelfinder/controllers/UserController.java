@@ -32,12 +32,14 @@ public class UserController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<StringResponse> loginSubmit(@RequestBody User user) {
+	public ResponseEntity<User> loginSubmit(@RequestBody User user) {
 		if (isAuthorized(user)) {
-			return ResponseEntity.ok(new StringResponse("success"));
+			User authenticatedUser = this.userService.getUserByMail(user.getMail());
+			authenticatedUser.setPassword(null);
+			return ResponseEntity.ok(authenticatedUser);
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-					.body(new StringResponse("fail"));
+					.body(null);
 		}
 	}
 

@@ -38,6 +38,12 @@ public class AnnonceController {
 	}
 	
 	@CrossOrigin
+	@RequestMapping("/accessoireList")
+	public Collection<Accessories> getAllAccessoire(){
+		return this.accessoriesService.getAllAccessories();
+	}
+	
+	@CrossOrigin
 	@RequestMapping("/oneId/{id}")
 	public Annonce getOne(@PathVariable("id") long id){
 		return this.annonceService.getOneAnnonce(id);

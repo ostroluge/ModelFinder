@@ -1,5 +1,7 @@
 package org.acteacademie.modelfinder.services.impl;
 
+import java.util.Collection;
+
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Accessories;
@@ -22,4 +24,11 @@ public class AccessoriesServiceImpl implements AccessoriesService{
 	public Accessories getOneAccessories(Long id) {
 		return this.accessoriesRepository.findOne(id);
 	}
+
+	@Override
+	public Collection<Accessories> getAllAccessories() {
+		return this.accessoriesRepository.findAll(); 
+	}
+	
+	
 }

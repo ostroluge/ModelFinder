@@ -1,12 +1,15 @@
 package org.acteacademie.modelfinder.controllers;
 
+import java.security.Principal;
 import java.util.Collection;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.services.UserService;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,10 +22,17 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 
 @RestController
+@Scope("session")
 public class UserController {
 
 	@Resource
 	UserService userService;
+	
+	@RequestMapping("/user")
+	public String user(Principal user, HttpServletRequest request, HttpSession session) {
+		System.out.println("/user : " + (String) request.getSession().getAttribute("USER_ROLE"));
+		return (String) session.getAttribute("USER_ROLE");
+	}
 	
 	@CrossOrigin
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -32,10 +42,17 @@ public class UserController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<User> loginSubmit(@RequestBody User user) {
+	public ResponseEntity<User> loginSubmit(@RequestBody User user, HttpServletRequest request, HttpSession session) {
 		if (isAuthorized(user)) {
 			User authenticatedUser = this.userService.getUserByMail(user.getMail());
 			authenticatedUser.setPassword(null);
+			
+			session.invalidate();
+			HttpSession newSession = request.getSession();
+			newSession.setAttribute("USER_ROLE", authenticatedUser.getRole());
+			
+			System.out.println("/login : " + newSession.getAttribute("USER_ROLE"));
+			
 			return ResponseEntity.ok(authenticatedUser);
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

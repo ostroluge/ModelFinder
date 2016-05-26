@@ -30,8 +30,7 @@ public class ModelServiceImpl implements ModelService{
 
 	@Override
 	public void saveModel(Model model) {
-		// TODO Auto-generated method stub
-		
+		this.modelRepository.save(model);
 	}
 
 	@Override

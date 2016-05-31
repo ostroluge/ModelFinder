@@ -3,14 +3,21 @@ package org.acteacademie.modelfinder.controllers;
 import java.util.Collection;
 import javax.annotation.Resource;
 import org.acteacademie.modelfinder.domain.Model;
+import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.enums.EyeColorEnum;
 import org.acteacademie.modelfinder.enums.LengthHairEnum;
 import org.acteacademie.modelfinder.enums.SkinToneEnum;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 @RestController
 public class ModelController {
@@ -43,5 +50,13 @@ public class ModelController {
 	@RequestMapping("/detailModel/{id}")
 	public Model getOne(@PathVariable("id") long id){
 		return this.modelService.findById(id);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/createModel", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody StringResponse createModel(@RequestBody Model model) {
+	model.setPassword(Hashing.sha1().hashString(model.getPassword(), Charsets.UTF_8 ).toString());
+		this.modelService.saveModel(model);
+		return new StringResponse("success");
 	}
 }

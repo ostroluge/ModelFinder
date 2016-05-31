@@ -4,7 +4,6 @@ import java.util.Collection;
 import javax.annotation.Resource;
 import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.StringResponse;
-import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.enums.EyeColorEnum;
 import org.acteacademie.modelfinder.enums.LengthHairEnum;
 import org.acteacademie.modelfinder.enums.SkinToneEnum;
@@ -35,6 +34,13 @@ public class ModelController {
 	@RequestMapping("/ModelById/{id}")
 	public Model getOne(@PathVariable("id") Long id){
 		return this.modelService.getOneModel(id);
+	}
+	
+	@CrossOrigin
+	@RequestMapping("/DeleteModel/{id}")
+	public StringResponse deleteStudent(@PathVariable("id") Long id){
+		this.modelService.deleteModel(id);
+		return new StringResponse("success");
 	}
 
 	@CrossOrigin

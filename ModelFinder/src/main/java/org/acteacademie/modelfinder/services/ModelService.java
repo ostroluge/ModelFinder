@@ -18,4 +18,7 @@ public interface ModelService {
 	Collection<Model> getModelByDetails(SkinToneEnum skinTone, EyeColorEnum eyeColor, LengthHairEnum lengthHair, long height_min, long height_max);
 
 	Model findById(long id);
+	
+	void deleteModel(Long id);
+
 }

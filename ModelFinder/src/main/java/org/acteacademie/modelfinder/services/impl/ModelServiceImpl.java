@@ -42,6 +42,11 @@ public class ModelServiceImpl implements ModelService{
 	public Model findById(long id) {
 		return this.modelRepository.findById(id);
 	}
+
+	@Override
+	public void deleteModel(Long id) {
+		this.modelRepository.delete(id);
+	}
 	
 	
 	

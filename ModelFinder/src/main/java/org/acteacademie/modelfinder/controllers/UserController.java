@@ -30,6 +30,7 @@ public class UserController {
 	
 	@RequestMapping("/user")
 	public String user(Principal user, HttpServletRequest request, HttpSession session) {
+		System.out.println("/user : SESSION ID = " + session.getId());
 		System.out.println("/user : " + (String) request.getSession().getAttribute("USER_ROLE"));
 		return (String) session.getAttribute("USER_ROLE");
 	}
@@ -51,6 +52,7 @@ public class UserController {
 			HttpSession newSession = request.getSession();
 			newSession.setAttribute("USER_ROLE", authenticatedUser.getRole());
 			
+			System.out.println("/login : SESSION ID = " + newSession.getId());
 			System.out.println("/login : " + newSession.getAttribute("USER_ROLE"));
 			
 			return ResponseEntity.ok(authenticatedUser);

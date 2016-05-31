@@ -10,5 +10,4 @@ public interface StudentRepository extends CrudRepository<Student, Long>{
 	Collection<Student> findAll();
 	
 	Student findOne(Long id);
-
 }

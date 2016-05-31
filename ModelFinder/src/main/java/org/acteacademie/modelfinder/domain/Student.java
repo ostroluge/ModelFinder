@@ -35,60 +35,61 @@ import javax.persistence.Table;
 		
 		@Column(name="IS_VALIDATED", unique = false, nullable = false)
 		private Boolean isValidated;
-		
-	    @Override
-	    public String toString() {
-	        return String.format(
-	                "Student[id=%d, firstName='%s', lastName='%s', email='%s', birthDate='%s']",
-	                id, firstName, lastName,mail,birthDate.toString());
-	    }
-		
-		public long getIdStudent(){
-			return this.id;
+
+		public long getId() {
+			return id;
 		}
-		
-		private void setIdStudent(long idStudent){
-			this.id = idStudent;
+
+		public void setId(long id) {
+			this.id = id;
 		}
-		
-	    public String getMail(){
-	    	return this.mail;
-	    }
-	    
-	    private void setMail(String mail){
-	    	this.mail = mail;
-	    }
-	    
-	    public String getLastName(){
-	    	return this.lastName;
-	    }
-	    
-	    private void setLastName(String lastName){
-	    	this.lastName = lastName;
-	    }
-	    
-	    public String getFirstName(){
-	    	return this.firstName;
-	    }
-	    
-		private void setFirstName(String firstName){
-	    	this.firstName = firstName;
-	    }
-		
-		public Date getBirthDate(){
-			return this.birthDate;
+
+		public String getPassword() {
+			return password;
 		}
-		
-		private void setBirthDate(Date birthDate){
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public Date getBirthDate() {
+			return birthDate;
+		}
+
+		public void setBirthDate(Date birthDate) {
 			this.birthDate = birthDate;
 		}
-		
-		public Boolean getIsValidated(){
-			return this.isValidated;
+
+		public String getMail() {
+			return mail;
 		}
-		
-		private void setIsValidated(Boolean validation){
-			this.isValidated = validation;
+
+		public void setMail(String mail) {
+			this.mail = mail;
+		}
+
+		public String getLastName() {
+			return lastName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
+		public String getFirstName() {
+			return firstName;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
+		public Boolean getIsValidated() {
+			return isValidated;
+		}
+
+		public void setIsValidated(Boolean isValidated) {
+			this.isValidated = isValidated;
 		}
 		
 }

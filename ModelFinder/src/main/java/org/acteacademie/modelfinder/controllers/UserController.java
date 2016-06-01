@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.services.UserService;
 import org.springframework.context.annotation.Scope;
@@ -29,11 +30,14 @@ public class UserController {
 	
 	@RequestMapping("/user")
 	@CrossOrigin
-	public String user(HttpServletRequest request) {
+	public StringResponse user(HttpServletRequest request) {
 
 		System.out.println(request.getSession().getAttribute("USER_ROLE"));
 		System.out.println("/user : " + request.getSession().getId());
-		return "mdr";
+		
+		StringResponse response = new StringResponse((String)request.getSession().getAttribute("USER_ROLE"));
+		
+		return response;
 	}
 	
 	@CrossOrigin
@@ -61,6 +65,16 @@ public class UserController {
 		}
 	}
 
+	@RequestMapping("/invalidateSession")
+	@CrossOrigin
+	public ResponseEntity<StringResponse> logoutUser(HttpServletRequest request) {
+		if (request.getSession() != null) {
+			request.getSession().invalidate();
+		}
+		
+		return ResponseEntity.ok(new StringResponse("success"));
+	}
+	
 	private boolean isAuthorized(User userToCheck) {
 
 		User user = this.userService.getUserByMail(userToCheck.getMail());

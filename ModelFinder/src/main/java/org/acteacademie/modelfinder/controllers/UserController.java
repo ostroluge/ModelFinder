@@ -1,6 +1,5 @@
 package org.acteacademie.modelfinder.controllers;
 
-import java.security.Principal;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -29,9 +28,12 @@ public class UserController {
 	UserService userService;
 	
 	@RequestMapping("/user")
-	public String user(Principal user, HttpServletRequest request, HttpSession session) {
-		System.out.println("/user : " + (String) request.getSession().getAttribute("USER_ROLE"));
-		return (String) session.getAttribute("USER_ROLE");
+	@CrossOrigin
+	public String user(HttpServletRequest request) {
+
+		System.out.println(request.getSession().getAttribute("USER_ROLE"));
+		System.out.println("/user : " + request.getSession().getId());
+		return "mdr";
 	}
 	
 	@CrossOrigin
@@ -42,16 +44,15 @@ public class UserController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<User> loginSubmit(@RequestBody User user, HttpServletRequest request, HttpSession session) {
+	public ResponseEntity<User> loginSubmit(@RequestBody User user, HttpServletRequest request) {
 		if (isAuthorized(user)) {
 			User authenticatedUser = this.userService.getUserByMail(user.getMail());
 			authenticatedUser.setPassword(null);
 			
-			session.invalidate();
-			HttpSession newSession = request.getSession();
-			newSession.setAttribute("USER_ROLE", authenticatedUser.getRole());
+			HttpSession session = request.getSession();
+			session.setAttribute("USER_ROLE", authenticatedUser.getRole());
 			
-			System.out.println("/login : " + newSession.getAttribute("USER_ROLE"));
+			System.out.println("Login : " + session.getId());
 			
 			return ResponseEntity.ok(authenticatedUser);
 		} else {

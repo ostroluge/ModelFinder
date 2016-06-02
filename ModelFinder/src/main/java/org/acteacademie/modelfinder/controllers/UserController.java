@@ -34,10 +34,8 @@ public class UserController {
 	@CrossOrigin
 	public StringResponse user(HttpServletRequest request) {
 
-		System.out.println(request.getSession().getAttribute("USER_ROLE"));
-		System.out.println("/user : " + request.getSession().getId());
-		
-		StringResponse response = new StringResponse((String)request.getSession().getAttribute("USER_ROLE"));
+		User user = (User) request.getSession().getAttribute("USER");
+		StringResponse response = new StringResponse(user.getRole());
 		
 		return response;
 	}
@@ -50,16 +48,13 @@ public class UserController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<User> loginSubmit(@RequestBody User user, @RequestParam(value = "logout", required = false) String logout,
- HttpServletRequest request) {
+	public ResponseEntity<User> loginSubmit(@RequestBody User user, HttpServletRequest request) {
 		if (isAuthorized(user)) {
 			User authenticatedUser = this.userService.getUserByMail(user.getMail());
 			authenticatedUser.setPassword(null);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("USER_ROLE", authenticatedUser.getRole());
-			
-			System.out.println("Login : " + session.getId());
+			session.setAttribute("USER", authenticatedUser);
 			
 			return ResponseEntity.ok(authenticatedUser);
 		} else {
@@ -68,12 +63,6 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-		request.getSession().invalidate();
-		return "ok";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
-	}
-	
 	private boolean isAuthorized(User userToCheck) {
 
 		User user = this.userService.getUserByMail(userToCheck.getMail());

@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.StringResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Charsets;
@@ -48,7 +50,8 @@ public class UserController {
 
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<User> loginSubmit(@RequestBody User user, HttpServletRequest request) {
+	public ResponseEntity<User> loginSubmit(@RequestBody User user, @RequestParam(value = "logout", required = false) String logout,
+ HttpServletRequest request) {
 		if (isAuthorized(user)) {
 			User authenticatedUser = this.userService.getUserByMail(user.getMail());
 			authenticatedUser.setPassword(null);
@@ -65,14 +68,10 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping("/invalidateSession")
-	@CrossOrigin
-	public ResponseEntity<StringResponse> logoutUser(HttpServletRequest request) {
-		if (request.getSession() != null) {
-			request.getSession().invalidate();
-		}
-		
-		return ResponseEntity.ok(new StringResponse("success"));
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+		request.getSession().invalidate();
+		return "ok";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 	
 	private boolean isAuthorized(User userToCheck) {

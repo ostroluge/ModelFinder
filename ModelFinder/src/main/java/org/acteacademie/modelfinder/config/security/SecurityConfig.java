@@ -23,7 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/**").permitAll().and()
 		.authorizeRequests()
 		.anyRequest().authenticated().and()
-		.httpBasic();
+		.httpBasic()
+		.and().logout().logoutSuccessUrl("/").permitAll();
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
 		

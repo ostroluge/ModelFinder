@@ -13,7 +13,7 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 	public Boolean hasRole(String role, HttpSession session) {
 		User user = (User) session.getAttribute("USER");
 		
-		if(user.getRole().equals(role)){
+		if(user.getRole().equals(role) && user.getIsValidated()){
 			return true;
 		}
 		

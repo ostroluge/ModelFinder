@@ -3,14 +3,18 @@ package org.acteacademie.modelfinder.controllers;
 import java.util.Collection;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.StudentService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,10 +35,11 @@ public class AnnonceController {
 	@Resource
 	StudentService studentService;
 	
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
 	@CrossOrigin
 	@RequestMapping("/annonceList")
-	public Collection<Annonce> getAll(){
-		return this.annonceService.getAllAnnonce();
+	public ResponseEntity<Collection<Annonce>> getAll(HttpSession session) {
+		return ResponseEntity.ok(this.annonceService.getAllAnnonce());
 	}
 	
 	@CrossOrigin
@@ -67,10 +72,11 @@ public class AnnonceController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories) {
+	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
 		annonceAccessories.getAnnonce().setAccessoriesId(annonceAccessories.getAccessories().getIdAccessories());
-		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
+		User user = (User) session.getAttribute("USER");
+		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(user.getId()));
 		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
 		
 			

@@ -61,7 +61,7 @@ public class ModelController {
 	@CrossOrigin
 	@RequestMapping(value="/createModel", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createModel(@RequestBody Model model) {
-	model.setPassword(Hashing.sha1().hashString(model.getPassword(), Charsets.UTF_8 ).toString());
+//	model.setPassword(Hashing.sha1().hashString(model.getPassword(), Charsets.UTF_8 ).toString());
 		this.modelService.saveModel(model);
 		return new StringResponse("success");
 	}

@@ -1,11 +1,15 @@
 package org.acteacademie.modelfinder.controllers;
 
 import java.util.Collection;
+
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.Student;
+import org.acteacademie.modelfinder.domain.User;
+import org.acteacademie.modelfinder.enums.RoleEnum;
 import org.acteacademie.modelfinder.services.StudentService;
+import org.acteacademie.modelfinder.services.UserService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +22,9 @@ public class StudentController {
 	
 	@Resource
 	StudentService studentService;
+	
+	@Resource
+	UserService userService;
 	
 	@CrossOrigin
 	@RequestMapping("/studentList")
@@ -34,9 +41,13 @@ public class StudentController {
 	@CrossOrigin
 	@RequestMapping("/ValidateStudent/{id}")
 	public StringResponse validateStudent(@PathVariable("id") Long id){
-		Student student = this.studentService.getOneStudent(id);
-		student.setIsValidated(true);
-		this.studentService.saveStudent(student);
+		User user = this.userService.getUserById(id);
+		if(user.getRole().equals(RoleEnum.STUDENT)){
+			user.setIsValidated(true);
+		} else{
+			return new StringResponse("error");
+		}
+		this.userService.saveUser(user);
 		return new StringResponse("success");
 	}
 	

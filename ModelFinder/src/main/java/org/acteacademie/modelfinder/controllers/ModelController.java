@@ -1,12 +1,16 @@
 package org.acteacademie.modelfinder.controllers;
 
 import java.util.Collection;
+
 import javax.annotation.Resource;
+
+import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.enums.EyeColorEnum;
 import org.acteacademie.modelfinder.enums.LengthHairEnum;
 import org.acteacademie.modelfinder.enums.SkinToneEnum;
+import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.google.common.base.Charsets;
-import com.google.common.hash.Hashing;
 
 @RestController
 public class ModelController {
 
+	@Resource
+	AnnonceService annonceService;
+	
 	@Resource
 	ModelService modelService;
 	
@@ -44,12 +49,12 @@ public class ModelController {
 	}
 
 	@CrossOrigin
-	@RequestMapping("/suggestionModel/{skinTone}/{eyeColor}/{lengthHair}/{height_min}/{height_max}")
-	public Collection<Model> getByDetails(@PathVariable("skinTone") String skinTone, @PathVariable("eyeColor") String eyeColor, @PathVariable("lengthHair") String lengthHair, @PathVariable("height_min") long height_min, @PathVariable("height_max") long height_max){
-		SkinToneEnum skinToneB = SkinToneEnum.fromValue(skinTone);
-		EyeColorEnum eyeColorB = EyeColorEnum.fromValue(eyeColor);
-		LengthHairEnum lengthHairB = LengthHairEnum.fromValue(lengthHair);
-		return this.modelService.getModelByDetails(skinToneB, eyeColorB, lengthHairB, height_min, height_max);
+	@RequestMapping("/suggestionModel/{idAnnonce}")
+	public Collection<Model> getByDetails(@PathVariable("idAnnonce") Long idAnnonce){
+		
+		Annonce annonce = this.annonceService.getOneAnnonce(idAnnonce);
+		
+		return this.modelService.getModelByDetails(annonce.getSkinTone(), annonce.getEyeColor(), annonce.getLengthHair(), annonce.getHeightMin(),annonce.getHeightMax());
 	}
 
 	@CrossOrigin

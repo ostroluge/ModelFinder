@@ -35,10 +35,9 @@ public class AnnonceController {
 	@Resource
 	StudentService studentService;
 	
-	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
 	@CrossOrigin
 	@RequestMapping("/annonceList")
-	public ResponseEntity<Collection<Annonce>> getAll(HttpSession session) {
+	public ResponseEntity<Collection<Annonce>> getAll() {
 		return ResponseEntity.ok(this.annonceService.getAllAnnonce());
 	}
 	
@@ -70,6 +69,7 @@ public class AnnonceController {
 		return annonceAccessories;
 	}
 	
+	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@CrossOrigin
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
@@ -83,9 +83,10 @@ public class AnnonceController {
 		return new StringResponse("success");
 	}
 	
-	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('student',#session)")
+	@CrossOrigin	
 	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse supdateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories) {
+	public @ResponseBody StringResponse updateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories, HttpSession session) {
 		newAnnonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
 		
 		//Mise à jour des champs de l'annonce

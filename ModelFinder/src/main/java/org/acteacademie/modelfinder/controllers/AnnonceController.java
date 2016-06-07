@@ -47,21 +47,10 @@ public class AnnonceController {
 		return this.accessoriesService.getAllAccessories();
 	}
 	
-	@CrossOrigin
-	@RequestMapping("/oneId/{id}")
-	public Annonce getOne(@PathVariable("id") long id){
-		return this.annonceService.getOneAnnonce(id);
-	}
-	
-	@CrossOrigin
-	@RequestMapping("/oneTitre/{id}")
-	public String getOneTitle(@PathVariable("id") long id){
-		return this.annonceService.getOneAnnonce(id).getTitle();
-	}
-	
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthor('student', #id,#session)")
 	@CrossOrigin
 	@RequestMapping("/detailAnnonce/{id}")
-	public AnnonceAccessories getDetail(@PathVariable("id") long id){
+	public AnnonceAccessories getDetail(@PathVariable("id") long id, HttpSession session){
 		AnnonceAccessories annonceAccessories = new AnnonceAccessories();
 		annonceAccessories.setAnnonce(this.annonceService.getOneAnnonce(id));
 		annonceAccessories.setAccessories(this.accessoriesService.getOneAccessories(annonceAccessories.getAnnonce().getAccessoriesId()));

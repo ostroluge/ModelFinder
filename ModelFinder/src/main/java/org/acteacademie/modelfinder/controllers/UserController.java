@@ -1,10 +1,7 @@
 package org.acteacademie.modelfinder.controllers;
 
-import java.util.Collection;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.StringResponse;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Charsets;
@@ -40,12 +36,6 @@ public class UserController {
 		return response;
 	}
 	
-	@CrossOrigin
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public Collection<User> getAll() {
-		return this.userService.getAllUsers();
-	}
-
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<User> loginSubmit(@RequestBody User user, HttpServletRequest request) {

@@ -3,14 +3,18 @@ package org.acteacademie.modelfinder.controllers;
 import java.util.Collection;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.StudentService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +37,8 @@ public class AnnonceController {
 	
 	@CrossOrigin
 	@RequestMapping("/annonceList")
-	public Collection<Annonce> getAll(){
-		return this.annonceService.getAllAnnonce();
+	public ResponseEntity<Collection<Annonce>> getAll() {
+		return ResponseEntity.ok(this.annonceService.getAllAnnonce());
 	}
 	
 	@CrossOrigin
@@ -43,21 +47,10 @@ public class AnnonceController {
 		return this.accessoriesService.getAllAccessories();
 	}
 	
-	@CrossOrigin
-	@RequestMapping("/oneId/{id}")
-	public Annonce getOne(@PathVariable("id") long id){
-		return this.annonceService.getOneAnnonce(id);
-	}
-	
-	@CrossOrigin
-	@RequestMapping("/oneTitre/{id}")
-	public String getOneTitle(@PathVariable("id") long id){
-		return this.annonceService.getOneAnnonce(id).getTitle();
-	}
-	
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthor('student', #id,#session)")
 	@CrossOrigin
 	@RequestMapping("/detailAnnonce/{id}")
-	public AnnonceAccessories getDetail(@PathVariable("id") long id){
+	public AnnonceAccessories getDetail(@PathVariable("id") long id, HttpSession session){
 		AnnonceAccessories annonceAccessories = new AnnonceAccessories();
 		annonceAccessories.setAnnonce(this.annonceService.getOneAnnonce(id));
 		annonceAccessories.setAccessories(this.accessoriesService.getOneAccessories(annonceAccessories.getAnnonce().getAccessoriesId()));
@@ -65,21 +58,24 @@ public class AnnonceController {
 		return annonceAccessories;
 	}
 	
+	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@CrossOrigin
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories) {
+	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
 		annonceAccessories.getAnnonce().setAccessoriesId(annonceAccessories.getAccessories().getIdAccessories());
-		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
+		User user = (User) session.getAttribute("USER");
+		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(user.getId()));
 		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
 		
 			
 		return new StringResponse("success");
 	}
 	
-	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('student',#session)")
+	@CrossOrigin	
 	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse supdateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories) {
+	public @ResponseBody StringResponse updateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories, HttpSession session) {
 		newAnnonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
 		
 		//Mise à jour des champs de l'annonce

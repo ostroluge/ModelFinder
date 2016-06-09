@@ -4,92 +4,61 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-	@Entity
-	@Table(name="STUDENT")
-	public class Student{
-		
-		@Id
-		@Column(name="ID_ETUDIANT")
-		@GeneratedValue(strategy=GenerationType.AUTO)
-		private long id;
-		
-		@Column(name="PASSWORD_STUDENT", unique = false, nullable = false)
-		private String password;
-		
-		@Column(name="BIRTH_DATE", unique = false, nullable = false)
-		private Date birthDate;
-		
-		@Column(name="EMAIL", unique = true, nullable = false)
-		private String mail;
-		
-		@Column(name="LAST_NAME", unique = false, nullable = false)
-		private String lastName;
+@Entity
+@Table(name="STUDENT")
+public class Student {
 
-		@Column(name="FIRST_NAME", unique = false, nullable = false)
-		private String firstName;
-		
-		@Column(name="IS_VALIDATED", unique = false, nullable = false)
-		private Boolean isValidated;
+	@Id
+	@Column(name="ID_ETUDIANT")
+	private long id;
 
-		public long getId() {
-			return id;
-		}
+	@Column(name="BIRTH_DATE", unique = false, nullable = false)
+	private Date birthDate;
 
-		public void setId(long id) {
-			this.id = id;
-		}
+	@Column(name="LAST_NAME", unique = false, nullable = false)
+	private String lastName;
 
-		public String getPassword() {
-			return password;
-		}
+	@Column(name="FIRST_NAME", unique = false, nullable = false)
+	private String firstName;
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", birthDate=" + birthDate + ", lastName=" + lastName + ", firstName=" + firstName
+				+ "]";
+	}
 
-		public Date getBirthDate() {
-			return birthDate;
-		}
+	public long getId() {
+		return id;
+	}
 
-		public void setBirthDate(Date birthDate) {
-			this.birthDate = birthDate;
-		}
+	public void setId(long id) {
+		this.id = id;
+	}
 
-		public String getMail() {
-			return mail;
-		}
+	public Date getBirthDate() {
+		return birthDate;
+	}
 
-		public void setMail(String mail) {
-			this.mail = mail;
-		}
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
 
-		public String getLastName() {
-			return lastName;
-		}
+	public String getLastName() {
+		return lastName;
+	}
 
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-		public String getFirstName() {
-			return firstName;
-		}
+	public String getFirstName() {
+		return firstName;
+	}
 
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public Boolean getIsValidated() {
-			return isValidated;
-		}
-
-		public void setIsValidated(Boolean isValidated) {
-			this.isValidated = isValidated;
-		}
-		
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 }

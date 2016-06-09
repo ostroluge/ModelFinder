@@ -8,8 +8,11 @@ import javax.servlet.http.HttpSession;
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.User;
+import org.acteacademie.modelfinder.domain.customobject.UserModel;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
+import org.acteacademie.modelfinder.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
+
 @RestController
 public class ModelController {
 
@@ -27,6 +33,9 @@ public class ModelController {
 	
 	@Resource
 	ModelService modelService;
+	
+	@Resource
+	UserService userService;
 	
 	@CrossOrigin
 	@RequestMapping("/modelList")
@@ -62,8 +71,12 @@ public class ModelController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/createModel", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createModel(@RequestBody Model model) {
-//	model.setPassword(Hashing.sha1().hashString(model.getPassword(), Charsets.UTF_8 ).toString());
+	public @ResponseBody StringResponse createModel(@RequestBody UserModel usermodel) {
+		User user = usermodel.getUser();
+		Model model = usermodel.getModel();
+		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
+		user = this.userService.saveUser(user);
+		model.setId(user.getId());
 		this.modelService.saveModel(model);
 		return new StringResponse("success");
 	}

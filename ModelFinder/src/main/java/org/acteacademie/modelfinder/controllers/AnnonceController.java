@@ -42,6 +42,18 @@ public class AnnonceController {
 	}
 	
 	@CrossOrigin
+	@RequestMapping("/annonceListActives")
+	public ResponseEntity<Collection<Annonce>> getAllActives() {
+		return ResponseEntity.ok(this.annonceService.findByStatus("Active"));
+	}
+	
+	@CrossOrigin
+	@RequestMapping("/annonceListInactives")
+	public ResponseEntity<Collection<Annonce>> getAllInactives() {
+		return ResponseEntity.ok(this.annonceService.findByStatus("Inactive"));
+	}
+	
+	@CrossOrigin
 	@RequestMapping("/accessoireList")
 	public Collection<Accessories> getAllAccessoire(){
 		return this.accessoriesService.getAllAccessories();
@@ -66,8 +78,6 @@ public class AnnonceController {
 		User user = (User) session.getAttribute("USER");
 		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(user.getId()));
 		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
-		
-			
 		return new StringResponse("success");
 	}
 	

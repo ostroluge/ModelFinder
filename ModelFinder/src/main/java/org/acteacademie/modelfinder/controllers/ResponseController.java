@@ -3,15 +3,18 @@ package org.acteacademie.modelfinder.controllers;
 import java.util.Collection;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.Response;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.ApplyForm;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.acteacademie.modelfinder.services.ResponseService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +40,19 @@ public class ResponseController {
 	}
 	
 	@CrossOrigin
+	@RequestMapping("/myResponses")
+	public ResponseEntity<Collection<Response>> getMyResponses(HttpSession session) {
+		User user = (User) session.getAttribute("USER");
+		if (user != null) {
+			if (user.getRole().equals("model")) {
+				Model model = modelService.getOneModel(Long.valueOf(user.getId()));
+				return ResponseEntity.ok(this.reponseService.findByModel(model));
+			}
+		}
+		return ResponseEntity.status(422).body(null);
+	}
+	
+	@CrossOrigin
 	@RequestMapping("/OneReponse/{id}")
 	public Response getOne(@PathVariable("id") long id){
 		return this.reponseService.getOneReponse(id);
@@ -57,44 +73,52 @@ public class ResponseController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/apply", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse apply(@RequestBody ApplyForm applyForm) {
-		Model model = modelService.getOneModel(Long.valueOf(applyForm.getIdModel()));
-		Annonce annonce = annonceService.getOneAnnonce(Long.valueOf(applyForm.getIdAnnonce()));
-		StringResponse rep = new StringResponse("En cours");
-		if (!(reponseService.findByAnnonceAndModel(annonce, model)).isEmpty()){
-			rep.setResponse("already apply");
+	public ResponseEntity<StringResponse> apply(@RequestBody ApplyForm applyForm, HttpSession session) {
+		StringResponse rep = null;
+		User user = (User) session.getAttribute("USER");
+		if (user != null) {
+			if (user.getRole().equals("model")) {
+				Model model = modelService.getOneModel(Long.valueOf(user.getId()));
+				Annonce annonce = annonceService.getOneAnnonce(Long.valueOf(applyForm.getIdAnnonce()));
+				rep = new StringResponse("En cours");
+				if (!(reponseService.findByAnnonceAndModel(annonce, model)).isEmpty()){
+					rep.setResponse("already apply");
+				}
+				else{
+					Response reponse = new Response();
+					if (applyForm.getComment() != null && !applyForm.getComment().equals("")) {
+						reponse.setComment(applyForm.getComment());
+					}
+					if (user.getId() != 0) {
+						reponse.setModel(model);
+					}
+					if (applyForm.getIdAnnonce() != null && !applyForm.getIdAnnonce().equals("")) {
+						reponse.setAnnonce(annonce);
+					}
+					if (applyForm.getAccessory1() != null) {
+						reponse.setStatusAccessory1(applyForm.getAccessory1());
+					}
+					if (applyForm.getAccessory2() != null) {
+						reponse.setStatusAccessory2(applyForm.getAccessory2());
+					}
+					if (applyForm.getAccessory3() != null) {
+						reponse.setStatusAccessory3(applyForm.getAccessory3());
+					}
+					if (applyForm.getAccessory4() != null) {
+						reponse.setStatusAccessory4(applyForm.getAccessory4());
+					}
+					if (applyForm.getAccessory5() != null) {
+						reponse.setStatusAccessory5(applyForm.getAccessory5());
+					}
+					reponse.setStatut("En attente");
+					reponseService.saveReponse(reponse);
+					rep.setResponse("success");
+					
+					return ResponseEntity.ok(rep);
+				}
+			}
 		}
-		else{
-			Response reponse = new Response();
-			if (applyForm.getComment() != null && !applyForm.getComment().equals("")) {
-				reponse.setComment(applyForm.getComment());
-			}
-			if (applyForm.getIdModel() != 0) {
-				reponse.setModel(model);
-			}
-			if (applyForm.getIdAnnonce() != null && !applyForm.getIdAnnonce().equals("")) {
-				reponse.setAnnonce(annonce);
-			}
-			if (applyForm.getAccessory1() != null) {
-				reponse.setStatusAccessory1(applyForm.getAccessory1());
-			}
-			if (applyForm.getAccessory2() != null) {
-				reponse.setStatusAccessory2(applyForm.getAccessory2());
-			}
-			if (applyForm.getAccessory3() != null) {
-				reponse.setStatusAccessory3(applyForm.getAccessory3());
-			}
-			if (applyForm.getAccessory4() != null) {
-				reponse.setStatusAccessory4(applyForm.getAccessory4());
-			}
-			if (applyForm.getAccessory5() != null) {
-				reponse.setStatusAccessory5(applyForm.getAccessory5());
-			}
-			reponse.setStatut("En attente");
-			reponseService.saveReponse(reponse);
-			rep.setResponse("success");
-		}
-		return rep;
+		return ResponseEntity.status(422).body(null);
 	}
 	
 	@CrossOrigin

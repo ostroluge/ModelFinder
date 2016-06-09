@@ -16,6 +16,8 @@ public interface ResponseService {
 	
 	void deleteReponse(long id);
 
+	Collection<Response> findByModel(Model model);
+	
 	Collection<Response> findByAnnonceAndModel(Annonce annonce,Model model);
 	
 	Collection<Response> findByAnnonce(Annonce annonce);

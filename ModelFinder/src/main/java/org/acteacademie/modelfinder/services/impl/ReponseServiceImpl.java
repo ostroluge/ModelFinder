@@ -48,5 +48,10 @@ public class ReponseServiceImpl implements ResponseService{
 	@Override
 	public Collection<Response> findByAnnonceAndStatut(Annonce annonce, String statut) {
 		return reponseRepository.findByAnnonceAndStatut(annonce,statut);
+	}
+
+	@Override
+	public Collection<Response> findByModel(Model model) {
+		return reponseRepository.findByModel(model);
 	};
 }

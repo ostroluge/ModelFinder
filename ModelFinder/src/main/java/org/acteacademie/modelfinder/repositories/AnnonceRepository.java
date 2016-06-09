@@ -11,4 +11,7 @@ public interface AnnonceRepository extends CrudRepository<Annonce, Long>{
 	Collection<Annonce> findAll();
 	
 	Annonce findOne(Long id);
+	
+	Collection<Annonce> findByStatus(String status);
+
 }

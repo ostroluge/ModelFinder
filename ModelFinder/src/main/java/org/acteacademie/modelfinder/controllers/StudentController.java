@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.Student;
 import org.acteacademie.modelfinder.domain.User;
+import org.acteacademie.modelfinder.domain.customobject.UserStudent;
 import org.acteacademie.modelfinder.enums.RoleEnum;
 import org.acteacademie.modelfinder.services.StudentService;
 import org.acteacademie.modelfinder.services.UserService;
@@ -59,9 +60,12 @@ public class StudentController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/saveStudent", method=RequestMethod.POST, produces = "application/json")
-	public StringResponse saveStudent(@RequestBody Student student, User user){
+	public StringResponse saveStudent(@RequestBody UserStudent userstudent){
+		User user = userstudent.getUser();
+		Student student = userstudent.getStudent();
 		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
-		this.userService.saveUser(user);
+		user = this.userService.saveUser(user);
+		student.setId(user.getId());
 		this.studentService.saveStudent(student);
 		return new StringResponse("success");
 	}

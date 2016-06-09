@@ -9,6 +9,7 @@ import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.User;
+import org.acteacademie.modelfinder.domain.customobject.UserModel;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.acteacademie.modelfinder.services.UserService;
@@ -70,9 +71,12 @@ public class ModelController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/createModel", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createModel(@RequestBody Model model, User user) {
+	public @ResponseBody StringResponse createModel(@RequestBody UserModel usermodel) {
+		User user = usermodel.getUser();
+		Model model = usermodel.getModel();
 		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
-		this.userService.saveUser(user);
+		user = this.userService.saveUser(user);
+		model.setId(user.getId());
 		this.modelService.saveModel(model);
 		return new StringResponse("success");
 	}

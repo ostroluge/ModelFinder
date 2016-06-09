@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
+
 @RestController
 public class StudentController {
 	
@@ -56,8 +59,9 @@ public class StudentController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/saveStudent", method=RequestMethod.POST, produces = "application/json")
-	public StringResponse saveStudent(@RequestBody Student student){
-//		student.setPassword(Hashing.sha1().hashString(student.getPassword(), Charsets.UTF_8 ).toString());
+	public StringResponse saveStudent(@RequestBody Student student, User user){
+		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
+		this.userService.saveUser(user);
 		this.studentService.saveStudent(student);
 		return new StringResponse("success");
 	}

@@ -29,4 +29,10 @@ public class AnnonceServiceImpl implements AnnonceService{
 	public void saveAnnonce(Annonce annonce) {
 		this.annonceRepository.save(annonce);
 	}
+	
+	@Override
+	public Collection<Annonce> findByStatus(String status) {
+		return this.annonceRepository.findByStatus(status);
+
+	}
 }

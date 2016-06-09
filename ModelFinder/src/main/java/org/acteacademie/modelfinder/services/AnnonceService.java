@@ -11,4 +11,7 @@ public interface AnnonceService {
 	Annonce getOneAnnonce(long id);
 
 	void saveAnnonce(Annonce annonce);
+	
+	Collection<Annonce> findByStatus(String status);
+
 }

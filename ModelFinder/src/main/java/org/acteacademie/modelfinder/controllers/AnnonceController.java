@@ -47,7 +47,6 @@ public class AnnonceController {
 		return this.accessoriesService.getAllAccessories();
 	}
 	
-	@PreAuthorize("@authorizationService.hasRoleAndIsAuthor('student', #id,#session)")
 	@CrossOrigin
 	@RequestMapping("/detailAnnonce/{id}")
 	public AnnonceAccessories getDetail(@PathVariable("id") long id, HttpSession session){
@@ -72,7 +71,7 @@ public class AnnonceController {
 		return new StringResponse("success");
 	}
 	
-	@PreAuthorize("@authorizationService.hasRole('student',#session)")
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthor('student', #id,#session)")
 	@CrossOrigin	
 	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse updateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories, HttpSession session) {

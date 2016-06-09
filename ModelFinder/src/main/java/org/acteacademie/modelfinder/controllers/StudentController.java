@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.Student;
 import org.acteacademie.modelfinder.domain.User;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Charsets;

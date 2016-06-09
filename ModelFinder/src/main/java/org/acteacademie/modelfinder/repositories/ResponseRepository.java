@@ -20,4 +20,6 @@ public interface ResponseRepository extends CrudRepository<Response, Long>{
 	Collection<Response> findByAnnonce(Annonce annonce);
 	
 	Collection <Response> findByAnnonceAndStatut(Annonce annonce, String statut);
+	
+	Collection<Response> findByModel(Model model);
 }

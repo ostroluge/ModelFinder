@@ -40,6 +40,19 @@ public class ResponseController {
 	}
 	
 	@CrossOrigin
+	@RequestMapping("/myResponses")
+	public ResponseEntity<Collection<Response>> getMyResponses(HttpSession session) {
+		User user = (User) session.getAttribute("USER");
+		if (user != null) {
+			if (user.getRole().equals("model")) {
+				Model model = modelService.getOneModel(Long.valueOf(user.getId()));
+				return ResponseEntity.ok(this.reponseService.findByModel(model));
+			}
+		}
+		return ResponseEntity.status(422).body(null);
+	}
+	
+	@CrossOrigin
 	@RequestMapping("/OneReponse/{id}")
 	public Response getOne(@PathVariable("id") long id){
 		return this.reponseService.getOneReponse(id);

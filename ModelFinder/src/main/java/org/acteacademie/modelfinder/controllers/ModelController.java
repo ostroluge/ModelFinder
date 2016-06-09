@@ -44,7 +44,7 @@ public class ModelController {
 	}
 
 	@CrossOrigin
-	@PreAuthorize("@authorizationService.hasRoleAndIsAuthor('student', #id,#session)")
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthorAnnonce('student', #idAnnonce,#session)")
 	@RequestMapping("/suggestionModel/{idAnnonce}")
 	public Collection<Model> getByDetails(@PathVariable("idAnnonce") Long idAnnonce, HttpSession session){
 		

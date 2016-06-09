@@ -1,16 +1,20 @@
 package org.acteacademie.modelfinder.services.impl;
 
-import java.util.List;
-
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.User;
+import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.AuthorizationService;
 import org.springframework.stereotype.Component;
 
 @Component("authorizationService")
 public class AuthorizationServiceImpl implements AuthorizationService{
 
+	@Resource
+	AnnonceService annonceService;
+	
 	@Override
 	public Boolean hasRole(String role, HttpSession session) {
 		User user = (User) session.getAttribute("USER");
@@ -43,4 +47,14 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		return false;
 	}
 
+	public Boolean hasRoleAndIsAuthorAnnonce(String role, Long idAnnonce, HttpSession session){
+		Annonce annonce = this.annonceService.getOneAnnonce(idAnnonce);
+		User user = (User) session.getAttribute("USER");
+
+		if(user.getRole().equals(role) && user.getIsValidated() && (annonce.getStudent().getId() == user.getId())){
+			return true;
+		}
+		
+		return false;
+	}
 }

@@ -1,7 +1,5 @@
 package org.acteacademie.modelfinder.services;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 public interface AuthorizationService {
@@ -11,4 +9,7 @@ public interface AuthorizationService {
 	public Boolean hasRoleAndIsAuthor(String role, Long idUser, HttpSession session);
 	
 	public Boolean hasAnyRole(String firstRole, String secondRole, HttpSession session);
+	
+	public Boolean hasRoleAndIsAuthorAnnonce(String role, Long idAnnonce, HttpSession session);
+	
 }

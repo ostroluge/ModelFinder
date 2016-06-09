@@ -71,11 +71,12 @@ public class AnnonceController {
 		return new StringResponse("success");
 	}
 	
-	@PreAuthorize("@authorizationService.hasRoleAndIsAuthor('student', #id,#session)")
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthorAnnonce('student', #newAnnonceAccessories.annonce.id,#session)")
 	@CrossOrigin	
 	@RequestMapping(value="/updateAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse updateAnnonce(@RequestBody AnnonceAccessories newAnnonceAccessories, HttpSession session) {
-		newAnnonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(1L));
+		User user = (User) session.getAttribute("USER");
+		newAnnonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(user.getId()));
 		
 		//Mise à jour des champs de l'annonce
 		Annonce oldAnnonce = this.annonceService.getOneAnnonce(newAnnonceAccessories.getAnnonce().getId());

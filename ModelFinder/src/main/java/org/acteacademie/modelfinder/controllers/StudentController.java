@@ -61,8 +61,9 @@ public class StudentController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/saveStudent", method=RequestMethod.POST, produces = "application/json")
-	public StringResponse saveStudent(@RequestBody Student student){
-		student.setPassword(Hashing.sha1().hashString(student.getPassword(), Charsets.UTF_8 ).toString());
+	public StringResponse saveStudent(@RequestBody Student student, User user){
+		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
+		this.userService.saveUser(user);
 		this.studentService.saveStudent(student);
 		return new StringResponse("success");
 	}

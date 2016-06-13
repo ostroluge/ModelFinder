@@ -49,6 +49,7 @@ public class ModelController {
 	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
 	public StringResponse deleteStudent(@PathVariable("id") Long id,HttpSession session){
 		this.modelService.deleteModel(id);
+		this.userService.deleteUser(id);
 		return new StringResponse("success");
 	}
 
@@ -65,8 +66,11 @@ public class ModelController {
 	@CrossOrigin
 	@RequestMapping("/detailModel/{id}")
 	@PreAuthorize("@authorizationService.hasAnyRole('student','admin',#session)")
-	public Model getOne(@PathVariable("id") long id, HttpSession session){
-		return this.modelService.findById(id);
+	public UserModel getOne(@PathVariable("id") long id, HttpSession session){
+		UserModel model = new UserModel();
+		model.setUser(this.userService.getUserById(id));
+		model.setModel(this.modelService.findById(id));
+		return model;
 	}
 	
 	@CrossOrigin
@@ -77,6 +81,27 @@ public class ModelController {
 		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
 		user = this.userService.saveUser(user);
 		model.setId(user.getId());
+		this.modelService.saveModel(model);
+		return new StringResponse("success");
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/modifyModel", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody StringResponse modifyModel(@RequestBody UserModel usermodel) {
+		User user = usermodel.getUser();
+		Model model = usermodel.getModel();
+		user = this.userService.saveUser(user);
+		this.modelService.saveModel(model);
+		return new StringResponse("success");
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/modifyModelAndPassword", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody StringResponse modifyModelAndPassword(@RequestBody UserModel usermodel) {
+		User user = usermodel.getUser();
+		Model model = usermodel.getModel();
+		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
+		user = this.userService.saveUser(user);
 		this.modelService.saveModel(model);
 		return new StringResponse("success");
 	}

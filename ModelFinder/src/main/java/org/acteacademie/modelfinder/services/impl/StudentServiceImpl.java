@@ -3,7 +3,6 @@ package org.acteacademie.modelfinder.services.impl;
 import java.util.Collection;
 
 import javax.annotation.Resource;
-
 import org.acteacademie.modelfinder.domain.Student;
 import org.acteacademie.modelfinder.repositories.StudentRepository;
 import org.acteacademie.modelfinder.services.StudentService;

@@ -1,5 +1,6 @@
 package org.acteacademie.modelfinder.controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -39,6 +40,39 @@ public class StudentController {
 		return this.studentService.getAllStudent();
 	}
 	
+	public UserStudent UserStudentByStudent(Student student){
+		UserStudent us = new UserStudent();
+		us.setUser(this.userService.getUserById(student.getId()));
+		us.setStudent(student);
+		return us;
+	}
+	
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
+	@CrossOrigin
+	@RequestMapping("/userStudentListVal")
+	public Collection<UserStudent> getUserStudentVal(HttpSession session){
+		Collection<UserStudent> students = new ArrayList<UserStudent>();
+		for (Student student:this.studentService.getAllStudent()){
+			if (this.userService.getUserById(student.getId()).getIsValidated()){
+				students.add(UserStudentByStudent(student));
+			}
+		}
+		return students;
+	}
+	
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
+	@CrossOrigin
+	@RequestMapping("/userStudentListWaitingVal")
+	public Collection<UserStudent> getUserStudentWaitingVal(HttpSession session){
+		Collection<UserStudent> students = new ArrayList<UserStudent>();
+		for (Student student:this.studentService.getAllStudent()){
+			if (!this.userService.getUserById(student.getId()).getIsValidated()){
+				students.add(UserStudentByStudent(student));
+			}
+		}
+		return students;
+	}
+	
 	@CrossOrigin
 	@RequestMapping("/studentById/{id}")
 	public UserStudent getOne(@PathVariable("id") Long id){
@@ -52,7 +86,7 @@ public class StudentController {
 	@RequestMapping("/validateStudent/{id}")
 	public StringResponse validateStudent(@PathVariable("id") Long id){
 		User user = this.userService.getUserById(id);
-		if(user.getRole().equals(RoleEnum.STUDENT)){
+		if(user.getRole().equals(RoleEnum.STUDENT.getRole())){
 			user.setIsValidated(true);
 		} else{
 			return new StringResponse("error");
@@ -60,6 +94,7 @@ public class StudentController {
 		this.userService.saveUser(user);
 		return new StringResponse("success");
 	}
+
 	
 	@CrossOrigin
 	@RequestMapping(value="/modifyStudent", method=RequestMethod.POST, produces = "application/json")

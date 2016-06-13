@@ -1,5 +1,6 @@
 package org.acteacademie.modelfinder.controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -37,11 +38,30 @@ public class ModelController {
 	@Resource
 	UserService userService;
 	
+	
 	@CrossOrigin
 	@RequestMapping("/modelList")
 	@PreAuthorize("@authorizationService.hasAnyRole('student','admin',#session)")
 	public Collection<Model> getAll(HttpSession session){
 		return this.modelService.getAllModel();
+	}
+	
+	public UserModel UserModelByModel(Model model){
+		UserModel um = new UserModel();
+		um.setUser(this.userService.getUserById(model.getId()));
+		um.setModel(model);
+		return um;
+	}
+	
+	@CrossOrigin
+	@RequestMapping("/usermodelList")
+	@PreAuthorize("@authorizationService.hasAnyRole('student','admin',#session)")
+	public Collection<UserModel> getAllUserModel(HttpSession session){
+		Collection<UserModel> models = new ArrayList<UserModel>();
+		for (Model model:this.modelService.getAllModel()){
+			models.add(UserModelByModel(model));
+		}
+		return models;
 	}
 	
 	@CrossOrigin

@@ -118,6 +118,19 @@ public class StudentController {
 	}
 	
 	@CrossOrigin
+	@RequestMapping(value="/saveStudent", method=RequestMethod.POST, produces = "application/json")
+	public StringResponse saveStudent(@RequestBody UserStudent userstudent){
+		User user = userstudent.getUser();
+		Student student = userstudent.getStudent();
+		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
+		user = this.userService.saveUser(user);
+		student.setId(user.getId());
+		this.studentService.saveStudent(student);
+		return new StringResponse("success");
+	}
+
+	
+	@CrossOrigin
 	@RequestMapping("/deleteStudent/{id}")
 	public StringResponse deleteStudent(@PathVariable("id") Long id){
 		this.studentService.deleteStudent(id);

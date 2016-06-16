@@ -12,6 +12,7 @@ import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.UserModel;
 import org.acteacademie.modelfinder.services.AnnonceService;
+import org.acteacademie.modelfinder.services.AuthorizationService;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.acteacademie.modelfinder.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +30,9 @@ import com.google.common.hash.Hashing;
 @RestController
 public class ModelController {
 
+	@Resource
+	AuthorizationService authorizationService;
+	
 	@Resource
 	AnnonceService annonceService;
 	

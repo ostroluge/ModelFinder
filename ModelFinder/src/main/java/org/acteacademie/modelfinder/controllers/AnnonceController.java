@@ -12,6 +12,7 @@ import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
+import org.acteacademie.modelfinder.services.AuthorizationService;
 import org.acteacademie.modelfinder.services.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@PreAuthorize("@authorizationService.isConnected(#session)")
 public class AnnonceController {
 
 	@Resource
@@ -35,27 +37,30 @@ public class AnnonceController {
 	@Resource
 	StudentService studentService;
 	
+	@Resource
+	AuthorizationService authorizationService;
+	
 	@CrossOrigin
 	@RequestMapping("/annonceList")
-	public ResponseEntity<Collection<Annonce>> getAll() {
+	public ResponseEntity<Collection<Annonce>> getAll(HttpSession session) {
 		return ResponseEntity.ok(this.annonceService.getAllAnnonce());
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/annonceListActives")
-	public ResponseEntity<Collection<Annonce>> getAllActives() {
+	public ResponseEntity<Collection<Annonce>> getAllActives(HttpSession session) {
 		return ResponseEntity.ok(this.annonceService.findByStatus("Active"));
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/annonceListInactives")
-	public ResponseEntity<Collection<Annonce>> getAllInactives() {
+	public ResponseEntity<Collection<Annonce>> getAllInactives(HttpSession session) {
 		return ResponseEntity.ok(this.annonceService.findByStatus("Inactive"));
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/accessoireList")
-	public Collection<Accessories> getAllAccessoire(){
+	public Collection<Accessories> getAllAccessoire(HttpSession session){
 		return this.accessoriesService.getAllAccessories();
 	}
 	

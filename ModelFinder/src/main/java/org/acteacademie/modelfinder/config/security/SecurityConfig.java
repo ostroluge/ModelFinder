@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery(
-                        "select email as username , password, is_validated as enabled " +
+                        "select EMAIL as username, PASSWORD, 'true' " +
                                 "from USER " +
                                 "where email=?");
     }

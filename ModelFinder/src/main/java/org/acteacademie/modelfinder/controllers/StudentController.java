@@ -11,6 +11,7 @@ import org.acteacademie.modelfinder.domain.Student;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.UserStudent;
 import org.acteacademie.modelfinder.enums.RoleEnum;
+import org.acteacademie.modelfinder.services.AuthorizationService;
 import org.acteacademie.modelfinder.services.StudentService;
 import org.acteacademie.modelfinder.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,9 @@ import com.google.common.hash.Hashing;
 
 @RestController
 public class StudentController {
+	
+	@Resource
+	AuthorizationService authorizationService;
 	
 	@Resource
 	StudentService studentService;
@@ -83,8 +87,9 @@ public class StudentController {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
 	@RequestMapping("/validateStudent/{id}")
-	public StringResponse validateStudent(@PathVariable("id") Long id){
+	public StringResponse validateStudent(@PathVariable("id") Long id, HttpSession session){
 		User user = this.userService.getUserById(id);
 		if(user.getRole().equals(RoleEnum.STUDENT.getRole())){
 			user.setIsValidated(true);
@@ -132,7 +137,8 @@ public class StudentController {
 	
 	@CrossOrigin
 	@RequestMapping("/deleteStudent/{id}")
-	public StringResponse deleteStudent(@PathVariable("id") Long id){
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
+	public StringResponse deleteStudent(@PathVariable("id") Long id, HttpSession session){
 		this.studentService.deleteStudent(id);
 		this.userService.deleteUser(id);
 		return new StringResponse("success");

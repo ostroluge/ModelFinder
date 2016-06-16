@@ -57,4 +57,12 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		
 		return false;
 	}
+
+	@Override
+	public Boolean isConnected(HttpSession session) {
+		if(session.getAttribute("USER") == null){
+			return false;
+		}
+		return true;
+	}
 }

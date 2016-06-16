@@ -83,32 +83,7 @@ public class AnnonceController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value="/getMyAnnonces", method=RequestMethod.GET)
-	public ResponseEntity<Collection<Annonce>> getAnnoncesByStudent(HttpSession session) {
-		User user = (User) session.getAttribute("USER");
-		if (user != null) {
-			if (user.getRole().equals("student")) {
-				Student student = studentService.getOneStudent(user.getId());
-				Collection<Annonce> allAnnonces = this.annonceService.findByStudent(student);
-				Collection<Response> allResponses = this.responseService.getAllReponse();
-				Collection<Annonce> annoncesWithResponse = new ArrayList<>();
-				
-				for (Response response : allResponses) {
-					for (Annonce annonce : allAnnonces) {
-						if (response.getAnnonce().getId() == annonce.getId()) {
-							annoncesWithResponse.add(annonce);
-						}
-					}
-				}
-				
-				return ResponseEntity.ok(annoncesWithResponse);
-			}
-		}
-		return ResponseEntity.status(422).body(null);
-	}
-	
 	@PreAuthorize("@authorizationService.hasRole('student',#session)")
-	@CrossOrigin
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());

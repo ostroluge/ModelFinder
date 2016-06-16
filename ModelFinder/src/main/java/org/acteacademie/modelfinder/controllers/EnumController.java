@@ -17,11 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@PreAuthorize("@authorizationService.isConnected(#session)")
 public class EnumController {
-	
-	@Resource
-	AuthorizationService authorizationService;
 	
 	@CrossOrigin
 	@RequestMapping(value = "/getCategoriesEnum", method = RequestMethod.GET)

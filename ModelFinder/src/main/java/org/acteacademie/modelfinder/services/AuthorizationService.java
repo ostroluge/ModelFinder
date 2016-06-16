@@ -13,4 +13,6 @@ public interface AuthorizationService {
 	public Boolean hasRoleAndIsAuthorAnnonce(String role, Long idAnnonce, HttpSession session);
 	
 	public Boolean isConnected(HttpSession session);
+	
+	public Boolean hasAnyRoleOrIsIdModel(String firstRole, String secondRole, Long idModel, HttpSession session);
 }

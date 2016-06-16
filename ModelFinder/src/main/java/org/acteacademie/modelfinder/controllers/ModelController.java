@@ -89,7 +89,7 @@ public class ModelController {
 
 	@CrossOrigin
 	@RequestMapping("/detailModel/{id}")
-	@PreAuthorize("@authorizationService.hasAnyRole('student','admin',#session)")
+	@PreAuthorize("@authorizationService.hasAnyRoleOrIsIdModel('student','admin',#id, #session)")
 	public UserModel getOne(@PathVariable("id") long id, HttpSession session){
 		UserModel model = new UserModel();
 		model.setUser(this.userService.getUserById(id));

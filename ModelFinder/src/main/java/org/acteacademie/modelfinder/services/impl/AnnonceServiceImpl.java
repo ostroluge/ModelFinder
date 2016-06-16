@@ -33,6 +33,5 @@ public class AnnonceServiceImpl implements AnnonceService{
 	@Override
 	public Collection<Annonce> findByStatus(String status) {
 		return this.annonceRepository.findByStatus(status);
-
 	}
 }

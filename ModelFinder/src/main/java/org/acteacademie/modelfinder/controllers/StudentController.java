@@ -1,5 +1,6 @@
 package org.acteacademie.modelfinder.controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -39,22 +40,80 @@ public class StudentController {
 		return this.studentService.getAllStudent();
 	}
 	
+	public UserStudent UserStudentByStudent(Student student){
+		UserStudent us = new UserStudent();
+		us.setUser(this.userService.getUserById(student.getId()));
+		us.setStudent(student);
+		return us;
+	}
+	
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
+	@CrossOrigin
+	@RequestMapping("/userStudentListVal")
+	public Collection<UserStudent> getUserStudentVal(HttpSession session){
+		Collection<UserStudent> students = new ArrayList<UserStudent>();
+		for (Student student:this.studentService.getAllStudent()){
+			if (this.userService.getUserById(student.getId()).getIsValidated()){
+				students.add(UserStudentByStudent(student));
+			}
+		}
+		return students;
+	}
+	
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
+	@CrossOrigin
+	@RequestMapping("/userStudentListWaitingVal")
+	public Collection<UserStudent> getUserStudentWaitingVal(HttpSession session){
+		Collection<UserStudent> students = new ArrayList<UserStudent>();
+		for (Student student:this.studentService.getAllStudent()){
+			if (!this.userService.getUserById(student.getId()).getIsValidated()){
+				students.add(UserStudentByStudent(student));
+			}
+		}
+		return students;
+	}
+	
 	@CrossOrigin
 	@RequestMapping("/studentById/{id}")
-	public Student getOne(@PathVariable("id") Long id){
-		return this.studentService.getOneStudent(id);
+	public UserStudent getOne(@PathVariable("id") Long id){
+		UserStudent student = new UserStudent();
+		student.setUser(this.userService.getUserById(id));
+		student.setStudent(this.studentService.getOneStudent(id));
+		return student;
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/validateStudent/{id}")
 	public StringResponse validateStudent(@PathVariable("id") Long id){
 		User user = this.userService.getUserById(id);
-		if(user.getRole().equals(RoleEnum.STUDENT)){
+		if(user.getRole().equals(RoleEnum.STUDENT.getRole())){
 			user.setIsValidated(true);
 		} else{
 			return new StringResponse("error");
 		}
 		this.userService.saveUser(user);
+		return new StringResponse("success");
+	}
+
+	
+	@CrossOrigin
+	@RequestMapping(value="/modifyStudent", method=RequestMethod.POST, produces = "application/json")
+	public StringResponse modifyStudent(@RequestBody UserStudent userstudent){
+		User user = userstudent.getUser();
+		Student student = userstudent.getStudent();
+		user = this.userService.saveUser(user);
+		this.studentService.saveStudent(student);
+		return new StringResponse("success");
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value="/modifyStudentAndPassword", method=RequestMethod.POST, produces = "application/json")
+	public StringResponse modifiyStudentAndPassword(@RequestBody UserStudent userstudent){
+		User user = userstudent.getUser();
+		Student student = userstudent.getStudent();
+		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
+		user = this.userService.saveUser(user);
+		this.studentService.saveStudent(student);
 		return new StringResponse("success");
 	}
 	
@@ -69,11 +128,13 @@ public class StudentController {
 		this.studentService.saveStudent(student);
 		return new StringResponse("success");
 	}
+
 	
 	@CrossOrigin
 	@RequestMapping("/deleteStudent/{id}")
 	public StringResponse deleteStudent(@PathVariable("id") Long id){
 		this.studentService.deleteStudent(id);
+		this.userService.deleteUser(id);
 		return new StringResponse("success");
 	}
 }

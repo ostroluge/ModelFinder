@@ -74,8 +74,8 @@ public class AnnonceController {
 		return annonceAccessories;
 	}
 	
-	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());

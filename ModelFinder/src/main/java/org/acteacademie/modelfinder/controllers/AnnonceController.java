@@ -1,5 +1,6 @@
 package org.acteacademie.modelfinder.controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -7,12 +8,15 @@ import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
+import org.acteacademie.modelfinder.domain.Response;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.Student;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.AuthorizationService;
+import org.acteacademie.modelfinder.services.ResponseService;
 import org.acteacademie.modelfinder.services.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +43,10 @@ public class AnnonceController {
 	
 	@Resource
 	AuthorizationService authorizationService;
+	
+	@Resource
+	ResponseService responseService;
+
 	
 	@CrossOrigin
 	@RequestMapping("/annonceList")

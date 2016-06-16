@@ -9,12 +9,14 @@ import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.Response;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.Student;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.ApplyForm;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.AuthorizationService;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.acteacademie.modelfinder.services.ResponseService;
+import org.acteacademie.modelfinder.services.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,7 +39,10 @@ public class ResponseController {
 	
 	@Resource
 	ModelService modelService;
-	
+
+	@Resource
+	StudentService studentService;
+
 	@Resource 
 	AnnonceService annonceService;
 	
@@ -48,13 +53,26 @@ public class ResponseController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping("/myResponses")
-	public ResponseEntity<Collection<Response>> getMyResponses(HttpSession session) {
+	@RequestMapping("/modelProposals")
+	public ResponseEntity<Collection<Response>> getModelProposals(HttpSession session) {
 		User user = (User) session.getAttribute("USER");
 		if (user != null) {
 			if (user.getRole().equals("model")) {
 				Model model = modelService.getOneModel(Long.valueOf(user.getId()));
 				return ResponseEntity.ok(this.reponseService.findByModel(model));
+			}
+		}
+		return ResponseEntity.status(422).body(null);
+	}
+	
+	@CrossOrigin
+	@RequestMapping("/studentServices")
+	public ResponseEntity<Collection<Response>> getStudentServices(HttpSession session) {
+		User user = (User) session.getAttribute("USER");
+		if (user != null) {
+			if (user.getRole().equals("student")) {
+				Student student = studentService.getOneStudent(Long.valueOf(user.getId()));
+				return ResponseEntity.ok(this.reponseService.getByStudent(student));
 			}
 		}
 		return ResponseEntity.status(422).body(null);

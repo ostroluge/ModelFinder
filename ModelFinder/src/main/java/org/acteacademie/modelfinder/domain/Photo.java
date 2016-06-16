@@ -1,17 +1,11 @@
 package org.acteacademie.modelfinder.domain;
 
-import java.util.Collection;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -23,9 +17,18 @@ public class Photo {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(name="URL", unique = false, nullable = true)
-	private String url;
+	@Lob
+	@Column(name="FILE", unique = false, nullable = true)
+	private byte[] file;
 	
+	@Column(name="TYPE", unique = false, nullable = true)
+	private String type;
+
+	public Photo(byte[] bytes, String mimeType) {
+		this.file = bytes;
+		this.type = mimeType;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -34,12 +37,19 @@ public class Photo {
 		this.id = id;
 	}
 
-	public String getUrl() {
-		return url;
+	public byte[] getFile() {
+		return file;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setFile(byte[] file) {
+		this.file = file;
 	}
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

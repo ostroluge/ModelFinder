@@ -8,7 +8,6 @@ import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.Response;
 import org.acteacademie.modelfinder.domain.Student;
-import org.acteacademie.modelfinder.repositories.CustomResponseRepository;
 import org.acteacademie.modelfinder.repositories.ResponseRepository;
 import org.acteacademie.modelfinder.services.ResponseService;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,6 @@ public class ReponseServiceImpl implements ResponseService{
 		
 	@Resource
 	private ResponseRepository reponseRepository;
-	@Resource
-	private CustomResponseRepository customResponseRepository;
 				
 	@Override
 	public Collection<Response> getAllReponse() {
@@ -61,6 +58,6 @@ public class ReponseServiceImpl implements ResponseService{
 
 	@Override
 	public Collection<Response> getByStudent(Student student) {
-		return customResponseRepository.getByStudent(student.getId());
+		return reponseRepository.getByStudent(student.getId());
 	}
 }

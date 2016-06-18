@@ -18,5 +18,4 @@ public interface ModelRepository extends CrudRepository<Model, Long>{
 			EyeColorEnum eyeColor, LengthHairEnum lengthHair, long height_min, long height_max);
 
 	Model findById(long id);
-
 }

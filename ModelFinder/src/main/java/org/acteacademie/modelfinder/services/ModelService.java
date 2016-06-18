@@ -20,5 +20,4 @@ public interface ModelService {
 	Model findById(long id);
 	
 	void deleteModel(Long id);
-
 }

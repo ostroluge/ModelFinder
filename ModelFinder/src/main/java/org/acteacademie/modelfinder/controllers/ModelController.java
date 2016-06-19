@@ -84,7 +84,7 @@ public class ModelController {
 		
 		Annonce annonce = this.annonceService.getOneAnnonce(idAnnonce);
 		
-		return this.modelService.getModelByDetails(annonce.getSkinTone(), annonce.getEyeColor(), annonce.getLengthHair(), annonce.getHeightMin(),annonce.getHeightMax());
+		return this.modelService.getModelByDetails(annonce.getSkinTone(), annonce.getLengthHair(), annonce.getHeightMin(),annonce.getHeightMax());
 	}
 
 	@CrossOrigin

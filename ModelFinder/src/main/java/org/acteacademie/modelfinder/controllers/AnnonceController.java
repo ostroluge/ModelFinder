@@ -1,6 +1,5 @@
 package org.acteacademie.modelfinder.controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.Resource;
@@ -8,9 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
-import org.acteacademie.modelfinder.domain.Response;
 import org.acteacademie.modelfinder.domain.StringResponse;
-import org.acteacademie.modelfinder.domain.Student;
+import org.acteacademie.modelfinder.domain.StringResponseId;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.services.AccessoriesService;
@@ -85,13 +83,13 @@ public class AnnonceController {
 	@CrossOrigin
 	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
+	public @ResponseBody StringResponseId createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
 		annonceAccessories.getAnnonce().setAccessoriesId(annonceAccessories.getAccessories().getIdAccessories());
 		User user = (User) session.getAttribute("USER");
 		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(user.getId()));
 		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
-		return new StringResponse("success");
+		return new StringResponseId("success", annonceAccessories.getAnnonce().getId());
 	}
 	
 	@PreAuthorize("@authorizationService.hasRoleAndIsAuthorAnnonce('student', #newAnnonceAccessories.annonce.id,#session)")

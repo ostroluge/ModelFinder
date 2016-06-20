@@ -14,10 +14,10 @@ public class CustomMvcConfig extends WebMvcConfigurerAdapter{
 	public DriverManagerDataSource dataSource(){
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 		driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		driverManagerDataSource.setUrl(localDbURL);
-//		driverManagerDataSource.setUsername("miage");
-		driverManagerDataSource.setUsername("root");
-//		driverManagerDataSource.setPassword("miage");
+		driverManagerDataSource.setUrl(alwaysDataURL);
+		driverManagerDataSource.setUsername("miage");
+//		driverManagerDataSource.setUsername("root");
+		driverManagerDataSource.setPassword("miage");
 		return driverManagerDataSource;
 	}
 }

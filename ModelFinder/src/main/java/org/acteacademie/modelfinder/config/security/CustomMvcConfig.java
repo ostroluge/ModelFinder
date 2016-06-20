@@ -7,14 +7,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class CustomMvcConfig extends WebMvcConfigurerAdapter{
 
+	private static final String alwaysDataURL = "jdbc:mysql://mysql-miage.alwaysdata.net:3306/miage_modelfinder_security";
+	private static final String localDbURL = "jdbc:mysql://127.0.0.1:3306/model_finder_local";
 	
 	@Bean(name="dataSource")
 	public DriverManagerDataSource dataSource(){
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 		driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		driverManagerDataSource.setUrl("jdbc:mysql://mysql-miage.alwaysdata.net:3306/miage_modelfinder_security");
-		driverManagerDataSource.setUsername("miage");
-		driverManagerDataSource.setPassword("miage");
+		driverManagerDataSource.setUrl(localDbURL);
+//		driverManagerDataSource.setUsername("miage");
+		driverManagerDataSource.setUsername("root");
+//		driverManagerDataSource.setPassword("miage");
 		return driverManagerDataSource;
 	}
 }

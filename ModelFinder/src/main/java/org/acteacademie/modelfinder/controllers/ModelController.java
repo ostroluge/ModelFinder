@@ -108,15 +108,13 @@ public class ModelController {
 	@RequestMapping(value="/saveModel", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createModel(@RequestBody UserModel usermodel) {
 		User user = usermodel.getUser();
-		Model model = usermodel.getModel();
-		
+		Model model = usermodel.getModel();	
 		Iterator<Photo> i = model.getModelPhoto().iterator();
 		while(i.hasNext())
 		{
 			Photo p = this.photoService.savePhoto(i.next());
 			System.out.println(p.getFile());
-		}		
-
+		}
 		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
 		user = this.userService.saveUser(user);
 		model.setId(user.getId());
@@ -130,6 +128,12 @@ public class ModelController {
 	public @ResponseBody StringResponse modifyModel(@RequestBody UserModel usermodel) {
 		User user = usermodel.getUser();
 		Model model = usermodel.getModel();
+		Iterator<Photo> i = model.getModelPhoto().iterator();
+		while(i.hasNext())
+		{
+			Photo p = this.photoService.savePhoto(i.next());
+			System.out.println(p.getFile());
+		}
 		user = this.userService.saveUser(user);
 		this.modelService.saveModel(model);
 		return new StringResponse("success");

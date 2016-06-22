@@ -19,14 +19,12 @@ public class Photo {
 	
 	@Lob
 	@Column(name="FILE", unique = false, nullable = true)
-	private byte[] file;
-	
-	@Column(name="TYPE", unique = false, nullable = true)
-	private String type;
+	private String file;
 
-	public Photo(byte[] bytes, String mimeType) {
-		this.file = bytes;
-		this.type = mimeType;
+	protected Photo(){}
+	
+	public Photo(String data) {
+		this.file = data;
 	}
 
 	public long getId() {
@@ -37,19 +35,12 @@ public class Photo {
 		this.id = id;
 	}
 
-	public byte[] getFile() {
+	public String getFile() {
 		return file;
 	}
 
-	public void setFile(byte[] file) {
+	public void setFile(String file) {
 		this.file = file;
 	}
-	
-	public String getType() {
-		return type;
-	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
 }

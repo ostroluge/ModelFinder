@@ -12,15 +12,11 @@ public class PhotoServiceImpl implements PhotoService {
 
 	@Resource
 	private PhotoRepository photoRepository;
-	
-	// Retrieve file
-    public Photo findById(int id) {
-        return photoRepository.findPhotoById(id);
-    }
 
-    // Upload the file
-    public void uploadFile(Photo doc) {
-        photoRepository.save(doc);
-    }
+	@Override
+	public Photo savePhoto(Photo photo) {
+		// TODO Auto-generated method stub
+		return photoRepository.save(photo);
+	}
 
 }

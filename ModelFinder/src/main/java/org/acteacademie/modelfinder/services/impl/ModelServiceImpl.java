@@ -29,8 +29,8 @@ public class ModelServiceImpl implements ModelService{
 	}
 
 	@Override
-	public void saveModel(Model model) {
-		this.modelRepository.save(model);
+	public Model saveModel(Model model) {
+		return this.modelRepository.save(model);
 	}
 
 	@Override

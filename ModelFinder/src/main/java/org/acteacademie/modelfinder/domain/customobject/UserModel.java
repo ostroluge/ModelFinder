@@ -1,7 +1,8 @@
 package org.acteacademie.modelfinder.domain.customobject;
 
-import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.Model;
+import org.acteacademie.modelfinder.domain.Photo;
+import org.acteacademie.modelfinder.domain.User;
 
 public class UserModel {
 

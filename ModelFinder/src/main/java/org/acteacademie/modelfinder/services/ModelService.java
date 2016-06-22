@@ -13,7 +13,7 @@ public interface ModelService {
 	
 	Model getOneModel(Long id);
 
-	void saveModel(Model model);
+	Model saveModel(Model model);
 	
 	Collection<Model> getModelByDetails(SkinToneEnum skinTone, EyeColorEnum eyeColor, LengthHairEnum lengthHair, long height_min, long height_max);
 

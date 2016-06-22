@@ -2,17 +2,21 @@ package org.acteacademie.modelfinder.controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
+import org.acteacademie.modelfinder.domain.Photo;
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.UserModel;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.ModelService;
+import org.acteacademie.modelfinder.services.PhotoService;
 import org.acteacademie.modelfinder.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,6 +42,8 @@ public class ModelController {
 	@Resource
 	UserService userService;
 	
+	@Resource
+	PhotoService photoService;
 	
 	@CrossOrigin
 	@RequestMapping("/modelList")
@@ -67,7 +73,7 @@ public class ModelController {
 	@CrossOrigin
 	@RequestMapping("/deleteModel/{id}")
 	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
-	public StringResponse deleteStudent(@PathVariable("id") Long id,HttpSession session){
+	public StringResponse deleteModel(@PathVariable("id") Long id,HttpSession session){
 		this.modelService.deleteModel(id);
 		this.userService.deleteUser(id);
 		return new StringResponse("success");
@@ -90,18 +96,28 @@ public class ModelController {
 		UserModel model = new UserModel();
 		model.setUser(this.userService.getUserById(id));
 		model.setModel(this.modelService.findById(id));
+		System.out.println(model.getModel());
 		return model;
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value="/createModel", method=RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value="/saveModel", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse createModel(@RequestBody UserModel usermodel) {
 		User user = usermodel.getUser();
 		Model model = usermodel.getModel();
+		
+		Iterator<Photo> i = model.getModelPhoto().iterator();
+		while(i.hasNext())
+		{
+			Photo p = this.photoService.savePhoto(i.next());
+			System.out.println(p.getFile());
+		}		
+
 		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
 		user = this.userService.saveUser(user);
 		model.setId(user.getId());
-		this.modelService.saveModel(model);
+		model = this.modelService.saveModel(model);
+
 		return new StringResponse("success");
 	}
 	

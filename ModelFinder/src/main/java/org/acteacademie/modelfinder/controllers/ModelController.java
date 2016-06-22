@@ -15,6 +15,7 @@ import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.UserModel;
 import org.acteacademie.modelfinder.services.AnnonceService;
+import org.acteacademie.modelfinder.services.AuthorizationService;
 import org.acteacademie.modelfinder.services.ModelService;
 import org.acteacademie.modelfinder.services.PhotoService;
 import org.acteacademie.modelfinder.services.UserService;
@@ -33,6 +34,9 @@ import com.google.common.hash.Hashing;
 @RestController
 public class ModelController {
 
+	@Resource
+	AuthorizationService authorizationService;
+	
 	@Resource
 	AnnonceService annonceService;
 	
@@ -86,12 +90,12 @@ public class ModelController {
 		
 		Annonce annonce = this.annonceService.getOneAnnonce(idAnnonce);
 		
-		return this.modelService.getModelByDetails(annonce.getSkinTone(), annonce.getEyeColor(), annonce.getLengthHair(), annonce.getHeightMin(),annonce.getHeightMax());
+		return this.modelService.getModelByDetails(annonce.getSkinTone(), annonce.getLengthHair(), annonce.getHeightMin(),annonce.getHeightMax());
 	}
 
 	@CrossOrigin
 	@RequestMapping("/detailModel/{id}")
-	@PreAuthorize("@authorizationService.hasAnyRole('student','admin',#session)")
+	@PreAuthorize("@authorizationService.hasAnyRoleOrIsIdModel('student','admin',#id, #session)")
 	public UserModel getOne(@PathVariable("id") long id, HttpSession session){
 		UserModel model = new UserModel();
 		model.setUser(this.userService.getUserById(id));

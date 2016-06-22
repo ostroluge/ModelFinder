@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.acteacademie.modelfinder.domain.Annonce;
+import org.acteacademie.modelfinder.domain.Student;
 import org.acteacademie.modelfinder.repositories.AnnonceRepository;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,10 @@ public class AnnonceServiceImpl implements AnnonceService{
 	@Override
 	public Collection<Annonce> findByStatus(String status) {
 		return this.annonceRepository.findByStatus(status);
+	}
+
+	@Override
+	public Collection<Annonce> findByStudent(Student student) {
+		return this.annonceRepository.findByStudent(student);
 	}
 }

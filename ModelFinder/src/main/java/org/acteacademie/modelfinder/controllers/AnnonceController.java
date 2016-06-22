@@ -8,10 +8,13 @@ import javax.servlet.http.HttpSession;
 import org.acteacademie.modelfinder.domain.Accessories;
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.StringResponse;
+import org.acteacademie.modelfinder.domain.StringResponseId;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.domain.customobject.AnnonceAccessories;
 import org.acteacademie.modelfinder.services.AccessoriesService;
 import org.acteacademie.modelfinder.services.AnnonceService;
+import org.acteacademie.modelfinder.services.AuthorizationService;
+import org.acteacademie.modelfinder.services.ResponseService;
 import org.acteacademie.modelfinder.services.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@PreAuthorize("@authorizationService.isConnected(#session)")
 public class AnnonceController {
 
 	@Resource
@@ -35,27 +39,34 @@ public class AnnonceController {
 	@Resource
 	StudentService studentService;
 	
+	@Resource
+	AuthorizationService authorizationService;
+	
+	@Resource
+	ResponseService responseService;
+
+	
 	@CrossOrigin
 	@RequestMapping("/annonceList")
-	public ResponseEntity<Collection<Annonce>> getAll() {
+	public ResponseEntity<Collection<Annonce>> getAll(HttpSession session) {
 		return ResponseEntity.ok(this.annonceService.getAllAnnonce());
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/annonceListActives")
-	public ResponseEntity<Collection<Annonce>> getAllActives() {
+	public ResponseEntity<Collection<Annonce>> getAllActives(HttpSession session) {
 		return ResponseEntity.ok(this.annonceService.findByStatus("Active"));
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/annonceListInactives")
-	public ResponseEntity<Collection<Annonce>> getAllInactives() {
+	public ResponseEntity<Collection<Annonce>> getAllInactives(HttpSession session) {
 		return ResponseEntity.ok(this.annonceService.findByStatus("Inactive"));
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/accessoireList")
-	public Collection<Accessories> getAllAccessoire(){
+	public Collection<Accessories> getAllAccessoire(HttpSession session){
 		return this.accessoriesService.getAllAccessories();
 	}
 	
@@ -69,16 +80,16 @@ public class AnnonceController {
 		return annonceAccessories;
 	}
 	
-	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@RequestMapping(value="/createAnnonce", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
+	public @ResponseBody StringResponseId createAnnonce(@RequestBody AnnonceAccessories annonceAccessories, HttpSession session) {
 		this.accessoriesService.saveAccessories(annonceAccessories.getAccessories());
 		annonceAccessories.getAnnonce().setAccessoriesId(annonceAccessories.getAccessories().getIdAccessories());
 		User user = (User) session.getAttribute("USER");
 		annonceAccessories.getAnnonce().setStudent(studentService.getOneStudent(user.getId()));
 		this.annonceService.saveAnnonce(annonceAccessories.getAnnonce());
-		return new StringResponse("success");
+		return new StringResponseId("success", annonceAccessories.getAnnonce().getId());
 	}
 	
 	@PreAuthorize("@authorizationService.hasRoleAndIsAuthorAnnonce('student', #newAnnonceAccessories.annonce.id,#session)")

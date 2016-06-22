@@ -2,7 +2,9 @@ spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://mysql-miage.alwaysdata.net:3306/miage_modelfinder_security
+ #   url: jdbc:mysql://127.0.0.1:3306/model_finder_local
     username: miage
+ #   username: root
     password: miage
     continueOnError: true
     initialize: false

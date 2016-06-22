@@ -6,10 +6,13 @@ import javax.servlet.http.HttpSession;
 
 import org.acteacademie.modelfinder.domain.StringResponse;
 import org.acteacademie.modelfinder.domain.User;
+import org.acteacademie.modelfinder.services.AuthorizationService;
 import org.acteacademie.modelfinder.services.UserService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +23,11 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 
 @RestController
-@Scope("session")
 public class UserController {
 
+	@Resource
+	AuthorizationService authorizationService;
+	
 	@Resource
 	UserService userService;
 	
@@ -38,8 +43,8 @@ public class UserController {
 	
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<User> loginSubmit(@RequestBody User user, HttpServletRequest request) {
-		if (isAuthorized(user)) {
+	public ResponseEntity<User> loginSubmit(@RequestBody User user, HttpServletRequest request, Authentication auth) {
+		if (isAuthorized(user)==1) {
 			User authenticatedUser = this.userService.getUserByMail(user.getMail());
 			authenticatedUser.setPassword(null);
 			
@@ -47,21 +52,35 @@ public class UserController {
 			session.setAttribute("USER", authenticatedUser);
 			
 			return ResponseEntity.ok(authenticatedUser);
-		} else {
+		} else if (isAuthorized(user)==3){
+			return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED)
+					.body(null);
+		} else{
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(null);
 		}
 	}
 
-	private boolean isAuthorized(User userToCheck) {
+	//Login ok : 1 , mauvais mdp ou user : 2 , bon mdp, bon user mais non validé : 3
+	private int isAuthorized(User userToCheck) {
 
 		User user = this.userService.getUserByMail(userToCheck.getMail());
-		if(user != null){
-			String encodedPassword = Hashing.sha1().hashString(userToCheck.getPassword(), Charsets.UTF_8 ).toString();
-			if(user.getPassword().equals(encodedPassword)){
-				return true;
+		if(user != null)
+		{
+			if(user.getIsValidated())
+			{
+				String encodedPassword = Hashing.sha1().hashString(userToCheck.getPassword(), Charsets.UTF_8 ).toString();
+				if(user.getPassword().equals(encodedPassword))
+				{
+					return 1;
+				}else{
+					return 2;
+				}
+			}else{
+				return 3;
 			}
+		}else{
+			return 2;
 		}
-		return false;
 	}
 }

@@ -4,11 +4,12 @@ import java.util.Collection;
 
 import javax.annotation.Resource;
 
-import org.acteacademie.modelfinder.repositories.ResponseRepository;
-import org.acteacademie.modelfinder.services.ResponseService;
 import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.Model;
 import org.acteacademie.modelfinder.domain.Response;
+import org.acteacademie.modelfinder.domain.Student;
+import org.acteacademie.modelfinder.repositories.ResponseRepository;
+import org.acteacademie.modelfinder.services.ResponseService;
 import org.springframework.stereotype.Service;
 
 @Service(value = "ReponseService")
@@ -53,5 +54,10 @@ public class ReponseServiceImpl implements ResponseService{
 	@Override
 	public Collection<Response> findByModel(Model model) {
 		return reponseRepository.findByModel(model);
-	};
+	}
+
+	@Override
+	public Collection<Response> getByStudent(Student student) {
+		return reponseRepository.getByStudent(student.getId());
+	}
 }

@@ -57,4 +57,23 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		
 		return false;
 	}
+
+
+	public Boolean hasAnyRoleOrIsIdModel(String firstRole, String secondRole, Long idModel, HttpSession session){
+		User user = (User) session.getAttribute("USER");
+
+		if((user.getRole().equals(firstRole) || user.getRole().equals(secondRole) || (user.getId() == idModel)) && user.getIsValidated()){
+			return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public Boolean isConnected(HttpSession session) {
+		if(session.getAttribute("USER") == null){
+			return false;
+		}
+		return true;
+	}
 }

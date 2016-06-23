@@ -37,8 +37,8 @@ public class StudentController {
 	@Resource
 	UserService userService;
 	
-	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
 	@RequestMapping("/studentList")
 	public Collection<Student> getAll(HttpSession session){
 		return this.studentService.getAllStudent();
@@ -51,8 +51,8 @@ public class StudentController {
 		return us;
 	}
 	
-	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
 	@RequestMapping("/userStudentListVal")
 	public Collection<UserStudent> getUserStudentVal(HttpSession session){
 		Collection<UserStudent> students = new ArrayList<UserStudent>();
@@ -78,8 +78,9 @@ public class StudentController {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRoleOrIsAuthor('admin', #id, #session)")
 	@RequestMapping("/studentById/{id}")
-	public UserStudent getOne(@PathVariable("id") Long id){
+	public UserStudent getOne(@PathVariable("id") Long id, HttpSession session){
 		UserStudent student = new UserStudent();
 		student.setUser(this.userService.getUserById(id));
 		student.setStudent(this.studentService.getOneStudent(id));
@@ -102,8 +103,9 @@ public class StudentController {
 
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@RequestMapping(value="/modifyStudent", method=RequestMethod.POST, produces = "application/json")
-	public StringResponse modifyStudent(@RequestBody UserStudent userstudent){
+	public StringResponse modifyStudent(@RequestBody UserStudent userstudent, HttpSession session){
 		User user = userstudent.getUser();
 		Student student = userstudent.getStudent();
 		user = this.userService.saveUser(user);
@@ -112,8 +114,9 @@ public class StudentController {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('student',#session)")
 	@RequestMapping(value="/modifyStudentAndPassword", method=RequestMethod.POST, produces = "application/json")
-	public StringResponse modifiyStudentAndPassword(@RequestBody UserStudent userstudent){
+	public StringResponse modifiyStudentAndPassword(@RequestBody UserStudent userstudent, HttpSession session){
 		User user = userstudent.getUser();
 		Student student = userstudent.getStudent();
 		user.setPassword(Hashing.sha1().hashString(user.getPassword(), Charsets.UTF_8 ).toString());
@@ -137,7 +140,7 @@ public class StudentController {
 	
 	@CrossOrigin
 	@RequestMapping("/deleteStudent/{id}")
-	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
+	@PreAuthorize("@authorizationService.hasAnyRole('admin','student',#session)")
 	public StringResponse deleteStudent(@PathVariable("id") Long id, HttpSession session){
 		this.studentService.deleteStudent(id);
 		this.userService.deleteUser(id);

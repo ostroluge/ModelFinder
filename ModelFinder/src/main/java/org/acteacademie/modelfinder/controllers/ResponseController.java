@@ -47,12 +47,7 @@ public class ResponseController {
 	AnnonceService annonceService;
 	
 	@CrossOrigin
-	@RequestMapping("/reponseList")
-	public Collection<Response> getAll(){
-		return this.reponseService.getAllReponse();
-	}
-	
-	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('model', #session)")
 	@RequestMapping("/modelProposals")
 	public ResponseEntity<Collection<Response>> getModelProposals(HttpSession session) {
 		User user = (User) session.getAttribute("USER");
@@ -66,6 +61,7 @@ public class ResponseController {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('student', #session)")
 	@RequestMapping("/studentServices")
 	public ResponseEntity<Collection<Response>> getStudentServices(HttpSession session) {
 		User user = (User) session.getAttribute("USER");
@@ -79,25 +75,28 @@ public class ResponseController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping("/OneReponse/{id}")
+	@RequestMapping("/detailReponse/{id}")
 	public Response getOne(@PathVariable("id") long id){
 		return this.reponseService.getOneReponse(id);
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/ReponsesByAnnonce/{id_annonce}")
-	public Collection<Response> getResponsesByAnnonce(@PathVariable("id_annonce") long id){
+	@PreAuthorize("@authorizationService.hasRole('student', #session)")
+	public Collection<Response> getResponsesByAnnonce(@PathVariable("id_annonce") long id, HttpSession session){
 		return this.reponseService.findByAnnonce(annonceService.getOneAnnonce(id));
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/ReponsesByAnnonceAndStatut/{id_annonce}/{statut}")
-	public Collection<Response> getResponsesByAnnonceAndStatut(@PathVariable("id_annonce") long id, @PathVariable("statut") String statut){
+	@PreAuthorize("@authorizationService.hasRole('student', #session)")
+	public Collection<Response> getResponsesByAnnonceAndStatut(@PathVariable("id_annonce") long id, @PathVariable("statut") String statut, HttpSession session){
 		return this.reponseService.findByAnnonceAndStatut(annonceService.getOneAnnonce(id), statut);
 	}
 		
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('model', #session)")
 	@RequestMapping(value="/apply", method=RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<StringResponse> apply(@RequestBody ApplyForm applyForm, HttpSession session) {
 		StringResponse rep = null;

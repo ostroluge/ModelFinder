@@ -76,7 +76,7 @@ public class ModelController {
 	
 	@CrossOrigin
 	@RequestMapping("/deleteModel/{id}")
-	@PreAuthorize("@authorizationService.hasRole('admin',#session)")
+	@PreAuthorize("@authorizationService.hasRoleOrIsAuthor('admin', #id, #session)")
 	public StringResponse deleteModel(@PathVariable("id") Long id,HttpSession session){
 		this.modelService.deleteModel(id);
 		this.userService.deleteUser(id);
@@ -124,8 +124,9 @@ public class ModelController {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthor('model',#usermodel.user.id, #session)")
 	@RequestMapping(value="/modifyModel", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse modifyModel(@RequestBody UserModel usermodel) {
+	public @ResponseBody StringResponse modifyModel(@RequestBody UserModel usermodel, HttpSession session) {
 		User user = usermodel.getUser();
 		Model model = usermodel.getModel();
 		Iterator<Photo> i = model.getModelPhoto().iterator();
@@ -140,6 +141,7 @@ public class ModelController {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthor('model',#usermodel.user.id, #session)")
 	@RequestMapping(value="/modifyModelAndPassword", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse modifyModelAndPassword(@RequestBody UserModel usermodel) {
 		User user = usermodel.getUser();

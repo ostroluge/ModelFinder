@@ -9,8 +9,6 @@ import org.acteacademie.modelfinder.domain.Student;
 
 public interface ResponseService {
 
-	Collection<Response> getAllReponse();
-	
 	Response getOneReponse(long id);
 
 	void saveReponse(Response reponse);

@@ -36,6 +36,17 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		return false;
 	}
 
+
+	public Boolean hasRoleOrIsAuthor(String role, Long idUser, HttpSession session) {
+		User user = (User) session.getAttribute("USER");
+		
+		if((user.getRole().equals(role) ||  user.getId() == idUser) && user.getIsValidated()){
+			return true;
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public Boolean hasAnyRole(String firstRole, String secondRole, HttpSession session) {
 		User user = (User) session.getAttribute("USER");

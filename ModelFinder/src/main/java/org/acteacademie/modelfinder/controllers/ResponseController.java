@@ -47,7 +47,6 @@ public class ResponseController {
 	AnnonceService annonceService;
 	
 	@CrossOrigin
-	@PreAuthorize("@authorizationService.hasRole('model', #session)")
 	@RequestMapping("/modelProposals")
 	public ResponseEntity<Collection<Response>> getModelProposals(HttpSession session) {
 		User user = (User) session.getAttribute("USER");
@@ -76,7 +75,7 @@ public class ResponseController {
 	
 	@CrossOrigin
 	@RequestMapping("/detailReponse/{id}")
-	public Response getOne(@PathVariable("id") long id){
+	public Response getOne(@PathVariable("id") long id, HttpSession session){
 		return this.reponseService.getOneReponse(id);
 	}
 	
@@ -93,7 +92,32 @@ public class ResponseController {
 	public Collection<Response> getResponsesByAnnonceAndStatut(@PathVariable("id_annonce") long id, @PathVariable("statut") String statut, HttpSession session){
 		return this.reponseService.findByAnnonceAndStatut(annonceService.getOneAnnonce(id), statut);
 	}
-		
+	
+	@CrossOrigin
+	@RequestMapping(value="/hadApply")
+	public ResponseEntity<StringResponse> hadApply(@RequestBody long id, HttpSession session) {
+		StringResponse rep = null;
+		User user = (User) session.getAttribute("USER");
+		if (user != null) {
+			if (user.getRole().equals("model")) {
+				Model model = modelService.getOneModel(Long.valueOf(user.getId()));
+				Annonce annonce = annonceService.getOneAnnonce(Long.valueOf(id));
+				rep = new StringResponse("En cours");
+				if (!(reponseService.findByAnnonceAndModel(annonce, model)).isEmpty()){
+					rep.setResponse("Had apply");
+				}
+				else{
+					rep.setResponse("Had not apply");
+				}
+				return ResponseEntity.ok(rep);
+			}
+			else{
+				rep = new StringResponse("Not a model");
+				return ResponseEntity.ok(rep);
+			}
+		}
+		return ResponseEntity.status(422).body(null);
+	}	
 	
 	@CrossOrigin
 	@PreAuthorize("@authorizationService.hasRole('model', #session)")
@@ -108,6 +132,7 @@ public class ResponseController {
 				rep = new StringResponse("En cours");
 				if (!(reponseService.findByAnnonceAndModel(annonce, model)).isEmpty()){
 					rep.setResponse("already apply");
+					return ResponseEntity.ok(rep);
 				}
 				else{
 					Response reponse = new Response();
@@ -148,14 +173,14 @@ public class ResponseController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/modifyReponse", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse modifyReponse(@RequestBody Response reponse) {
+	public @ResponseBody StringResponse modifyReponse(@RequestBody Response reponse, HttpSession session) {
 		reponseService.saveReponse(reponse);
 		return new StringResponse("success");
 	}
 	
 	@CrossOrigin
 	@RequestMapping(value = "/supprimerReponse", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse supprimerRv(@RequestBody Long id) {
+	public @ResponseBody StringResponse supprimerRv(@RequestBody Long id, HttpSession session) {
 		reponseService.deleteReponse(id);
 		return new StringResponse("success");
 	}

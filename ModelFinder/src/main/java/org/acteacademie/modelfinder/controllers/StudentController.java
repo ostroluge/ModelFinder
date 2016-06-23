@@ -78,7 +78,7 @@ public class StudentController {
 	}
 	
 	@CrossOrigin
-	@PreAuthorize("@authorizationService.hasRoleOrIsAuthor('admin', #id, #session")
+	@PreAuthorize("@authorizationService.hasRoleOrIsAuthor('admin', #id, #session)")
 	@RequestMapping("/studentById/{id}")
 	public UserStudent getOne(@PathVariable("id") Long id, HttpSession session){
 		UserStudent student = new UserStudent();

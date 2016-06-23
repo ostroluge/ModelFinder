@@ -48,7 +48,7 @@ public class ResponseController {
 	
 	@CrossOrigin
 	@RequestMapping("/reponseList")
-	public Collection<Response> getAll(){
+	public Collection<Response> getAll(HttpSession session){
 		return this.reponseService.getAllReponse();
 	}
 	
@@ -80,19 +80,20 @@ public class ResponseController {
 	
 	@CrossOrigin
 	@RequestMapping("/OneReponse/{id}")
-	public Response getOne(@PathVariable("id") long id){
+	public Response getOne(@PathVariable("id") long id, HttpSession session){
 		return this.reponseService.getOneReponse(id);
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/ReponsesByAnnonce/{id_annonce}")
-	public Collection<Response> getResponsesByAnnonce(@PathVariable("id_annonce") long id){
+	public Collection<Response> getResponsesByAnnonce(@PathVariable("id_annonce") long id, HttpSession session){
 		return this.reponseService.findByAnnonce(annonceService.getOneAnnonce(id));
 	}
 	
 	@CrossOrigin
 	@RequestMapping("/ReponsesByAnnonceAndStatut/{id_annonce}/{statut}")
-	public Collection<Response> getResponsesByAnnonceAndStatut(@PathVariable("id_annonce") long id, @PathVariable("statut") String statut){
+	public Collection<Response> getResponsesByAnnonceAndStatut(@PathVariable("id_annonce") long id, @PathVariable("statut") String statut, HttpSession session){
+		
 		return this.reponseService.findByAnnonceAndStatut(annonceService.getOneAnnonce(id), statut);
 	}
 	
@@ -175,14 +176,14 @@ public class ResponseController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/modifyReponse", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse modifyReponse(@RequestBody Response reponse) {
+	public @ResponseBody StringResponse modifyReponse(@RequestBody Response reponse, HttpSession session) {
 		reponseService.saveReponse(reponse);
 		return new StringResponse("success");
 	}
 	
 	@CrossOrigin
 	@RequestMapping(value = "/supprimerReponse", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody StringResponse supprimerRv(@RequestBody Long id) {
+	public @ResponseBody StringResponse supprimerRv(@RequestBody Long id, HttpSession session) {
 		reponseService.deleteReponse(id);
 		return new StringResponse("success");
 	}

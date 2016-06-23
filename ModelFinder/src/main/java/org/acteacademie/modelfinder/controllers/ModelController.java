@@ -131,10 +131,20 @@ public class ModelController {
 		Iterator<Photo> i = model.getModelPhoto().iterator();
 		while(i.hasNext())
 		{
-			Photo p = this.photoService.savePhoto(i.next());
-			System.out.println(p.getFile());
+			Photo p = i.next();
+			System.out.println(p.getId());
+			if (p.getFile()==null)
+			{
+				System.out.println('b');
+				this.photoService.deletePhoto(p.getId());
+				model.getModelPhoto().remove(p);
+			}else{
+				p = this.photoService.savePhoto(p);
+				System.out.println(p.getFile());
+			}
 		}
 		user = this.userService.saveUser(user);
+		System.out.println("c");
 		this.modelService.saveModel(model);
 		return new StringResponse("success");
 	}

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -75,7 +76,7 @@ public class Model {
 	@Column(name="COMMENT", unique = false, nullable = true)
 	private String comment;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "R_MODEL_PHOTO", 
 	joinColumns = { @JoinColumn(name = "MODELE_ID") }, 
 	inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID") })

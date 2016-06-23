@@ -19,4 +19,10 @@ public class PhotoServiceImpl implements PhotoService {
 		return photoRepository.save(photo);
 	}
 
+	@Override
+	public void deletePhoto(Long id) {
+		// TODO Auto-generated method stub
+		photoRepository.delete(id);
+	}
+
 }

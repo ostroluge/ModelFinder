@@ -7,6 +7,7 @@ import org.acteacademie.modelfinder.domain.Annonce;
 import org.acteacademie.modelfinder.domain.User;
 import org.acteacademie.modelfinder.services.AnnonceService;
 import org.acteacademie.modelfinder.services.AuthorizationService;
+import org.acteacademie.modelfinder.services.ResponseService;
 import org.springframework.stereotype.Component;
 
 @Component("authorizationService")
@@ -14,6 +15,9 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 
 	@Resource
 	AnnonceService annonceService;
+	
+	@Resource
+	ResponseService responseService;
 	
 	@Override
 	public Boolean hasRole(String role, HttpSession session) {
@@ -80,6 +84,19 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		return false;
 	}
 
+	@Override
+	public Boolean hasRoleAndIsAuthorReponse(String role, Long idReponse, HttpSession session) {
+		User user = (User) session.getAttribute("USER");
+		
+		Long idModel = responseService.getOneReponse(idReponse).getModel().getId();
+		
+		if((user.getRole().endsWith(role) && user.getId() == idModel && user.getIsValidated())){
+			return true;
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public Boolean isConnected(HttpSession session) {
 		if(session.getAttribute("USER") == null){

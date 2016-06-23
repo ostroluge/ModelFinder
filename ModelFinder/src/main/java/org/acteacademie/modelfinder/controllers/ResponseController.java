@@ -47,6 +47,7 @@ public class ResponseController {
 	AnnonceService annonceService;
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRole('model', #session)")
 	@RequestMapping("/modelProposals")
 	public ResponseEntity<Collection<Response>> getModelProposals(HttpSession session) {
 		User user = (User) session.getAttribute("USER");
@@ -172,6 +173,7 @@ public class ResponseController {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthorReponse('model', #reponse.id, #session)")
 	@RequestMapping(value="/modifyReponse", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse modifyReponse(@RequestBody Response reponse, HttpSession session) {
 		reponseService.saveReponse(reponse);
@@ -179,6 +181,7 @@ public class ResponseController {
 	}
 	
 	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthorReponse('model', #id,#session)")
 	@RequestMapping(value = "/supprimerReponse", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse supprimerRv(@RequestBody Long id, HttpSession session) {
 		reponseService.deleteReponse(id);

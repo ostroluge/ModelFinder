@@ -17,11 +17,6 @@ public class ReponseServiceImpl implements ResponseService{
 		
 	@Resource
 	private ResponseRepository reponseRepository;
-				
-	@Override
-	public Collection<Response> getAllReponse() {
-		return this.reponseRepository.findAll();
-	}
 
 	@Override
 	public Response getOneReponse(long id) {

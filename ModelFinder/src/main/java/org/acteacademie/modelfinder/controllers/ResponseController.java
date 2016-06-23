@@ -95,7 +95,32 @@ public class ResponseController {
 	public Collection<Response> getResponsesByAnnonceAndStatut(@PathVariable("id_annonce") long id, @PathVariable("statut") String statut){
 		return this.reponseService.findByAnnonceAndStatut(annonceService.getOneAnnonce(id), statut);
 	}
-		
+	
+	@CrossOrigin
+	@RequestMapping(value="/hadApply")
+	public ResponseEntity<StringResponse> hadApply(@RequestBody long id, HttpSession session) {
+		StringResponse rep = null;
+		User user = (User) session.getAttribute("USER");
+		if (user != null) {
+			if (user.getRole().equals("model")) {
+				Model model = modelService.getOneModel(Long.valueOf(user.getId()));
+				Annonce annonce = annonceService.getOneAnnonce(Long.valueOf(id));
+				rep = new StringResponse("En cours");
+				if (!(reponseService.findByAnnonceAndModel(annonce, model)).isEmpty()){
+					rep.setResponse("Had apply");
+				}
+				else{
+					rep.setResponse("Had not apply");
+				}
+				return ResponseEntity.ok(rep);
+			}
+			else{
+				rep = new StringResponse("Not a model");
+				return ResponseEntity.ok(rep);
+			}
+		}
+		return ResponseEntity.status(422).body(null);
+	}	
 	
 	@CrossOrigin
 	@RequestMapping(value="/apply", method=RequestMethod.POST, produces = "application/json")

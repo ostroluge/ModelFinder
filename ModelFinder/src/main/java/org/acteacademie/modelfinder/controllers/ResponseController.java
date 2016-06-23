@@ -181,12 +181,26 @@ public class ResponseController {
 	}
 	
 	@CrossOrigin
-	@PreAuthorize("@authorizationService.hasRoleAndIsAuthorReponse('model', #id,#session)")
+	@PreAuthorize("@authorizationService.hasRoleAndIsAuthorAnnonce('student', #reponse.annonce.id, #session)")
+	@RequestMapping(value="/modifyReponseStatus", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody StringResponse modifyReponseStatus(@RequestBody Response reponse, HttpSession session) {
+		reponseService.saveReponse(reponse);
+		return new StringResponse("success");
+	}
+	
+	@CrossOrigin
+	@PreAuthorize("@authorizationService.hasRoleOrIsAuthorReponse('student', #id,#session)")
 	@RequestMapping(value = "/supprimerReponse", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody StringResponse supprimerRv(@RequestBody Long id, HttpSession session) {
 		reponseService.deleteReponse(id);
 		return new StringResponse("success");
 	}
 
+	@CrossOrigin
+	@RequestMapping(value = "/deleteAllReponse/{id}")
+	public StringResponse deleteAllReponse(@PathVariable("id") long idAnnonce, HttpSession session){
+		reponseService.deleteAllReponse(idAnnonce);
+		return new StringResponse("success");
+	}
 }
 

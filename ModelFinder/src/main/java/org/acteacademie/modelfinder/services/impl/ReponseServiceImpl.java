@@ -55,4 +55,9 @@ public class ReponseServiceImpl implements ResponseService{
 	public Collection<Response> getByStudent(Student student) {
 		return reponseRepository.getByStudent(student.getId());
 	}
+
+	@Override
+	public void deleteAllReponse(long id) {
+		this.reponseRepository.deleteAllReponse(id);
+	}
 }

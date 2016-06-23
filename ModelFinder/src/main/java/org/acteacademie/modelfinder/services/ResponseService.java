@@ -24,4 +24,6 @@ public interface ResponseService {
 	Collection <Response> findByAnnonceAndStatut(Annonce annonce, String statut);
 
 	Collection<Response> getByStudent(Student student);
+	
+	void deleteAllReponse(long id);
 }

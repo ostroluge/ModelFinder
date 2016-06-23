@@ -85,12 +85,25 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 	}
 
 	@Override
+	public Boolean hasRoleOrIsAuthorReponse(String role, Long idReponse, HttpSession session) {
+		User user = (User) session.getAttribute("USER");
+		
+		Long idModel = responseService.getOneReponse(idReponse).getModel().getId();
+		
+		if((user.getRole().equals(role) || user.getId() == idModel) && user.getIsValidated()){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	@Override
 	public Boolean hasRoleAndIsAuthorReponse(String role, Long idReponse, HttpSession session) {
 		User user = (User) session.getAttribute("USER");
 		
 		Long idModel = responseService.getOneReponse(idReponse).getModel().getId();
 		
-		if((user.getRole().endsWith(role) && user.getId() == idModel && user.getIsValidated())){
+		if((user.getRole().equals(role) && user.getId() == idModel && user.getIsValidated())){
 			return true;
 		}
 		

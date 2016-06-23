@@ -109,6 +109,7 @@ public class ResponseController {
 				rep = new StringResponse("En cours");
 				if (!(reponseService.findByAnnonceAndModel(annonce, model)).isEmpty()){
 					rep.setResponse("already apply");
+					return ResponseEntity.ok(rep);
 				}
 				else{
 					Response reponse = new Response();
